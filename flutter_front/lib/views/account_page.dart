@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_front/widgets/drawer.dart';
 
 import '../widgets/form.dart';
 
@@ -12,8 +11,7 @@ class AccountPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
-        drawer: const DrawerScreen(),
-        appBar: AppBar(
+          appBar: AppBar(
           title: const Text("EA - Flutter Form"),
           backgroundColor: Colors.deepPurple[300], 
           ),
