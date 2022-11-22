@@ -47,7 +47,7 @@ class DrawerScreen extends StatelessWidget {
                   MaterialPageRoute(builder: (context) => const FirstPage()));
             },
           ),
-          
+
           //Els meus parquings
           ListTile(
             leading: const Icon(Icons.car_rental),
@@ -83,38 +83,7 @@ class DrawerScreen extends StatelessWidget {
                   MaterialPageRoute(builder: (context) => const ListPage()));
             },
           ),
-
-          ListTile(
-            leading: const Icon(Icons.home),
-            title: const Text(
-              'List users',
-            ),
-            onTap: () {
-              Navigator.of(context).push(
-                  MaterialPageRoute(builder: (context) => const ListPage()));
-            },
-          ),
-          ListTile(
-            leading: const Icon(Icons.home),
-            title: const Text(
-              'User Account: Login & Register',
-            ),
-            onTap: () {
-              Navigator.of(context).push(
-                  MaterialPageRoute(builder: (context) => const AccountPage()));
-            },
-          ),
           
-          ListTile(
-            leading: const Icon(Icons.home),
-            title: const Text(
-              'Update',
-            ),
-            onTap: () {
-              Navigator.of(context).push(
-                  MaterialPageRoute(builder: (context) => const UpdatePage()));
-            },
-          ),
         ],
       ),
     ))));
