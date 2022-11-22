@@ -20,8 +20,6 @@ export default model('Parking', Parking);
  */
 
 import 'dart:convert';
-import 'dart:ffi';
-import 'package:flutter_front/models/user.dart';
 
 List<Parking> parkingFromJson(String str) =>
     List<Parking>.from(json.decode(str).map((x) => Parking.fromJson(x)));
@@ -55,8 +53,8 @@ class Parking {
   String type;
   String price;
   String size;
-  Int difficulty;
-  Int score;
+  int difficulty;
+  int score;
   String id;
 
   factory Parking.fromJson(Map<String, dynamic> json) => Parking(

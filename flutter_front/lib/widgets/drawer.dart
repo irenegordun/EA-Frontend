@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_front/views/first_page.dart';
 import 'package:flutter_front/views/list_page.dart';
+import 'package:flutter_front/views/listParkings_page.dart';
 import 'package:flutter_front/views/account_page.dart';
 import 'package:flutter_front/views/update_page.dart';
 
@@ -35,7 +36,17 @@ class DrawerScreen extends StatelessWidget {
                   MaterialPageRoute(builder: (context) => const ListPage()));
             },
           ),
-
+          //Llistat parquings
+          ListTile(
+            leading: const Icon(Icons.abc_sharp),
+            title: const Text(
+              'List parquings general',
+            ),
+            onTap: () {
+              Navigator.of(context).push(
+                  MaterialPageRoute(builder: (context) => const ListParkings()));
+            },
+          ),
           //Main
           ListTile(
             leading: const Icon(Icons.home),

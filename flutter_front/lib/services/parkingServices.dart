@@ -3,25 +3,25 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 
+import '../models/parking.dart';
 import '../models/user.dart';
 import 'package:http/http.dart' as http;
 
 class ParkingServices extends ChangeNotifier {
+  Parking _parkingData = new Parking(user:"",country:"",city: "",street: "",spotNumber:"", type:"", price:"", size: "", difficulty: 0 , score: 0, id:"");
 
-  User _userData = new User(name:"",id: "",password:"",email: "");
+  Parking get parkingData => _parkingData;
 
-  User get userData => _userData;
-
-  void setUserData(User userData) {
-    _userData = userData;
+  void setParkingData(Parking parkingData) {
+    _parkingData = parkingData;
   }
-  Future<List<User>?> getUsers() async {
+  Future<List<Parking>?> getParkings() async {
     var client = http.Client();
-    var uri = Uri.parse('http://localhost:5432/api/users');
+    var uri = Uri.parse('http://localhost:5432/api/parkings');
     var response = await client.get(uri);
     if (response.statusCode == 200) {
       var json = response.body;
-      return userFromJson(json);
+      return parkingFromJson(json);
     }
     return null;
   }
