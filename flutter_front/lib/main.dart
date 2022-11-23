@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_front/models/user.dart';
 import 'package:flutter_front/services/userServices.dart';
-import 'package:flutter_front/views/account_page.dart';
+import 'package:flutter_front/views/new_parking_page.dart';
 import 'package:provider/provider.dart';
 
 void main() {
   runApp(
-      MultiProvider(
+    MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => UserServices()),
       ],
@@ -21,7 +20,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const MaterialApp(
-      home: AccountPage(),
+      home: NewParkingPage(),
     );
   }
 }
