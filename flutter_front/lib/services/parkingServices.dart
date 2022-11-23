@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import '../models/parking.dart';
 import 'package:http/http.dart' as http;
@@ -36,11 +35,13 @@ class ParkingServices extends ChangeNotifier {
     return null;
   }
 
-  Future<void> createParking(Parking parking) async {
+  //Future<void> createParking(Parking parking) async {
+  Future<void> createParking(String token) async {
     var client = http.Client();
     var uri = Uri.parse('http://localhost:5432/api/parkings/');
-    var parkingJS = json.encode(parking.toJson());
+    //var parkingJS = json.encode(parking.toJson());
     await client.post(uri,
-        headers: {'content-type': 'application/json'}, body: parkingJS);
+        //headers: {'content-type': 'application/json'}, body: parkingJS);
+        headers: {'x-access-token': token});
   }
 }

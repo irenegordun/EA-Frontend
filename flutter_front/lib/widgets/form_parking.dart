@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_front/models/parking.dart';
 import 'package:flutter_front/views/list_page.dart';
 import '../services/parkingServices.dart';
-import '../services/userServices.dart';
+import 'package:jaguar_jwt/jaguar_jwt.dart';
+import 'package:dart_jsonwebtoken/dart_jsonwebtoken.dart';
 
 class FormWidget extends StatefulWidget {
   const FormWidget({super.key});
@@ -209,7 +210,42 @@ class _MyStatefulWidgetState extends State<FormWidget> {
                     difficulty: formDifficulty, // hauria de ser number
                   );
 
-                  ParkingServices().createParking(parking);
+                  const String secret = 'clavesecreta';
+                  final claimSet = JwtClaim(payload: {
+                    "user_id": "635d673ac3000ee9ca34e98e",
+                    "email": "alba@upc.com",
+                    "score": 0,
+                    "country": formCountry,
+                    "city": formCity,
+                    "street": formStreet,
+                    "streetNumber": formNumber,
+                    "spotNumber": formSpot,
+                    "type": formType,
+                    "price": formPrice,
+                    "size": formSize,
+                    "difficulty": formDifficulty
+                  });
+                  final String token = issueJwtHS256(claimSet, secret);
+                  print(token);
+
+                  final jwt = JWT({
+                    "user_id": "635d673ac3000ee9ca34e98e",
+                    "email": "alba@upc.com",
+                    "score": 0,
+                    "country": formCountry,
+                    "city": formCity,
+                    "street": formStreet,
+                    "streetNumber": formNumber,
+                    "spotNumber": formSpot,
+                    "type": formType,
+                    "price": formPrice,
+                    "size": formSize,
+                    "difficulty": formDifficulty
+                  });
+
+                  var token2 = jwt.sign(SecretKey(secret));
+
+                  ParkingServices().createParking(token2);
                   setState(() {
                     Navigator.of(context).push(MaterialPageRoute(
                         builder: (context) => const ListPage()));
