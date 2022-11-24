@@ -70,8 +70,8 @@ class _MyParkingsPageState extends State<ListMyParkings> {
             return Card(
               color: Colors.deepPurple[100],
               child: ListTile(
-                title: Text(parkings![index].price),
-                subtitle: Text(parkings![index].user),
+                title: Text(parkings![index].city),
+                subtitle: Text(parkings![index].street),
                 //falten altres camps
                 trailing: SizedBox(
                     width: 120,

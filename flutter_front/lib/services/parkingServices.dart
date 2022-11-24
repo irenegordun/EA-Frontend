@@ -43,6 +43,7 @@ class ParkingServices extends ChangeNotifier {
       return print("deleted");
     }
     return null;
+  }
 
   //Future<void> createParking(Parking parking) async {
   Future<void> createParking(String token) async {
@@ -52,6 +53,5 @@ class ParkingServices extends ChangeNotifier {
     await client.post(uri,
         //headers: {'content-type': 'application/json'}, body: parkingJS);
         headers: {'x-access-token': token});
-
   }
 }

@@ -32,7 +32,7 @@ class UserServices extends ChangeNotifier {
     var response = await client.get(uri);
     if (response.statusCode == 200) {
       var json = response.body;
-      return userFromJson(json);
+      return listuserFromJson(json);
     }
     return null;
   }
@@ -83,7 +83,6 @@ class UserServices extends ChangeNotifier {
     }
   }
 
-
   Future<List<Parking>?> getParkingsOneU(Parking parkingData) async {
     var client = http.Client();
     var id = parkingData.id;
@@ -94,6 +93,7 @@ class UserServices extends ChangeNotifier {
       return parkingFromJson(json);
     }
     return null;
+  }
 
   Future<void> loginUser(User user) async {
     var client = http.Client();
@@ -102,9 +102,9 @@ class UserServices extends ChangeNotifier {
     var response = await client.post(uri,
         headers: {'content-type': 'application/json'}, body: userJS);
     if (response.statusCode == 200) {
-      print(response.body.toString());
-      List<String> Resp1 = response.body.toString().split(", ");
-      print(Resp1.last.characters);
+      //print(response.body.toString());
+      //List<String> Resp1 = response.body.toString().split(", ");
+      //print(Resp1.last.characters);
       // final jwtdecode = JWT.verify(Resp1.last, SecretKey('clavesecreta'));
       // final payload = jwtdecode.payload.toString();
       // List<String> tros1 = payload.split(', ');
@@ -115,6 +115,5 @@ class UserServices extends ChangeNotifier {
     } else {
       print("contrasenya no valida");
     }
-
   }
 }
