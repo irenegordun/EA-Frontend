@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_front/views/first_page.dart';
 import 'package:flutter_front/views/list_page.dart';
-import 'package:flutter_front/views/account_page.dart';
-import 'package:flutter_front/views/update_page.dart';
+import 'package:flutter_front/views/listParkings_page.dart';
+
+
+import '../views/new_parking_page.dart';
 
 class DrawerScreen extends StatelessWidget {
   const DrawerScreen({Key? key}) : super(key: key);
@@ -35,7 +37,17 @@ class DrawerScreen extends StatelessWidget {
                   MaterialPageRoute(builder: (context) => const ListPage()));
             },
           ),
-
+          //Llistat parquings
+          ListTile(
+            leading: const Icon(Icons.abc_sharp),
+            title: const Text(
+              'List parquings general',
+            ),
+            onTap: () {
+              Navigator.of(context).push(
+                  MaterialPageRoute(builder: (context) => const ListParkings()));
+            },
+          ),
           //Main
           ListTile(
             leading: const Icon(Icons.home),
@@ -47,7 +59,7 @@ class DrawerScreen extends StatelessWidget {
                   MaterialPageRoute(builder: (context) => const FirstPage()));
             },
           ),
-          
+
           //Els meus parquings
           ListTile(
             leading: const Icon(Icons.car_rental),
@@ -71,7 +83,7 @@ class DrawerScreen extends StatelessWidget {
                   MaterialPageRoute(builder: (context) => const ListPage()));
             },
           ),
-          
+
           //Els meus preferits
           ListTile(
             leading: const Icon(Icons.favorite_border),
@@ -83,38 +95,17 @@ class DrawerScreen extends StatelessWidget {
                   MaterialPageRoute(builder: (context) => const ListPage()));
             },
           ),
+          ListTile(
+            leading: const Icon(Icons.car_rental_rounded),
+            title: const Text(
+              'Create parking spot',
+            ),
+            onTap: () {
+              Navigator.of(context).push(MaterialPageRoute(
+                  builder: (context) => const NewParkingPage()));
+            },
+          ),
 
-          ListTile(
-            leading: const Icon(Icons.home),
-            title: const Text(
-              'List users',
-            ),
-            onTap: () {
-              Navigator.of(context).push(
-                  MaterialPageRoute(builder: (context) => const ListPage()));
-            },
-          ),
-          ListTile(
-            leading: const Icon(Icons.home),
-            title: const Text(
-              'User Account: Login & Register',
-            ),
-            onTap: () {
-              Navigator.of(context).push(
-                  MaterialPageRoute(builder: (context) => const AccountPage()));
-            },
-          ),
-          
-          ListTile(
-            leading: const Icon(Icons.home),
-            title: const Text(
-              'Update',
-            ),
-            onTap: () {
-              Navigator.of(context).push(
-                  MaterialPageRoute(builder: (context) => const UpdatePage()));
-            },
-          ),
         ],
       ),
     ))));
