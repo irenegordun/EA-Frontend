@@ -4,7 +4,6 @@ import 'package:flutter_front/views/list_page.dart';
 import '../services/userServices.dart';
 
 
-
 class FormWidget extends StatefulWidget {
   const FormWidget({super.key});
 
@@ -102,7 +101,6 @@ class _MyStatefulWidgetState extends State<FormWidget> {
               );
             });
             
-
           }, child: Text ('Submit')),
           // Padding(
           //   padding: const EdgeInsets.symmetric(vertical: 16.0),
