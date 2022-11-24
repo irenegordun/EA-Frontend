@@ -7,6 +7,10 @@ import 'package:flutter_front/widgets/from_update.dart';
 import '../models/user.dart';
 import '../models/parking.dart';
 import 'package:http/http.dart' as http;
+import 'package:jwt_decode/jwt_decode.dart';
+import 'package:jwt_decoder/jwt_decoder.dart';
+import 'package:jaguar_jwt/jaguar_jwt.dart';
+import 'package:dart_jsonwebtoken/dart_jsonwebtoken.dart';
 
 class UserServices extends ChangeNotifier {
   User _userData = new User(
@@ -40,7 +44,7 @@ class UserServices extends ChangeNotifier {
     var response = await client.get(uri);
     if (response.statusCode == 200) {
       var json = response.body;
-      return userFromJson(json);
+      return listuserFromJson(json);
     }
     return null;
   }
@@ -79,6 +83,7 @@ class UserServices extends ChangeNotifier {
     }
   }
 
+
   Future<List<Parking>?> getParkingsOneU(Parking parkingData) async {
     var client = http.Client();
     var id = parkingData.id;
@@ -89,5 +94,27 @@ class UserServices extends ChangeNotifier {
       return parkingFromJson(json);
     }
     return null;
+
+  Future<void> loginUser(User user) async {
+    var client = http.Client();
+    var uri = Uri.parse('http://localhost:5432/api/auth/login');
+    var userJS = json.encode(user.LogintoJson());
+    var response = await client.post(uri,
+        headers: {'content-type': 'application/json'}, body: userJS);
+    if (response.statusCode == 200) {
+      print(response.body.toString());
+      List<String> Resp1 = response.body.toString().split(", ");
+      print(Resp1.last.characters);
+      // final jwtdecode = JWT.verify(Resp1.last, SecretKey('clavesecreta'));
+      // final payload = jwtdecode.payload.toString();
+      // List<String> tros1 = payload.split(', ');
+      // List<String> tros2 = tros1.first.split(': ');
+      // print(tros1.last);
+      // print(tros2.last);
+      print("tot ok");
+    } else {
+      print("contrasenya no valida");
+    }
+
   }
 }
