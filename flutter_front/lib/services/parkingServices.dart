@@ -37,4 +37,15 @@ class ParkingServices extends ChangeNotifier {
     }
     return null;
   }
+
+  Future<void> deleteParking(Parking parking) async {
+    var client = http.Client();
+    var id = parking.id;
+    var uri = Uri.parse('http://localhost:5432/api/parkings/deleted/$id');
+    var response = await client.delete(uri);
+    if (response.statusCode == 200) {
+      return print("deleted");
+    }
+    return null;
+  }
 }

@@ -5,6 +5,7 @@ import 'package:flutter_front/services/userServices.dart';
 import 'package:flutter_front/views/user_info.dart';
 import 'package:flutter_front/widgets/from_update.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_front/services/parkingServices.dart';
 
 import '../models/user.dart';
 import '../models/parking.dart';
@@ -42,6 +43,10 @@ class _MyParkingsPageState extends State<ListMyParkings> {
         isLoaded = true;
       });
     }
+  }
+
+  deleteParking(Parking parking) async {
+    var response = await ParkingServices().deleteParking(parking);
   }
 
   @override
@@ -92,6 +97,14 @@ class _MyParkingsPageState extends State<ListMyParkings> {
                                 builder: (context) => const UserInfo()));
                           },
                         )),
+                        Expanded(
+                          child: IconButton(
+                              icon: const Icon(Icons.delete),
+                              tooltip: 'Delete Paking',
+                              onPressed: () {
+                                deleteParking(parkings![index]);
+                              }),
+                        ),
                       ],
                     )),
               ),
