@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_front/models/user.dart';
 import 'package:flutter_front/services/userServices.dart';
 import 'package:flutter_front/views/login.dart';
 import 'package:provider/provider.dart';
-import '../views/register.dart';
 
 void main() {
   runApp(
@@ -21,8 +19,8 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Register(),
+    return const MaterialApp(
+      home: Login(),
     );
   }
 }

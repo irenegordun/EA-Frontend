@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_front/views/login.dart';
+import '../models/user.dart';
+import '../services/userServices.dart';
 import '../widgets/adaptive_scaffold.dart';
 
 void main() {
@@ -38,7 +40,7 @@ class _RegisterState extends State<Register> {
   }
 }
 
-class LoginForm extends StatelessWidget {
+class LoginForm extends StatefulWidget {
   const LoginForm({
     Key? key,
     required GlobalKey<FormState> formKey,
@@ -46,6 +48,18 @@ class LoginForm extends StatelessWidget {
         super(key: key);
 
   final GlobalKey<FormState> _formKey;
+
+  @override
+  State<LoginForm> createState() => _LoginFormState();
+}
+
+class _LoginFormState extends State<LoginForm> {
+  final nameController = TextEditingController();
+
+  final emailController = TextEditingController();
+
+  final passwordController = TextEditingController();
+  final passwordController2 = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -70,7 +84,7 @@ class LoginForm extends StatelessWidget {
           ),
           const SizedBox(height: 24),
           Form(
-            key: _formKey,
+            key: widget._formKey,
             child: Column(children: [
               TextFormField(
                 decoration: const InputDecoration(
@@ -81,6 +95,13 @@ class LoginForm extends StatelessWidget {
                       padding: EdgeInsets.only(top: 15.0),
                       child: Icon(Icons.perm_identity),
                     )),
+                controller: nameController,
+                validator: (String? value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Please enter some text';
+                  }
+                  return null;
+                },
               ),
               const SizedBox(height: 12),
               TextFormField(
@@ -93,6 +114,13 @@ class LoginForm extends StatelessWidget {
                       padding: EdgeInsets.only(top: 15.0),
                       child: Icon(Icons.email),
                     )),
+                controller: emailController,
+                validator: (String? value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Please enter some text';
+                  }
+                  return null;
+                },
               ),
               const SizedBox(height: 12),
               TextFormField(
@@ -105,6 +133,13 @@ class LoginForm extends StatelessWidget {
                       child: Icon(Icons.lock),
                     )),
                 obscureText: true,
+                controller: passwordController,
+                validator: (String? value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Please enter some text';
+                  }
+                  return null;
+                },
               ),
               const SizedBox(height: 12),
               TextFormField(
@@ -117,15 +152,50 @@ class LoginForm extends StatelessWidget {
                       child: Icon(Icons.lock),
                     )),
                 obscureText: true,
+                controller: passwordController2,
+                validator: (String? value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Please enter some text';
+                  }
+                  return null;
+                },
               )
             ]),
           ),
           const SizedBox(height: 24),
           ElevatedButton(
-            onPressed: () {},
+            onPressed: () {
+              setState(() async {
+                //aquí dona error
+                String formName = nameController.text.toString();
+                print(formName);
+                //print(nameController.text.toString());
+
+                String formEmail = emailController.text.toString();
+                print(formEmail);
+
+                String formPassword = passwordController.text.toString();
+                print(formPassword);
+
+                String formPassword2 = passwordController2.text.toString();
+                print(formPassword2);
+
+                if (formPassword == formPassword2) {
+                  var user = User(
+                      name: formName,
+                      id: "",
+                      password: formPassword,
+                      email: formEmail);
+                  await UserServices().createUser(user);
+                  Navigator.of(context).push(
+                      MaterialPageRoute(builder: (context) => const Login()));
+                } else {}
+              });
+            },
             style: ElevatedButton.styleFrom(
               elevation: 0,
               minimumSize: const Size(1024, 60),
+              backgroundColor: const Color.fromARGB(249, 244, 17, 13),
             ),
             child: const Text(
               'Register',
