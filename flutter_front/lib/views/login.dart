@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_front/views/listParkings_page.dart';
 import 'package:flutter_front/views/register.dart';
 import '../widgets/adaptive_scaffold.dart';
 import '../models/user.dart';
@@ -164,8 +165,8 @@ class _LoginFormState extends State<LoginForm> {
                     password: formPassword,
                     email: formEmail);
                 await UserServices().loginUser(user);
-                Navigator.of(context).push(
-                    MaterialPageRoute(builder: (context) => const ListPage()));
+                Navigator.of(context).push(MaterialPageRoute(
+                    builder: (context) => const ListParkings()));
               });
             },
             style: ElevatedButton.styleFrom(

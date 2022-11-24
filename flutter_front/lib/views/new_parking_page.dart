@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_front/widgets/drawer.dart';
 
 import '../widgets/form_parking.dart';
 
@@ -11,6 +12,7 @@ class NewParkingPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
+        drawer: const DrawerScreen(),
         appBar: AppBar(
           title: const Text("Aparca'm - Create new parking spot"),
           backgroundColor: Colors.deepPurple[300],
