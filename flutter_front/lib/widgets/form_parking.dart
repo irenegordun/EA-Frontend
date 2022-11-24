@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_front/models/parking.dart';
 import 'package:flutter_front/views/list_page.dart';
 import '../services/parkingServices.dart';
-import 'package:jaguar_jwt/jaguar_jwt.dart';
 import 'package:dart_jsonwebtoken/dart_jsonwebtoken.dart';
 
 class FormWidget extends StatefulWidget {
@@ -195,38 +193,7 @@ class _MyStatefulWidgetState extends State<FormWidget> {
                   String formDifficulty = difficultyController.text.toString();
                   print(formDifficulty);
 
-                  var parking = Parking(
-                    email: "alba@upc.com", // falta passar user actiu
-                    id: "",
-                    score: 0,
-                    country: formCountry,
-                    city: formCity,
-                    street: formStreet,
-                    streetNumber: formNumber,
-                    spotNumber: formSpot, // hauria de ser Number
-                    type: formType,
-                    price: formPrice, // hauria de ser Number
-                    size: formSize,
-                    difficulty: formDifficulty, // hauria de ser number
-                  );
-
                   const String secret = 'clavesecreta';
-                  final claimSet = JwtClaim(payload: {
-                    "user_id": "635d673ac3000ee9ca34e98e",
-                    "email": "alba@upc.com",
-                    "score": 0,
-                    "country": formCountry,
-                    "city": formCity,
-                    "street": formStreet,
-                    "streetNumber": formNumber,
-                    "spotNumber": formSpot,
-                    "type": formType,
-                    "price": formPrice,
-                    "size": formSize,
-                    "difficulty": formDifficulty
-                  });
-                  final String token = issueJwtHS256(claimSet, secret);
-                  print(token);
 
                   final jwt = JWT({
                     "user_id": "635d673ac3000ee9ca34e98e",
@@ -243,9 +210,24 @@ class _MyStatefulWidgetState extends State<FormWidget> {
                     "difficulty": formDifficulty
                   });
 
-                  var token2 = jwt.sign(SecretKey(secret));
+                  // // TRY DECODE PER L'AIDA
+                  // String tokenAida =
+                  //     "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzNmNlNmUxMTE4Mjk4MDgwNzdkMGM1YiIsImVtYWlsIjoiYWx2YXJvQGdtYWlsLmNvbSIsImlhdCI6MTY2OTI4MTQ0MCwiZXhwIjoxNjY5MzY3ODQwfQ.nAASTme9N3WACld05OicwfKQ5-luHaTekr3q-aozAJM";
+                  // try {
+                  //   final jwtdecode =
+                  //       JWT.verify(tokenAida, SecretKey('clavesecreta'));
+                  //   print('PAYLOAD: ${jwtdecode.payload}');
+                  //   final payload = jwtdecode.payload.toString();
+                  //   print('PAYLOAD STRING: ${payload}');
+                  //   //var info = json.decode(payload);
+                  //   print('INFO UTIL: ');
+                  // } on JWTError catch (ex) {
+                  //   print(ex.message);
+                  // }
 
-                  ParkingServices().createParking(token2);
+                  var token = jwt.sign(SecretKey(secret));
+
+                  ParkingServices().createParking(token);
                   setState(() {
                     Navigator.of(context).push(MaterialPageRoute(
                         builder: (context) => const ListPage()));

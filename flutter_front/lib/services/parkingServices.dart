@@ -1,11 +1,10 @@
-import 'dart:convert';
 import 'package:flutter/material.dart';
 import '../models/parking.dart';
 import 'package:http/http.dart' as http;
 
 class ParkingServices extends ChangeNotifier {
   Parking _parkingData = Parking(
-      email: "",
+      //email: "",
       country: "",
       city: "",
       street: "",
