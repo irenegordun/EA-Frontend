@@ -66,9 +66,18 @@ class UserServices extends ChangeNotifier {
     var response = await client.post(uri,
         headers: {'content-type': 'application/json'}, body: userJS);
     if (response.statusCode == 200) {
-      var json = response.body;
-      Map<String, dynamic> decodedToken = JwtDecoder.decode(json);
-      user.id = decodedToken["id"];
+      print(response.body.toString());
+      List<String> Resp1 = response.body.toString().split(", ");
+      print(Resp1.last.characters);
+      // final jwtdecode = JWT.verify(Resp1.last, SecretKey('clavesecreta'));
+      // final payload = jwtdecode.payload.toString();
+      // List<String> tros1 = payload.split(', ');
+      // List<String> tros2 = tros1.first.split(': ');
+      // print(tros1.last);
+      // print(tros2.last);
+      print("tot ok");
+    } else {
+      print("contrasenya no valida");
     }
   }
 }
