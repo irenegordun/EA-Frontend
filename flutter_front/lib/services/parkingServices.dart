@@ -8,13 +8,13 @@ class ParkingServices extends ChangeNotifier {
       country: "",
       city: "",
       street: "",
-      streetNumber: "",
-      spotNumber: "",
+      streetNumber: 0,
+      spotNumber: 0,
       type: "",
-      price: "",
+      price: 0,
       size: "",
-      difficulty: "",
-      score: 0,
+      difficulty: 0,
+      //score: 0,
       id: "");
 
   Parking get parkingData => _parkingData;

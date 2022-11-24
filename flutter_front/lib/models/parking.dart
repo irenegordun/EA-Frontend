@@ -20,7 +20,7 @@ class Parking {
     required this.price,
     required this.size,
     required this.difficulty,
-    required this.score,
+    //required this.score,
     required this.id,
   });
 
@@ -29,13 +29,13 @@ class Parking {
   String country;
   String city;
   String street;
-  String streetNumber;
-  String spotNumber;
+  int streetNumber;
+  int spotNumber;
   String type;
-  String price;
+  int price;
   String size;
-  String difficulty;
-  int score;
+  int difficulty;
+  //int score;
   String id;
 
   factory Parking.fromJson(Map<String, dynamic> json) => Parking(
@@ -51,7 +51,7 @@ class Parking {
         price: json["price"],
         size: json["size"],
         difficulty: json["difficulty"],
-        score: json["score"],
+        //score: json["score"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -65,7 +65,7 @@ class Parking {
         "type": type,
         "price": price,
         "size": size,
-        "difficuty": difficulty,
-        "score": score,
+        "difficulty": difficulty,
+        //"score": score,
       };
 }
