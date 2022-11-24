@@ -2,12 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_front/services/userServices.dart';
 import 'package:flutter_front/views/new_parking_page.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_front/services/parkingServices.dart';
 
 void main() {
   runApp(
     MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => UserServices()),
+        ChangeNotifierProvider(create: (_) => ParkingServices()),
       ],
       child: const MyApp(),
     ),
