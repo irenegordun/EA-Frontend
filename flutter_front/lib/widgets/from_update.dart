@@ -1,3 +1,5 @@
+//import 'dart:ffi';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_front/services/userServices.dart';
 
@@ -14,9 +16,18 @@ String name = "h";
 String email = "h";
 String newpass = "h";
 
-updateU(String name, email, newpass) async {
-  var user = User(name: name, id: "", password: newpass, email: email);
-  bool res = await UserServices().updateUser(user);
+updateU(
+  String name,
+  email,
+  newpass,
+) async {
+  var user = User(
+    id: "637eb539897f189262001c87",
+    name: name,
+    password: newpass,
+    email: email,
+  );
+  var res = await UserServices().updateUser(user);
   if (res == true) {
     return true;
   } else {
@@ -79,8 +90,12 @@ class _MyStatefulWidgetState extends State<FormWidgetUpdate> {
                 if (_formKey.currentState!.validate()) {
                   const SnackBar(content: Text('Processing Data'));
                   if (name != 'h' && email != 'h' && newpass != 'h') {
-                    bool res = updateU(name, email, newpass) as bool;
-                    if (res == false) {
+                    var res = updateU(
+                      name,
+                      email,
+                      newpass,
+                    );
+                    if (res == null) {
                       ElevatedButton.styleFrom(
                           backgroundColor: Color.fromARGB(255, 255, 0, 0));
                     } else {
@@ -90,7 +105,16 @@ class _MyStatefulWidgetState extends State<FormWidgetUpdate> {
                   }
                 }
               },
-              child: const Text('Update'),
+              child: IconButton(
+                  icon: const Icon(Icons.update),
+                  tooltip: 'Update',
+                  onPressed: () {
+                    updateU(
+                      name,
+                      email,
+                      newpass,
+                    );
+                  }),
             ),
           ),
         ],

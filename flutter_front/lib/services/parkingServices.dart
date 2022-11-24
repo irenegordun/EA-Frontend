@@ -34,6 +34,16 @@ class ParkingServices extends ChangeNotifier {
     return null;
   }
 
+  Future<void> deleteParking(Parking parking) async {
+    var client = http.Client();
+    var id = parking.id;
+    var uri = Uri.parse('http://localhost:5432/api/parkings/deleted/$id');
+    var response = await client.delete(uri);
+    if (response.statusCode == 200) {
+      return print("deleted");
+    }
+    return null;
+
   //Future<void> createParking(Parking parking) async {
   Future<void> createParking(String token) async {
     var client = http.Client();
@@ -42,5 +52,6 @@ class ParkingServices extends ChangeNotifier {
     await client.post(uri,
         //headers: {'content-type': 'application/json'}, body: parkingJS);
         headers: {'x-access-token': token});
+
   }
 }

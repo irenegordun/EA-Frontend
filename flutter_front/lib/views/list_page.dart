@@ -2,10 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_front/services/userServices.dart';
 import 'package:flutter_front/views/first_page.dart';
 import 'package:flutter_front/views/user_info.dart';
+import 'package:flutter_front/views/update_page.dart';
+import 'package:http/http.dart';
 import 'package:provider/provider.dart';
 
 import '../models/user.dart';
 import '../widgets/drawer.dart';
+
+void main() => runApp(const ListPage());
 
 class ListPage extends StatefulWidget {
   const ListPage({super.key});
@@ -16,7 +20,7 @@ class ListPage extends StatefulWidget {
 
 class _HomePageState extends State<ListPage> {
   List<User>? users;
-  var isLoaded = false;
+  var isLoaded = true;
   @override
   void initState() {
     super.initState();
@@ -32,16 +36,9 @@ class _HomePageState extends State<ListPage> {
     }
   }
 
-  deleteU(String name) async {
-    await UserServices().deleteUsers(name);
-  }
-
-
   @override
   Widget build(BuildContext context) {
-
-      UserServices _userprovider = Provider.of<UserServices>(context);
-
+    UserServices _userprovider = Provider.of<UserServices>(context);
 
     return Scaffold(
       drawer: const DrawerScreen(),
@@ -71,7 +68,7 @@ class _HomePageState extends State<ListPage> {
                             icon: const Icon(Icons.article),
                             onPressed: () {
                               showDialogFunc(context, users![index].name,
-                              users![index].email, users![index].id);
+                                  users![index].email, users![index].id);
                             },
                             tooltip: 'Details',
                           ),
@@ -88,25 +85,23 @@ class _HomePageState extends State<ListPage> {
                         ),
                         Expanded(
                             child: IconButton(
-                          icon: const Icon(Icons.delete),
-                          tooltip: 'Delete',
-                          onPressed: () {
-                            deleteU(users![index].name.toString());
-                            setState(() {
-                              users!.removeAt(index);
-                            });
-                          },
-                        )),
+                                icon: const Icon(Icons.info_outline),
+                                tooltip: 'More Info',
+                                onPressed: () {
+                                  _userprovider.setUserData(users![index]);
+                                  Navigator.of(context).push(MaterialPageRoute(
+                                      builder: (context) => const UserInfo()));
+                                })),
                         Expanded(
                             child: IconButton(
-                          icon: const Icon(Icons.info_outline),
-                          tooltip: 'More Info',
-                          onPressed: () {
-                             _userprovider.setUserData(users![index]);
-                              Navigator.of(context).push(MaterialPageRoute(
-                                  builder: (context) => const UserInfo()));
-                          },
-                        )),
+                                icon: const Icon(Icons.update),
+                                tooltip: 'Update',
+                                onPressed: () {
+                                  _userprovider.setUserData(users![index]);
+                                  Navigator.of(context).push(MaterialPageRoute(
+                                      builder: (context) =>
+                                          const UpdatePage()));
+                                })),
                       ],
                     )),
               ),

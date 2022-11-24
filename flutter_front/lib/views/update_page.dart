@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_front/widgets/drawer.dart';
-
+import '../models/user.dart';
 import '../widgets/from_update.dart';
 
 void main() => runApp(const UpdatePage());

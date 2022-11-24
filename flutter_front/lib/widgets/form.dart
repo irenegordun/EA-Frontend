@@ -3,7 +3,6 @@ import 'package:flutter_front/models/user.dart';
 import 'package:flutter_front/views/list_page.dart';
 import '../services/userServices.dart';
 
-
 class FormWidget extends StatefulWidget {
   const FormWidget({super.key});
 
@@ -19,8 +18,6 @@ class _MyStatefulWidgetState extends State<FormWidget> {
   final nameController = TextEditingController();
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
-
-
 
   final GlobalKey<FormState> _formKey =
       GlobalKey<FormState>(); // Permet accedir al form desde qualseevol lloc
@@ -73,7 +70,6 @@ class _MyStatefulWidgetState extends State<FormWidget> {
                 hintText: 'Enter your password',
               ),
               controller: passwordController,
-
               validator: (String? value) {
                 if (value == null || value.isEmpty) {
                   return 'Please enter some text';
@@ -82,6 +78,7 @@ class _MyStatefulWidgetState extends State<FormWidget> {
               },
             ),
           ),
+
           TextButton(onPressed: (){
             setState (() async { //aquí dona error
               String formName = nameController.text.toString();
@@ -94,7 +91,12 @@ class _MyStatefulWidgetState extends State<FormWidget> {
               String formPassword = passwordController.text.toString();
               print(formPassword);
 
-              var user = User(name: formName, id: "", password: formPassword, email: formEmail);
+              var user = User(
+                name: formName, 
+                id: "", 
+                password: 
+                formPassword, 
+                email: formEmail);
               await UserServices().createUser(user);
               Navigator.of(context).push(
                 MaterialPageRoute(builder: (context) => const ListPage())
@@ -117,8 +119,6 @@ class _MyStatefulWidgetState extends State<FormWidget> {
           // ),
         ],
       ),
-          
-
     );
   }
 }

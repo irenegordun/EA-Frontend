@@ -29,6 +29,7 @@ class Parking {
   String country;
   String city;
   String street;
+
   int streetNumber;
   int spotNumber;
   String type;
