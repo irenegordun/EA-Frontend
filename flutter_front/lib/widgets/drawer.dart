@@ -4,6 +4,8 @@ import 'package:flutter_front/views/list_page.dart';
 import 'package:flutter_front/views/listParkings_page.dart';
 
 
+import '../views/new_parking_page.dart';
+
 class DrawerScreen extends StatelessWidget {
   const DrawerScreen({Key? key}) : super(key: key);
 
@@ -81,7 +83,7 @@ class DrawerScreen extends StatelessWidget {
                   MaterialPageRoute(builder: (context) => const ListPage()));
             },
           ),
-          
+
           //Els meus preferits
           ListTile(
             leading: const Icon(Icons.favorite_border),
@@ -93,7 +95,17 @@ class DrawerScreen extends StatelessWidget {
                   MaterialPageRoute(builder: (context) => const ListPage()));
             },
           ),
-          
+          ListTile(
+            leading: const Icon(Icons.car_rental_rounded),
+            title: const Text(
+              'Create parking spot',
+            ),
+            onTap: () {
+              Navigator.of(context).push(MaterialPageRoute(
+                  builder: (context) => const NewParkingPage()));
+            },
+          ),
+
         ],
       ),
     ))));
