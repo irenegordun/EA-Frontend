@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_front/services/parkingServices.dart';
-import 'package:flutter_front/views/user_info.dart';
+import 'package:flutter_front/views/infoParking.dart';
 import 'package:provider/provider.dart';
 
 import '../models/parking.dart';
@@ -35,13 +35,13 @@ class _ListParkingsState extends State<ListParkings> {
   }
   @override
   Widget build(BuildContext context) {
-    
+
     ParkingServices _parkingprovider = Provider.of<ParkingServices>(context);
 
     return Scaffold(
       drawer: const DrawerScreen(),
       appBar: AppBar(
-        title: const Text('Seminari 10 Fluter LLISTAT PARKINGS'),
+        title: const Text('LLISTAT PARKINGS'),
         backgroundColor: Colors.deepPurple[300],
       ),
       body: Visibility(
@@ -55,8 +55,8 @@ class _ListParkingsState extends State<ListParkings> {
             return Card(
               color: Colors.deepPurple[100],
               child: ListTile(
-                title: Text(parkings![index].price),
-                subtitle: Text(parkings![index].user),
+                title: Text(parkings![index].city),
+                subtitle: Text(parkings![index].street),
                 //falten altres camps
                 trailing: SizedBox(
                     width: 120,
@@ -79,7 +79,7 @@ class _ListParkingsState extends State<ListParkings> {
                           onPressed: () {
                              _parkingprovider.setParkingData(parkings![index]);
                               Navigator.of(context).push(MaterialPageRoute(
-                                  builder: (context) => const UserInfo()));
+                                  builder: (context) => const ParkingInfo()));
                           },
                         )),   
                       ],

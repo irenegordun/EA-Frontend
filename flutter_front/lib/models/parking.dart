@@ -23,67 +23,71 @@ import 'dart:convert';
 
 List<Parking> parkingFromJson(String str) =>
     List<Parking>.from(json.decode(str).map((x) => Parking.fromJson(x)));
-
+//o no passa ve la x 
 String parkingToJson(List<Parking> data) =>
     json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
 
 class Parking {
   Parking({
-    required this.user,
+    //required this.user,
     //required this.opinions,
-    //required this.email,
+    //required this.email,//no esta en la llista
     required this.country,
     required this.city,
     required this.street,
+    //required this.streetNumber,
     required this.spotNumber,
     required this.type,
     required this.price,
     required this.size,
     required this.difficulty,
-    required this.score,
+    //required this.score,
     required this.id,
   });
 
-  String user;
+  //String user;
   //String email;
   String country;
   String city;
   String street;
-  String spotNumber;
+  //int streetNumber; //NO QUADRA!! I MIRAR SCORE 
+  int spotNumber;
   String type;
-  String price;
+  int price;
   String size;
   int difficulty;
-  int score;
-  String id;
+  //int score;
+  String id; 
 
   factory Parking.fromJson(Map<String, dynamic> json) => Parking(
     id: json["_id"],
-    user: json["user"],
+    //user: json["user"],
     //email: json["email"],
     country: json["country"],
     city: json["city"],
     street: json["street"],
+    //streetNumber: json["streetNumber"], //!!
     spotNumber: json["spotNumber"],
     type: json["type"],
     price: json["price"],
     size: json["size"],
     difficulty: json["difficulty"],
-    score: json["score"],
+    //score: json["score"], //!!! ACABAR D'ARREGLAR!!
   );
 
   Map<String, dynamic> toJson() => {
     "_id": id,
-    "user": user,
+    //"email": email,
     "country": country,
     "city": city,
     "street": street,
+    //"streetNumber": streetNumber, //!!
     "spotNumber": spotNumber,
     "type": type,
     "price": price,
     "size": size,
     "difficuty": difficulty,
-    "score": score,
+    //"score": score, //!!
     
   };
 

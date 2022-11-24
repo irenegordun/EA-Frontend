@@ -2,8 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_front/views/first_page.dart';
 import 'package:flutter_front/views/list_page.dart';
 import 'package:flutter_front/views/listParkings_page.dart';
-import 'package:flutter_front/views/account_page.dart';
-import 'package:flutter_front/views/update_page.dart';
+
 
 class DrawerScreen extends StatelessWidget {
   const DrawerScreen({Key? key}) : super(key: key);

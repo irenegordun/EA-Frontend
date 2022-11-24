@@ -4,11 +4,10 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 
 import '../models/parking.dart';
-import '../models/user.dart';
 import 'package:http/http.dart' as http;
 
 class ParkingServices extends ChangeNotifier {
-  Parking _parkingData = new Parking(user:"",country:"",city: "",street: "",spotNumber:"", type:"", price:"", size: "", difficulty: 0 , score: 0, id:"");
+  Parking _parkingData = new Parking(country:"",city: "",street: "",spotNumber:0, type:"", price: 0, size: "", difficulty: 0, id:"");
 
   Parking get parkingData => _parkingData;
 
