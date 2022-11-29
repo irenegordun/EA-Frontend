@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_front/models/user.dart';
-import 'package:flutter_front/views/list_page.dart';
 import '../services/userServices.dart';
 
 class FormWidget extends StatefulWidget {
@@ -98,9 +97,9 @@ class _MyStatefulWidgetState extends State<FormWidget> {
                 formPassword, 
                 email: formEmail);
               await UserServices().createUser(user);
-              Navigator.of(context).push(
-                MaterialPageRoute(builder: (context) => const ListPage())
-              );
+              //Navigator.of(context).push(
+              //  MaterialPageRoute(builder: (context) => const ListPage())
+              //);
             });
             
           }, child: Text ('Submit')),

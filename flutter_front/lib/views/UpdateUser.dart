@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_front/widgets/drawer.dart';
 import '../models/user.dart';
-import '../widgets/from_update.dart';
+import '../widgets/form_updateUser.dart';
 
 void main() => runApp(const UpdatePage());
 
@@ -15,7 +15,7 @@ class UpdatePage extends StatelessWidget {
         drawer: const DrawerScreen(),
         appBar: AppBar(
             title: const Text("Update User"),
-            backgroundColor: Colors.deepPurple[300]),
+            backgroundColor: Colors.blueGrey),
         body: const FormWidgetUpdate(), //cridar
       ),
     );

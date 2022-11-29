@@ -16,7 +16,9 @@ class ParkingInfo extends StatefulWidget {
 }
 
 class _ParkingInfoState extends State<ParkingInfo> {
-  static final showCard = true;
+  var isLoaded = false;
+
+  
   
   @override
   Widget build(BuildContext context) {
@@ -25,17 +27,18 @@ class _ParkingInfoState extends State<ParkingInfo> {
 
   return Scaffold(
     drawer: const DrawerScreen(),
+    
       appBar: AppBar(
-        title: const Text('INFO PARKING'),
-        backgroundColor: Colors.deepPurple[300],
+        //title: const Text('INFO PARKING'),
+        
+        backgroundColor: Colors.blueGrey,
       ),
-      body: Center(child: showCard ? _buildCard() : _buildStack()),
+      body: Center(child:     
+      _buildCard(_parkingprovider.parkingData) ),
      );   
   }
 
-  Widget _buildCard() => SizedBox(
-     
-     //ParkingServices _parkingprovider = Provider.of<ParkingServices>(context),
+  Widget _buildCard(Parking parking) => SizedBox(
 
       height: 330,
       child: Card(
@@ -44,7 +47,7 @@ class _ParkingInfoState extends State<ParkingInfo> {
             ListTile(
               title: Text('Direction',
                   style: TextStyle(fontWeight: FontWeight.w500)),
-              subtitle: Text('c/ ...'),
+              subtitle: Text(parking.city),
               leading: Icon(
                 Icons.where_to_vote_outlined,
                 color: Colors.blue[500],
@@ -93,26 +96,5 @@ class _ParkingInfoState extends State<ParkingInfo> {
     );
 
 
-    Widget _buildStack() => Stack(
-      alignment: const Alignment(0.6, 0.6),
-      children: [
-        CircleAvatar(
-          backgroundImage: AssetImage('assets/image1.jpg'),
-          radius: 100,
-        ),
-        Container(
-          decoration: BoxDecoration(
-            color: Colors.black45,
-          ),
-          child: Text(
-            'Aparcam',
-            style: TextStyle(
-              fontSize: 20,
-              fontWeight: FontWeight.bold,
-              color: Colors.white,
-            ),
-          ),
-        ),
-      ],
-    );
+    
 }

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../widgets/form.dart';
+import '../widgets/form_user.dart';
 
 void main() => runApp(const AccountPage());
 
@@ -13,7 +13,7 @@ class AccountPage extends StatelessWidget {
       home: Scaffold(
           appBar: AppBar(
           title: const Text("EA - Flutter Form"),
-          backgroundColor: Colors.deepPurple[300], 
+          backgroundColor: Colors.blueGrey, 
           ),
         body: const FormWidget(),
       ),

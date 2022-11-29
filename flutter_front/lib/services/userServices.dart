@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_front/widgets/from_update.dart';
+import 'package:flutter_front/widgets/form_updateUser.dart';
 
 import '../models/user.dart';
 import '../models/parking.dart';

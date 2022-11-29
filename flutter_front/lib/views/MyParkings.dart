@@ -2,15 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_front/services/userServices.dart';
-import 'package:flutter_front/views/user_info.dart';
-import 'package:flutter_front/widgets/from_update.dart';
+import 'package:flutter_front/views/UserInfo.dart';
+import 'package:flutter_front/widgets/form_updateUser.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_front/services/parkingServices.dart';
 
 import '../models/user.dart';
 import '../models/parking.dart';
 import '../widgets/drawer.dart';
-import 'first_page.dart';
 
 class ListMyParkings extends StatefulWidget {
   const ListMyParkings({super.key});
@@ -57,7 +56,7 @@ class _MyParkingsPageState extends State<ListMyParkings> {
       drawer: const DrawerScreen(),
       appBar: AppBar(
         title: const Text('Els meus Parkings'),
-        backgroundColor: Colors.deepPurple[300],
+        backgroundColor: Colors.blueGrey,
       ),
       body: Visibility(
         visible: isLoaded,
@@ -68,7 +67,7 @@ class _MyParkingsPageState extends State<ListMyParkings> {
           itemCount: parkings?.length,
           itemBuilder: (context, index) {
             return Card(
-              color: Colors.deepPurple[100],
+              color: Color.fromARGB(255, 144, 180, 199),
               child: ListTile(
                 title: Text(parkings![index].city),
                 subtitle: Text(parkings![index].street),
@@ -83,7 +82,7 @@ class _MyParkingsPageState extends State<ListMyParkings> {
                             tooltip: 'Main',
                             onPressed: () {
                               Navigator.of(context).push(MaterialPageRoute(
-                                  builder: (context) => const FirstPage()));
+                                  builder: (context) => const UserInfo()));
                             },
                           ),
                         ),

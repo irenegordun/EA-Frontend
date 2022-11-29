@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_front/views/first_page.dart';
-import 'package:flutter_front/views/list_page.dart';
-import 'package:flutter_front/views/listParkings_page.dart';
-import 'package:flutter_front/views/parkingsList_MyUser.dart';
-import 'package:flutter_front/views/user_info.dart';
+import 'package:flutter_front/views/ListParkings.dart';
+import 'package:flutter_front/views/MyParkings.dart';
+import 'package:flutter_front/views/UserInfo.dart';
 
-import '../views/new_parking_page.dart';
+import '../views/NewParking.dart';
 
 class DrawerScreen extends StatelessWidget {
   const DrawerScreen({Key? key}) : super(key: key);
@@ -49,17 +47,6 @@ class DrawerScreen extends StatelessWidget {
                   builder: (context) => const ListParkings()));
             },
           ),
-          //Main
-          ListTile(
-            leading: const Icon(Icons.home),
-            title: const Text(
-              'Main',
-            ),
-            onTap: () {
-              Navigator.of(context).push(
-                  MaterialPageRoute(builder: (context) => const FirstPage()));
-            },
-          ),
 
           //Els meus parquings
           ListTile(
@@ -76,13 +63,7 @@ class DrawerScreen extends StatelessWidget {
           //Les meves reserves
           ListTile(
             leading: const Icon(Icons.bookmark_outline),
-            title: const Text(
-              'My bookings',
-            ),
-            onTap: () {
-              Navigator.of(context).push(
-                  MaterialPageRoute(builder: (context) => const ListPage()));
-            },
+            title: const Text('My bookings'),
           ),
 
           //Els meus preferits
@@ -91,10 +72,6 @@ class DrawerScreen extends StatelessWidget {
             title: const Text(
               'My favourites',
             ),
-            onTap: () {
-              Navigator.of(context).push(
-                  MaterialPageRoute(builder: (context) => const ListPage()));
-            },
           ),
           ListTile(
             leading: const Icon(Icons.car_rental_rounded),
