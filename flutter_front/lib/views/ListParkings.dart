@@ -45,13 +45,28 @@ class _ListParkingsState extends State<ListParkings> {
         title: const Text('LLISTAT PARKINGS'),
         backgroundColor: Colors.blueGrey,
       ),
-      body: Visibility(
-        visible: isLoaded,
-        replacement: const Center(
-          child: CircularProgressIndicator(),
-        ),
-        
-        child: ListView.builder(
+      body: Column(
+        children: <Widget>[
+          Card(
+              //color: Color.fromARGB(255, 0, 0, 0),
+              child: Wrap(
+                spacing: 3,
+                children: [ 
+                  Chip(
+                    label: Text("Moto"),
+                    onDeleted: (){},
+                  ),
+                  Chip(
+                    label: Text("Cotxe"),
+                    onDeleted: (){},
+                  ),
+                  
+                ],
+              )
+              
+          ),
+          Expanded(
+            child: ListView.builder(
           itemCount: parkings?.length,
           itemBuilder: (context, index) {
             return Card(
@@ -59,7 +74,6 @@ class _ListParkingsState extends State<ListParkings> {
               child: ListTile(
                 title: Text(parkings![index].city),
                 subtitle: Text(parkings![index].street),
-                //falten altres camps
                 trailing: SizedBox(
                     width: 120,
                     child: Row(
@@ -90,6 +104,9 @@ class _ListParkingsState extends State<ListParkings> {
             );
           },
         ),
+            
+        ),
+        ],      
       ),
     );
   }
