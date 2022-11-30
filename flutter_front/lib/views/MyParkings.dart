@@ -9,6 +9,7 @@ import 'package:flutter_front/services/parkingServices.dart';
 
 import '../models/user.dart';
 import '../models/parking.dart';
+import '../widgets/buttonAccessibility.dart';
 import '../widgets/drawer.dart';
 
 class ListMyParkings extends StatefulWidget {
@@ -54,6 +55,8 @@ class _MyParkingsPageState extends State<ListMyParkings> {
 
     return Scaffold(
       drawer: const DrawerScreen(),
+      floatingActionButton :const AccessibilityButton(),
+
       appBar: AppBar(
         title: const Text('Els meus Parkings'),
         backgroundColor: Colors.blueGrey,

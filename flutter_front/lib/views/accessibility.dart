@@ -14,9 +14,9 @@ class _AccessibilitytState extends State<Accessibility> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.blueGrey,
       appBar: AppBar(
         title: Text('Accessibility'),
+        backgroundColor: Colors.blueGrey,
       ),
       body: Center(
         child: Card(
@@ -27,7 +27,7 @@ class _AccessibilitytState extends State<Accessibility> {
               SwitchListTile(
                 title: Text('Dark mode'),
                 value: _darkmode,
-                activeColor: Colors.blue,
+                activeColor: Colors.blueGrey,
                 inactiveTrackColor: Colors.grey,
                 onChanged: (bool value) {
                   setState(() {

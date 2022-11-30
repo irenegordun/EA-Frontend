@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_front/services/userServices.dart';
+import 'package:flutter_front/widgets/buttonAccessibility.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_front/views/UpdateUser.dart';
 import 'package:flutter_front/views/MyParkings.dart';
@@ -24,6 +25,8 @@ class _UserPageState extends State<UserInfo> {
 
     return Scaffold(
       drawer: const DrawerScreen(),
+      floatingActionButton :const AccessibilityButton(),
+
       appBar: AppBar(
         title: const Text('Profile'),
         backgroundColor: Colors.blueGrey,
