@@ -3,6 +3,8 @@ import 'package:flutter/src/widgets/framework.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_front/services/parkingServices.dart';
+import 'package:flutter_front/views/accessibility.dart';
+import 'package:flutter_front/widgets/buttonAccessibility.dart';
 import 'package:provider/provider.dart';
 import '../models/parking.dart';
 import '../widgets/drawer.dart';
@@ -16,7 +18,8 @@ class ParkingInfo extends StatefulWidget {
 }
 
 class _ParkingInfoState extends State<ParkingInfo> {
-  static final showCard = true;
+  var isLoaded = false;
+
   
   @override
   Widget build(BuildContext context) {
@@ -25,26 +28,27 @@ class _ParkingInfoState extends State<ParkingInfo> {
 
   return Scaffold(
     drawer: const DrawerScreen(),
+
       appBar: AppBar(
         title: const Text('INFO PARKING'),
-        backgroundColor: Colors.deepPurple[300],
+        
+        backgroundColor: Colors.blueGrey,
       ),
-      body: Center(child: showCard ? _buildCard() : _buildStack()),
+      body: Center(
+        child:  _buildCard(_parkingprovider.parkingData) ),
      );   
   }
 
-  Widget _buildCard() => SizedBox(
-     
-     //ParkingServices _parkingprovider = Provider.of<ParkingServices>(context),
+  Widget _buildCard(Parking parking) => SizedBox(
 
-      height: 330,
+      height: 600,
       child: Card(
         child: Column(
           children: [
             ListTile(
               title: Text('Direction',
                   style: TextStyle(fontWeight: FontWeight.w500)),
-              subtitle: Text('c/ ...'),
+              subtitle: Text(parking.city + ' ,' +parking.country + ' ,' + parking.street + ' ,' /*+ parking.spotNumber*/),
               leading: Icon(
                 Icons.where_to_vote_outlined,
                 color: Colors.blue[500],
@@ -61,6 +65,7 @@ class _ParkingInfoState extends State<ParkingInfo> {
             ),
             ListTile(
               title: Text('Price'),
+              //subtitle: Text(parking.price),
               leading: Icon(
                 Icons.attach_money_outlined,
                 color: Colors.blue[500],
@@ -68,6 +73,7 @@ class _ParkingInfoState extends State<ParkingInfo> {
             ),
             ListTile(
               title: Text('Type'),
+              subtitle: Text(parking.type),
               leading: Icon(
                 Icons.two_wheeler,
                 color: Colors.blue[500],
@@ -75,6 +81,7 @@ class _ParkingInfoState extends State<ParkingInfo> {
             ),
             ListTile(
               title: Text('Size'),
+              subtitle: Text(parking.size),
               leading: Icon(
                 Icons.aspect_ratio_outlined,
                 color: Colors.blue[500],
@@ -87,32 +94,23 @@ class _ParkingInfoState extends State<ParkingInfo> {
                 color: Colors.blue[500],
               ),
             ),
+            ListTile(
+              contentPadding: EdgeInsets.zero,
+              leading: IconButton(
+                  icon: Icon(Icons.check_circle),
+                onPressed: () => print('select'),
+              ),
+              title: Text('BOOK'),
+              trailing: Icon(
+                  Icons.arrow_forward_ios,
+              ),
+              onTap: () => print('on tap')              
+            ),
           ],
         ),
       ),
     );
 
 
-    Widget _buildStack() => Stack(
-      alignment: const Alignment(0.6, 0.6),
-      children: [
-        CircleAvatar(
-          backgroundImage: AssetImage('assets/image1.jpg'),
-          radius: 100,
-        ),
-        Container(
-          decoration: BoxDecoration(
-            color: Colors.black45,
-          ),
-          child: Text(
-            'Aparcam',
-            style: TextStyle(
-              fontSize: 20,
-              fontWeight: FontWeight.bold,
-              color: Colors.white,
-            ),
-          ),
-        ),
-      ],
-    );
+    
 }

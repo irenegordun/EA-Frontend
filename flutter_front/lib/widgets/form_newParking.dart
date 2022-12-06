@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_front/views/list_page.dart';
+import 'package:flutter_front/views/ListParkings.dart';
 import '../services/parkingServices.dart';
 import 'package:dart_jsonwebtoken/dart_jsonwebtoken.dart';
 
@@ -196,8 +196,8 @@ class _MyStatefulWidgetState extends State<FormWidget> {
                   const String secret = 'clavesecreta';
 
                   final jwt = JWT({
-                    "user_id": "635d673ac3000ee9ca34e98e",
-                    "email": "alba@upc.com",
+                    "user_id": "6346e161fe62edf290bd2ee1",
+                    "email": "ferran@gmail.com",
                     "score": 0,
                     "country": formCountry,
                     "city": formCity,
@@ -230,7 +230,7 @@ class _MyStatefulWidgetState extends State<FormWidget> {
                   ParkingServices().createParking(token);
                   setState(() {
                     Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) => const ListPage()));
+                        builder: (context) => const ListParkings()));
                   });
                   ElevatedButton.styleFrom(
                       backgroundColor: Color.fromARGB(65, 143, 74, 163));

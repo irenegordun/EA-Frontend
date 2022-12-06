@@ -1,23 +1,32 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter_front/services/parkingServices.dart';
-import 'package:flutter_front/views/infoParking.dart';
+import 'package:flutter_front/services/userServices.dart';
+import 'package:flutter_front/views/UserInfo.dart';
+import 'package:flutter_front/widgets/form_updateUser.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_front/services/parkingServices.dart';
 
+import '../models/user.dart';
 import '../models/parking.dart';
+import '../widgets/buttonAccessibility.dart';
 import '../widgets/drawer.dart';
-import 'first_page.dart';
 
-class ListParkings extends StatefulWidget {
-  const ListParkings({super.key});
+class ListMyParkings extends StatefulWidget {
+  const ListMyParkings({super.key});
 
   @override
-  State<ListParkings> createState() => _ListParkingsState();
+  State<ListMyParkings> createState() => _MyParkingsPageState();
 }
 
-class _ListParkingsState extends State<ListParkings> {
+class _MyParkingsPageState extends State<ListMyParkings> {
   List<Parking>? parkings;
+  var user = User(
+    name: "",
+    id: "",
+    password: "",
+    email: "",
+  );
   var isLoaded = false;
 
   @override
@@ -25,24 +34,32 @@ class _ListParkingsState extends State<ListParkings> {
     super.initState();
     getData();
   }
+
   getData() async {
-    parkings = await ParkingServices().getParkings();
+    //user = await UserServices().getOneUsers(user);
+    // parkings = await UserServices().getParkingsOneU(user);
     if (parkings != null) {
       setState(() {
         isLoaded = true;
       });
     }
   }
+
+  deleteParking(Parking parking) async {
+    var response = await ParkingServices().deleteParking(parking);
+  }
+
   @override
   Widget build(BuildContext context) {
-
-    ParkingServices _parkingprovider = Provider.of<ParkingServices>(context);
+    UserServices _myparkingprovider = Provider.of<UserServices>(context);
 
     return Scaffold(
       drawer: const DrawerScreen(),
+      floatingActionButton :const AccessibilityButton(),
+
       appBar: AppBar(
-        title: const Text('LLISTAT PARKINGS'),
-        backgroundColor: Colors.deepPurple[300],
+        title: const Text('Els meus Parkings'),
+        backgroundColor: Colors.blueGrey,
       ),
       body: Visibility(
         visible: isLoaded,
@@ -53,7 +70,7 @@ class _ListParkingsState extends State<ListParkings> {
           itemCount: parkings?.length,
           itemBuilder: (context, index) {
             return Card(
-              color: Colors.deepPurple[100],
+              color: Color.fromARGB(255, 144, 180, 199),
               child: ListTile(
                 title: Text(parkings![index].city),
                 subtitle: Text(parkings![index].street),
@@ -68,7 +85,7 @@ class _ListParkingsState extends State<ListParkings> {
                             tooltip: 'Main',
                             onPressed: () {
                               Navigator.of(context).push(MaterialPageRoute(
-                                  builder: (context) => const FirstPage()));
+                                  builder: (context) => const UserInfo()));
                             },
                           ),
                         ),
@@ -77,11 +94,19 @@ class _ListParkingsState extends State<ListParkings> {
                           icon: const Icon(Icons.info_outline),
                           tooltip: 'More Info',
                           onPressed: () {
-                             _parkingprovider.setParkingData(parkings![index]);
-                              Navigator.of(context).push(MaterialPageRoute(
-                                  builder: (context) => const ParkingInfo()));
+                            //_myparkingprovider.setParkingData(parkings![index]);
+                            Navigator.of(context).push(MaterialPageRoute(
+                                builder: (context) => const UserInfo()));
                           },
-                        )),   
+                        )),
+                        Expanded(
+                          child: IconButton(
+                              icon: const Icon(Icons.delete),
+                              tooltip: 'Delete Paking',
+                              onPressed: () {
+                                deleteParking(parkings![index]);
+                              }),
+                        ),
                       ],
                     )),
               ),

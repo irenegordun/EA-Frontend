@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_front/services/userServices.dart';
-import 'package:flutter_front/views/first_page.dart';
+import 'package:flutter_front/widgets/buttonAccessibility.dart';
 import 'package:provider/provider.dart';
-import 'package:flutter_front/views/update_page.dart';
-import 'package:flutter_front/views/parkingsList_MyUser.dart';
+import 'package:flutter_front/views/UpdateUser.dart';
+import 'package:flutter_front/views/MyParkings.dart';
 
 import '../models/user.dart';
 import '../widgets/drawer.dart';
@@ -25,9 +25,11 @@ class _UserPageState extends State<UserInfo> {
 
     return Scaffold(
       drawer: const DrawerScreen(),
+      floatingActionButton :const AccessibilityButton(),
+
       appBar: AppBar(
         title: const Text('Profile'),
-        backgroundColor: Colors.deepPurple[300],
+        backgroundColor: Colors.blueGrey,
       ),
       body: SingleChildScrollView(
         child: Column(
