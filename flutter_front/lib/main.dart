@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_front/services/userServices.dart';
+import 'package:flutter_front/views/Filters.dart';
 import 'package:flutter_front/views/ListParkings.dart';
 import 'package:flutter_front/services/parkingServices.dart';
 import 'package:flutter_front/views/Login.dart';
@@ -29,7 +30,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const MaterialApp(
-      home: ListParkings(),
+      home: Filters(),
     );
   }
 }

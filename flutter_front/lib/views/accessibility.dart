@@ -46,19 +46,19 @@ class _AccessibilitytState extends State<Accessibility> {
               subtitle: Text ("Select the lenguage"),
               trailing: 
                 PopupMenuButton(
-              itemBuilder: (context){
-                return [
-                  PopupMenuItem<int>(
-                    value: 0,
-                    child: Text("Spanish"),
-                  ),
-                  PopupMenuItem<int>(
-                    value: 1,
-                    child: Text("English"),
-                  ),
-                ];
-              },
-            )
+                  itemBuilder: (context){
+                    return [
+                      PopupMenuItem<int>(
+                        value: 0,
+                        child: Text("Spanish"),
+                      ),
+                      PopupMenuItem<int>(
+                        value: 1,
+                        child: Text("English"),
+                      ),
+                    ];
+                  },
+                )
             ), 
             //boto del panic
             SwitchListTile(
