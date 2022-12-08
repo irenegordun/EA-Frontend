@@ -10,7 +10,6 @@ import 'package:flutter_front/widgets/form_user.dart';
 
 import 'package:provider/provider.dart';
 
-
 void main() {
   runApp(
     MultiProvider(
@@ -29,7 +28,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const MaterialApp(
-      home: ListParkings(),
+      home: Login(),
     );
   }
 }
