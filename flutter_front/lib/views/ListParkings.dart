@@ -43,12 +43,15 @@ class _ListParkingsState extends State<ListParkings> {
     return Scaffold(
       drawer: const DrawerScreen(),
       appBar: AppBar(
-        title: const Text('LLISTAT PARKINGS'),
+        title: new Center(
+          child: new Text("A P A R C A ' M"),
+        ),
         backgroundColor: Colors.blueGrey,
       ),
       body: Column(
         children: <Widget>[
-          Card(
+          //Card(
+              /*
               //color: Color.fromARGB(255, 0, 0, 0),
               child: Wrap(
                 spacing: 3,
@@ -61,10 +64,51 @@ class _ListParkingsState extends State<ListParkings> {
                     label: Text("Cotxe"),
                     onDeleted: (){},
                   ),
-                  
-                ],
-              )
-              
+                ],)
+              */
+          //),
+           Row(
+            children: [
+              Expanded(
+                child: 
+                ElevatedButton(
+                  onPressed: () {},
+                  child: const Text('List'),
+                  style: const ButtonStyle(
+                    backgroundColor: MaterialStatePropertyAll<Color>(Colors.blueGrey),
+                  )
+                )
+              ),
+              Expanded(
+                child: 
+                ElevatedButton(
+                  onPressed: () {},
+                  child: const Text('Map'),
+                  style: ButtonStyle(
+                    backgroundColor: MaterialStatePropertyAll<Color>(Colors.blueGrey),
+                  )
+                )
+              ),
+            ],
+          ),
+          Expanded(
+            child: Row(
+              children: [
+                Expanded(
+                  child: OutlinedButton(
+                    onPressed: () {},
+                    child: const Text('Open Date Picker'),
+                  ),
+                ),
+                Expanded(
+                  child: OutlinedButton(
+                    onPressed: () {},
+                    child: const Text('Open Date Picker'),
+                  ),
+                
+                ),
+              ],
+            ),
           ),
           Expanded(
             child: ListView.builder(
@@ -73,19 +117,25 @@ class _ListParkingsState extends State<ListParkings> {
             return Card(
               color: Color.fromARGB(255, 144, 180, 199),
               child: ListTile(
-                title: Text(parkings![index].city),
-                subtitle: Text(parkings![index].street),
+                leading: Container(
+                  width: 80,
+                  height: 80,
+                  child: Image.asset(
+                      'parking1.jpg'),
+                ),
+                
+                title: Text(parkings![index].street),
+                subtitle: Text(parkings![index].city),
                 trailing: SizedBox(
                     width: 120,
+
                     child: Row(
                       children: <Widget>[
                         Expanded(
                           child: IconButton(
-                            icon: const Icon(Icons.home),
-                            tooltip: 'Main',
+                            icon: const Icon(Icons.favorite_border_outlined),
+                            tooltip: 'Add to favourites',
                             onPressed: () {
-                              Navigator.of(context).push(MaterialPageRoute(
-                                  builder: (context) => const ParkingInfo()));
                             },
                           ),
                         ),
