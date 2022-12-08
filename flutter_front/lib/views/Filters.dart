@@ -9,8 +9,8 @@ class Filters extends StatefulWidget {
 }
 
 class _FiltersState extends State<Filters> {
-  double _currentSliderValue = 20;
-
+  double _slider2Val = 50.0;
+  double _slider1Val = 0.5;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -63,6 +63,13 @@ class _FiltersState extends State<Filters> {
             ListTile(
               title: Text('Maximum price',
                   style: TextStyle(fontWeight: FontWeight.w500)),
+                
+              /*trailing: Slider(
+                onChanged: (double value) {
+                  setState(() => this._slider1Val = value);
+                },
+                value: this._slider1Val,
+              ),*/
               /*trailing: 
                 Slider(
                   value: _currentSliderValue,

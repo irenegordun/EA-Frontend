@@ -15,7 +15,9 @@ class _AccessibilitytState extends State<Accessibility> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Accessibility'),
+        title: new Center(
+          child: new Text("A P A R C A ' M"),
+        ),
         backgroundColor: Colors.blueGrey,
       ),
       body: Center(

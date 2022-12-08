@@ -10,6 +10,7 @@ import 'package:provider/provider.dart';
 import '../models/parking.dart';
 import '../widgets/drawer.dart';
 
+//enviar camps a backend i slider
 
 class ParkingInfo extends StatefulWidget {
   const ParkingInfo({super.key});
@@ -57,7 +58,7 @@ class _ParkingInfoState extends State<ParkingInfo> {
             ListTile(
               title: Text('Direction',
                   style: TextStyle(fontWeight: FontWeight.w500)),
-              subtitle: Text(parking.city + ' ,' +parking.country + ' ,' + parking.street + ' ,' /*+ parking.spotNumber*/),
+              subtitle: Text(parking.street + ', ' +parking.city + ', ' + parking.country  /*+ parking.spotNumber*/),
               leading: Icon(
                 Icons.where_to_vote_outlined,
                 color: Color.fromARGB(255, 39, 51, 58),
