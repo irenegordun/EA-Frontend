@@ -138,6 +138,7 @@ class UserServices extends ChangeNotifier {
       print("222222222222222222222222222222222222222222222222222222");
       StorageAparcam().addItemsToLocalStorage(det.token, det.id);
       print("111111111111111111111111111111111111111111111111111111");
+
       return true;
     } else {
       print("contrasenya no valida");

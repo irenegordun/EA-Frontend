@@ -8,22 +8,21 @@ import 'package:flutter_front/widgets/buttonAccessibility.dart';
 import 'package:provider/provider.dart';
 
 import '../models/parking.dart';
-//import '../widgets/buttonAccessibility.dart';
 import '../widgets/drawer.dart';
 import 'Filters.dart';
-import 'MapParkings.dart';
+import 'ListParkings.dart';
 
-//millorar visualment
+//per sprint4
 
-class ListParkings extends StatefulWidget {
-  const ListParkings({super.key});
+class MapParkings extends StatefulWidget {
+  const MapParkings({super.key});
 
   @override
-  State<ListParkings> createState() => _ListParkingsState();
+  State<MapParkings> createState() => _MapParkingsState();
   
 }
 
-class _ListParkingsState extends State<ListParkings> {
+class _MapParkingsState extends State<MapParkings> {
   List<Parking>? parkings;
   var isLoaded = false;
 
@@ -42,13 +41,11 @@ class _ListParkingsState extends State<ListParkings> {
   }
   @override
   Widget build(BuildContext context) {
-    
 
     ParkingServices _parkingprovider = Provider.of<ParkingServices>(context);
 
     return Scaffold(
       drawer: const DrawerScreen(),
-      floatingActionButton :const AccessibilityButton(),
       appBar: AppBar(
         title: new Center(
           child: new Text("A P A R C A ' M"),
@@ -94,7 +91,10 @@ class _ListParkingsState extends State<ListParkings> {
                   height: 40,
                   width: 50,
                   child: ElevatedButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) => const ListParkings()));                      
+                    },
                     child: const Text('List'),
                     style: const ButtonStyle(
                       backgroundColor: MaterialStatePropertyAll<Color>(Colors.blueGrey),
@@ -106,10 +106,7 @@ class _ListParkingsState extends State<ListParkings> {
                   height: 40,
                   width: 50,
                   child: ElevatedButton(
-                    onPressed: () {
-                      Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) => const MapParkings())); 
-                    },
+                    onPressed: () {},
                     child: const Text('Map'),
                     style: ButtonStyle(
                       backgroundColor: MaterialStatePropertyAll<Color>(Colors.blueGrey),
@@ -118,54 +115,7 @@ class _ListParkingsState extends State<ListParkings> {
                           )),
         ])), 
         
-        //Row 2/2
-        Expanded(
-            child: ListView.builder(
-            itemCount: parkings?.length,
-            itemBuilder: (context, index) {
-              return Card(
-                color: Color.fromARGB(255, 144, 180, 199),
-                child: ListTile(
-                  leading: Container(
-                    width: 80,
-                    height: 80,
-                    child: Image.asset(
-                        'parking1.jpg'),
-                  ),
-                  
-                  title: Text(parkings![index].street),
-                  subtitle: Text(parkings![index].city),
-                  trailing: SizedBox(
-                      width: 120,
 
-                      child: Row(
-                        children: <Widget>[
-                          Expanded(
-                            child: IconButton(
-                              icon: const Icon(Icons.favorite_border_outlined),
-                              tooltip: 'Add to favourites',
-                              onPressed: () {
-                              },
-                            ),
-                          ),
-                          Expanded(
-                              child: IconButton(
-                            icon: const Icon(Icons.info_outline),
-                            tooltip: 'More Info',
-                            onPressed: () {
-                              _parkingprovider.setParkingData(parkings![index]);
-                                Navigator.of(context).push(MaterialPageRoute(
-                                    builder: (context) => const ParkingInfo()));
-                            },
-                          )),   
-                        ],
-                      )),
-                ),
-              );
-            },
-          ),), 
-         
-          
         ],      
       ),
     );

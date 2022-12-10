@@ -210,21 +210,6 @@ class _MyStatefulWidgetState extends State<FormWidget> {
                     "difficulty": formDifficulty
                   });
 
-                  // // TRY DECODE PER L'AIDA
-                  // String tokenAida =
-                  //     "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzNmNlNmUxMTE4Mjk4MDgwNzdkMGM1YiIsImVtYWlsIjoiYWx2YXJvQGdtYWlsLmNvbSIsImlhdCI6MTY2OTI4MTQ0MCwiZXhwIjoxNjY5MzY3ODQwfQ.nAASTme9N3WACld05OicwfKQ5-luHaTekr3q-aozAJM";
-                  // try {
-                  //   final jwtdecode =
-                  //       JWT.verify(tokenAida, SecretKey('clavesecreta'));
-                  //   print('PAYLOAD: ${jwtdecode.payload}');
-                  //   final payload = jwtdecode.payload.toString();
-                  //   print('PAYLOAD STRING: ${payload}');
-                  //   //var info = json.decode(payload);
-                  //   print('INFO UTIL: ');
-                  // } on JWTError catch (ex) {
-                  //   print(ex.message);
-                  // }
-
                   var token = jwt.sign(SecretKey(secret));
 
                   ParkingServices().createParking(token);
