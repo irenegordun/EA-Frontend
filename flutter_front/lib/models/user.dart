@@ -3,7 +3,7 @@ import 'dart:convert';
 List<User> listuserFromJson(String str) =>
     List<User>.from(json.decode(str).map((x) => User.fromJson(x)));
 
-User userFromJson(String str) => User.fromJson(str as Map<String, dynamic>);
+User userFromJson(Map<String, dynamic> str) => User.fromJson(str);
 
 String userToJson(List<User> data) =>
     json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
@@ -21,10 +21,22 @@ class User {
   String password;
   String email;
 
+  void setemail(String email) {
+    this.email = email;
+  }
+
+  void setname(String name) {
+    this.name = name;
+  }
+
+  void setpass(String pass) {
+    this.password = pass;
+  }
+
   factory User.fromJson(Map<String, dynamic> json) => User(
         id: json["_id"],
         name: json["name"],
-        password: json["password"],
+        password: "",
         email: json["email"],
       );
   factory User.fromJsontoken(Map<String, dynamic> json) => User(

@@ -163,6 +163,7 @@ class _LoginFormState extends State<LoginForm> {
           ElevatedButton(
             onPressed: () {
               openDialog('Go to register');
+              
               // Navigator.of(context).push(
               //     MaterialPageRoute(builder: (context) => const Register()));
             },
@@ -193,6 +194,7 @@ class _LoginFormState extends State<LoginForm> {
         ),
       );
   void submit() {
+
     //Navigator.of(context).pop();
     Navigator.of(context)
         .push(MaterialPageRoute(builder: (context) => const Login()));
