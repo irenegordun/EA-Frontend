@@ -139,7 +139,11 @@ class _LoginFormState extends State<LoginForm> {
                 print(formPassword);
 
                 var user = User(
-                    name: "", id: "", password: formPassword, email: formEmail);
+                    name: "",
+                    id: "",
+                    password: formPassword,
+                    email: formEmail,
+                    newpassword: "");
                 bool state = await UserServices().loginUser(user);
                 if (state == true) {
                   Navigator.of(context).push(MaterialPageRoute(
@@ -163,7 +167,7 @@ class _LoginFormState extends State<LoginForm> {
           ElevatedButton(
             onPressed: () {
               openDialog('Go to register');
-              
+
               // Navigator.of(context).push(
               //     MaterialPageRoute(builder: (context) => const Register()));
             },
@@ -194,7 +198,6 @@ class _LoginFormState extends State<LoginForm> {
         ),
       );
   void submit() {
-
     //Navigator.of(context).pop();
     Navigator.of(context)
         .push(MaterialPageRoute(builder: (context) => const Login()));

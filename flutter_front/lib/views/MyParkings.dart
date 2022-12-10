@@ -3,7 +3,6 @@ import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_front/services/userServices.dart';
 import 'package:flutter_front/views/UserInfo.dart';
-import 'package:flutter_front/widgets/form_updateUser.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_front/services/parkingServices.dart';
 
@@ -21,12 +20,7 @@ class ListMyParkings extends StatefulWidget {
 
 class _MyParkingsPageState extends State<ListMyParkings> {
   List<Parking>? parkings;
-  var user = User(
-    name: "",
-    id: "",
-    password: "",
-    email: "",
-  );
+  var user = User(name: "", id: "", password: "", email: "", newpassword: "");
   var isLoaded = false;
 
   @override
@@ -55,8 +49,7 @@ class _MyParkingsPageState extends State<ListMyParkings> {
 
     return Scaffold(
       drawer: const DrawerScreen(),
-      floatingActionButton :const AccessibilityButton(),
-
+      floatingActionButton: const AccessibilityButton(),
       appBar: AppBar(
         title: const Text('Els meus Parkings'),
         backgroundColor: Colors.blueGrey,

@@ -49,6 +49,8 @@ dependencies:
   flutter_expanded_tile: ^0.3.6
   internet_popup: ^1.0.8+5
   localstorage: ^4.0.0+1
+  encrypt: ^5.0.1
+  hex: ^0.2.0
 dev_dependencies:
   flutter_test:
     sdk: flutter
