@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_front/views/ListParkings.dart';
 import '../services/parkingServices.dart';
 import 'package:dart_jsonwebtoken/dart_jsonwebtoken.dart';
+import 'package:flutter_front/models/parking.dart';
 
 class FormWidget extends StatefulWidget {
   const FormWidget({super.key});
@@ -195,24 +196,21 @@ class _MyStatefulWidgetState extends State<FormWidget> {
 
                   const String secret = 'clavesecreta';
 
-                  final jwt = JWT({
-                    "user_id": "6346e161fe62edf290bd2ee1",
-                    "email": "ferran@gmail.com",
-                    "score": 0,
-                    "country": formCountry,
-                    "city": formCity,
-                    "street": formStreet,
-                    "streetNumber": formNumber,
-                    "spotNumber": formSpot,
-                    "type": formType,
-                    "price": formPrice,
-                    "size": formSize,
-                    "difficulty": formDifficulty
-                  });
+                  Parking p = Parking(
+                      //user_id:  StorageAparcam().getId(),
+                      // score: 0,
+                      id: '',
+                      country: formCountry,
+                      city: formCity,
+                      street: formStreet,
+                      streetNumber: int.parse(formNumber),
+                      spotNumber: int.parse(formSpot),
+                      type: formType,
+                      price: int.parse(formPrice),
+                      size: formSize,
+                      difficulty: int.parse(formDifficulty));
 
-                  var token = jwt.sign(SecretKey(secret));
-
-                  ParkingServices().createParking(token);
+                  ParkingServices().createParking(p);
                   setState(() {
                     Navigator.of(context).push(MaterialPageRoute(
                         builder: (context) => const ListParkings()));
