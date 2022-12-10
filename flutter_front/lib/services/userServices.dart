@@ -2,7 +2,9 @@ import 'dart:convert';
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_front/services/localStorage.dart';
 import 'package:flutter_front/widgets/form_updateUser.dart';
+import 'package:localstorage/localstorage.dart';
 
 import '../models/user.dart';
 import '../models/parking.dart';
@@ -95,25 +97,18 @@ class UserServices extends ChangeNotifier {
     return null;
   }
 
-  Future<void> loginUser(User user) async {
+  Future<bool> loginUser(User user) async {
     var client = http.Client();
     var uri = Uri.parse('http://localhost:5432/api/auth/login');
     var userJS = json.encode(user.LogintoJson());
     var response = await client.post(uri,
         headers: {'content-type': 'application/json'}, body: userJS);
     if (response.statusCode == 200) {
-      //print(response.body.toString());
-      //List<String> Resp1 = response.body.toString().split(", ");
-      //print(Resp1.last.characters);
-      // final jwtdecode = JWT.verify(Resp1.last, SecretKey('clavesecreta'));
-      // final payload = jwtdecode.payload.toString();
-      // List<String> tros1 = payload.split(', ');
-      // List<String> tros2 = tros1.first.split(': ');
-      // print(tros1.last);
-      // print(tros2.last);
-      print("tot ok");
+      StorageAparcam().addItemsToLocalStorage('token', 'id');
+      return true;
     } else {
       print("contrasenya no valida");
+      return false;
     }
   }
 }

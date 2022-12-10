@@ -1,9 +1,12 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_front/views/ListParkings.dart';
 import 'package:flutter_front/views/register.dart';
 import '../widgets/adaptive_scaffold.dart';
 import '../models/user.dart';
 import '../services/userServices.dart';
+import 'package:localstorage/localstorage.dart';
 
 void main() {
   runApp(const Login());
@@ -88,24 +91,6 @@ class _LoginFormState extends State<LoginForm> {
             child: Column(children: [
               TextFormField(
                 decoration: const InputDecoration(
-                    border: OutlineInputBorder(),
-                    labelText: 'Name *',
-                    // ignore: unnecessary_const
-                    icon: const Padding(
-                      padding: EdgeInsets.only(top: 15.0),
-                      child: Icon(Icons.perm_identity),
-                    )),
-                controller: nameController,
-                validator: (String? value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please enter some text';
-                  }
-                  return null;
-                },
-              ),
-              const SizedBox(height: 12),
-              TextFormField(
-                decoration: const InputDecoration(
                     //dependencies: email_validator: '^2.1.16'
                     border: OutlineInputBorder(),
                     labelText: 'Email *',
@@ -147,11 +132,6 @@ class _LoginFormState extends State<LoginForm> {
           ElevatedButton(
             onPressed: () {
               setState(() async {
-                //aquí dona error
-                String formName = nameController.text.toString();
-                print(formName);
-                //print(nameController.text.toString());
-
                 String formEmail = emailController.text.toString();
                 print(formEmail);
 
@@ -159,13 +139,15 @@ class _LoginFormState extends State<LoginForm> {
                 print(formPassword);
 
                 var user = User(
-                    name: formName,
-                    id: "",
-                    password: formPassword,
-                    email: formEmail);
-                await UserServices().loginUser(user);
-                Navigator.of(context).push(MaterialPageRoute(
-                    builder: (context) => const ListParkings()));
+                    name: "", id: "", password: formPassword, email: formEmail);
+                bool state = await UserServices().loginUser(user);
+                if (state == true) {
+                  Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) => const ListParkings()));
+                } else {
+                  openDialog(
+                      'The user does not exist or maybe the password is wrong');
+                }
               });
             },
             style: ElevatedButton.styleFrom(
@@ -180,8 +162,9 @@ class _LoginFormState extends State<LoginForm> {
           const SizedBox(height: 5),
           ElevatedButton(
             onPressed: () {
-              Navigator.of(context).push(
-                  MaterialPageRoute(builder: (context) => const Register()));
+              openDialog('Go to register');
+              // Navigator.of(context).push(
+              //     MaterialPageRoute(builder: (context) => const Register()));
             },
             style: ElevatedButton.styleFrom(
               elevation: 0,
@@ -195,6 +178,24 @@ class _LoginFormState extends State<LoginForm> {
         ],
       ),
     );
+  }
+
+  Future openDialog(String text) => showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+          title: Text(text),
+          actions: [
+            TextButton(
+              child: Text('Ok'),
+              onPressed: submit,
+            ),
+          ],
+        ),
+      );
+  void submit() {
+    //Navigator.of(context).pop();
+    Navigator.of(context)
+        .push(MaterialPageRoute(builder: (context) => const Login()));
   }
 }
 
