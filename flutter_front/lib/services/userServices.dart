@@ -93,6 +93,18 @@ class UserServices extends ChangeNotifier {
         headers: {'content-type': 'application/json'}, body: userJS);
   }
 
+
+  Future<void> activateUser(User user) async {
+    var client = http.Client();
+    var uri = Uri.parse('http://localhost:5432/api/users/activate');
+    var userJS = json.encode(user.toJson());
+    print(userJS.toString());
+    await client.put(uri,
+        headers: {'content-type': 'application/json'}, body: userJS);
+  }
+
+  Future<dynamic> updateUser(User user) async {
+
   Future<dynamic> updateUseremail(User user) async {
     var client = http.Client();
     var id = user.id;
@@ -132,6 +144,7 @@ class UserServices extends ChangeNotifier {
   }
 
   Future<dynamic> updateUserpass(User user) async {
+
     var client = http.Client();
     var id = user.id;
     var uri = Uri.parse('http://localhost:5432/api/users/changepass');
@@ -162,7 +175,7 @@ class UserServices extends ChangeNotifier {
     return null;
   }
 
-  Future<bool> loginUser(User user) async {
+  Future<int> loginUser(User user) async {
     var client = http.Client();
     var uri = Uri.parse('http://localhost:5432/api/auth/login');
     var userJS = json.encode(user.LogintoJson());
@@ -170,18 +183,19 @@ class UserServices extends ChangeNotifier {
         headers: {'content-type': 'application/json'}, body: userJS);
     if (response.statusCode == 200) {
       DetailsModel parametres = new DetailsModel(token: "", id: "");
-      print("333333333333333333333333333333333333333333333333333333");
-      print("response.body: " + response.body);
+
       final Map<String, dynamic> map = json.decode(response.body);
       DetailsModel det = detailsmodelfromJson(map);
-      print("222222222222222222222222222222222222222222222222222222");
-      StorageAparcam().addItemsToLocalStorage(det.token, det.id, user.password);
-      print("111111111111111111111111111111111111111111111111111111");
 
-      return true;
+      StorageAparcam().addItemsToLocalStorage(det.token, det.id);
+
+
+      return 1;
+    } else if (response.statusCode == 402) {
+      return 2;
     } else {
       print("contrasenya no valida");
-      return false;
+      return 3;
     }
   }
 }
