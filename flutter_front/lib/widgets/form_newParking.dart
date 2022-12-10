@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_front/views/ListParkings.dart';
 import '../services/parkingServices.dart';
 import 'package:dart_jsonwebtoken/dart_jsonwebtoken.dart';
+import 'package:flutter_front/models/parking.dart';
+
+enum Menu { car, moto }
 
 class FormWidget extends StatefulWidget {
   const FormWidget({super.key});
@@ -11,6 +14,8 @@ class FormWidget extends StatefulWidget {
 }
 
 class _MyStatefulWidgetState extends State<FormWidget> {
+  String _selectedMenu = '';
+
   final countryController = TextEditingController();
   final cityController = TextEditingController();
   final streetController = TextEditingController();
@@ -112,18 +117,24 @@ class _MyStatefulWidgetState extends State<FormWidget> {
           ),
           ListTile(
             leading: Icon(Icons.car_rental_sharp),
-            title: TextFormField(
-              decoration: const InputDecoration(
-                hintText: 'Enter the vehicle type',
-              ),
-              controller: typeController,
-              validator: (String? value) {
-                if (value == null || value.isEmpty) {
-                  return 'Please enter some text';
-                }
-                return null;
-              },
-            ),
+            title: Text("Select the vehicle type",
+                style: TextStyle(color: Colors.grey)),
+            trailing: PopupMenuButton<Menu>(
+                onSelected: (Menu item) {
+                  setState(() {
+                    _selectedMenu = item.name;
+                  });
+                },
+                itemBuilder: (BuildContext context) => <PopupMenuEntry<Menu>>[
+                      const PopupMenuItem<Menu>(
+                        value: Menu.car,
+                        child: Text('Car'),
+                      ),
+                      const PopupMenuItem<Menu>(
+                        value: Menu.moto,
+                        child: Text('Moto'),
+                      ),
+                    ]),
           ),
           ListTile(
             leading: Icon(Icons.price_change),
@@ -184,8 +195,10 @@ class _MyStatefulWidgetState extends State<FormWidget> {
                   print(formNumber);
                   String formSpot = spotController.text.toString();
                   print(formSpot);
-                  String formType = typeController.text.toString();
+
+                  String formType = _selectedMenu.toString();
                   print(formType);
+
                   String formPrice = priceController.text.toString();
                   print(formPrice);
                   String formSize = sizeController.text.toString();
@@ -195,24 +208,21 @@ class _MyStatefulWidgetState extends State<FormWidget> {
 
                   const String secret = 'clavesecreta';
 
-                  final jwt = JWT({
-                    "user_id": "6346e161fe62edf290bd2ee1",
-                    "email": "ferran@gmail.com",
-                    "score": 0,
-                    "country": formCountry,
-                    "city": formCity,
-                    "street": formStreet,
-                    "streetNumber": formNumber,
-                    "spotNumber": formSpot,
-                    "type": formType,
-                    "price": formPrice,
-                    "size": formSize,
-                    "difficulty": formDifficulty
-                  });
+                  Parking p = Parking(
+                      //user_id:  StorageAparcam().getId(),
+                      // score: 0,
+                      id: '',
+                      country: formCountry,
+                      city: formCity,
+                      street: formStreet,
+                      streetNumber: int.parse(formNumber),
+                      spotNumber: int.parse(formSpot),
+                      type: formType,
+                      price: int.parse(formPrice),
+                      size: formSize,
+                      difficulty: int.parse(formDifficulty));
 
-                  var token = jwt.sign(SecretKey(secret));
-
-                  ParkingServices().createParking(token);
+                  ParkingServices().createParking(p);
                   setState(() {
                     Navigator.of(context).push(MaterialPageRoute(
                         builder: (context) => const ListParkings()));

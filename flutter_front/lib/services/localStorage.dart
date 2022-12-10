@@ -6,9 +6,10 @@ import 'package:localstorage/localstorage.dart';
 class StorageAparcam extends ChangeNotifier {
   final LocalStorage storage = LocalStorage('user');
 
-  void addItemsToLocalStorage(String token, String id) {
+  void addItemsToLocalStorage(String token, String id, String password) {
     storage.setItem('token', token);
     storage.setItem('id', id);
+    storage.setItem('password', password);
 
     //        FORMAT LLISTA SET ITEM
 
@@ -22,6 +23,10 @@ class StorageAparcam extends ChangeNotifier {
 
   String getId() {
     return storage.getItem('id');
+  }
+
+  String getpass() {
+    return storage.getItem('password');
   }
 
   void deleteToken() {

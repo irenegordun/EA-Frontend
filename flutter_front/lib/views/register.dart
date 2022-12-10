@@ -185,7 +185,8 @@ class _LoginFormState extends State<LoginForm> {
                       name: formName,
                       id: "",
                       password: formPassword,
-                      email: formEmail);
+                      email: formEmail,
+                      newpassword: "");
                   await UserServices().createUser(user);
                   Navigator.of(context).push(
                       MaterialPageRoute(builder: (context) => const Login()));

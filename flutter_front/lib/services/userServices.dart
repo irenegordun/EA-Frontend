@@ -3,7 +3,6 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_front/services/localStorage.dart';
-import 'package:flutter_front/widgets/form_updateUser.dart';
 import 'package:localstorage/localstorage.dart';
 
 import '../models/user.dart';
@@ -35,12 +34,8 @@ class DetailsModel {
 }
 
 class UserServices extends ChangeNotifier {
-  User _userData = new User(
-    name: "",
-    id: "",
-    password: "",
-    email: "",
-  );
+  User _userData =
+      new User(name: "", id: "", password: "", email: "", newpassword: "");
 
   User get userData => _userData;
 
@@ -75,27 +70,71 @@ class UserServices extends ChangeNotifier {
 
   Future<void> deleteUsers(User user) async {
     var client = http.Client();
-    var id = user.id;
-    var uri = Uri.parse('http://localhost:5432/api/users/deleted/$id');
-    var response = await client.delete(uri);
+    var uri = Uri.parse('http://localhost:5432/api/users/');
+    var userJS = json.encode(user.toJson());
+    var response = await client.delete(uri,
+        headers: {
+          'content-type': 'application/json',
+          'x-access-token': StorageAparcam().getToken()
+        },
+        body: userJS);
     if (response.statusCode == 200) {
-      return print("deleted");
+      return print("Account deleted");
+    } else {
+      return print("ERROR: can't delete the account");
     }
-    return null;
   }
 
   Future<void> createUser(User user) async {
     var client = http.Client();
-    var uri = Uri.parse('http://localhost:5432/api/users/register');
+    var uri = Uri.parse('http://localhost:5432/api/users/');
     var userJS = json.encode(user.toJson());
     await client.post(uri,
         headers: {'content-type': 'application/json'}, body: userJS);
   }
 
-  Future<dynamic> updateUser(User user) async {
+  Future<dynamic> updateUseremail(User user) async {
     var client = http.Client();
     var id = user.id;
-    var uri = Uri.parse('http://localhost:5432/api/users/update');
+    var uri = Uri.parse('http://localhost:5432/api/users/updateEmail');
+    var userJS = json.encode(user.toJson());
+    var response = await client.put(uri,
+        headers: {
+          'content-type': 'application/json',
+          'x-access-token': StorageAparcam().getToken()
+        },
+        body: userJS);
+    if (response.statusCode == 200) {
+      var json = response.body;
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  Future<dynamic> updateUsername(User user) async {
+    var client = http.Client();
+    var id = user.id;
+    var uri = Uri.parse('http://localhost:5432/api/users/updateName');
+    var userJS = json.encode(user.toJson());
+    var response = await client.put(uri,
+        headers: {
+          'content-type': 'application/json',
+          'x-access-token': StorageAparcam().getToken()
+        },
+        body: userJS);
+    if (response.statusCode == 200) {
+      var json = response.body;
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  Future<dynamic> updateUserpass(User user) async {
+    var client = http.Client();
+    var id = user.id;
+    var uri = Uri.parse('http://localhost:5432/api/users/changepass');
     var userJS = json.encode(user.toJson());
     var response = await client.put(uri,
         headers: {
@@ -136,7 +175,7 @@ class UserServices extends ChangeNotifier {
       final Map<String, dynamic> map = json.decode(response.body);
       DetailsModel det = detailsmodelfromJson(map);
       print("222222222222222222222222222222222222222222222222222222");
-      StorageAparcam().addItemsToLocalStorage(det.token, det.id);
+      StorageAparcam().addItemsToLocalStorage(det.token, det.id, user.password);
       print("111111111111111111111111111111111111111111111111111111");
 
       return true;
