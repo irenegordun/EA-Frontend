@@ -9,17 +9,19 @@ String userToJson(List<User> data) =>
     json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
 
 class User {
-  User({
-    //this.id = "", // non nullable but optional with a default value
-    required this.name,
-    required this.id,
-    required this.password,
-    required this.email,
-  });
+  User(
+      {
+      //this.id = "", // non nullable but optional with a default value
+      required this.name,
+      required this.id,
+      required this.password,
+      required this.email,
+      required this.newpassword});
   String id;
   String name;
   String password;
   String email;
+  String newpassword;
 
   void setemail(String email) {
     this.email = email;
@@ -38,12 +40,14 @@ class User {
         name: json["name"],
         password: "",
         email: json["email"],
+        newpassword: "",
       );
   factory User.fromJsontoken(Map<String, dynamic> json) => User(
         id: json["_id"],
         name: json["name"],
         password: json["password"],
         email: json["email"],
+        newpassword: "",
       );
 
   Map<String, dynamic> toJson() => {
@@ -51,6 +55,7 @@ class User {
         "name": name,
         "password": password,
         "email": email,
+        "newpassword": newpassword,
       };
 
   Map<String, dynamic> LogintoJson() => {

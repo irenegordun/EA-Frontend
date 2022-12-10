@@ -145,12 +145,14 @@ class _LoginFormState extends State<LoginForm> {
                   openDialog("Enter your email please");
                 } else if (passwordController.text.isEmpty) {
                   openDialog("Enter your password please");
+
                 } else {
                   var user = User(
                       name: "",
                       id: "",
                       password: formPassword,
-                      email: formEmail);
+                      email: formEmail,
+                      newpassword: "");
                   int state = await UserServices().loginUser(user);
                   if (state == 1) {
                     Navigator.of(context).push(MaterialPageRoute(
@@ -214,6 +216,7 @@ class _LoginFormState extends State<LoginForm> {
           ],
         ),
       );
+
   Future activateUser() => showDialog(
         context: context,
         builder: (context) => AlertDialog(
