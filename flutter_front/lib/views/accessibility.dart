@@ -15,7 +15,9 @@ class _AccessibilitytState extends State<Accessibility> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Accessibility'),
+        title: new Center(
+          child: new Text("A P A R C A ' M"),
+        ),
         backgroundColor: Colors.blueGrey,
       ),
       body: Center(
@@ -46,19 +48,19 @@ class _AccessibilitytState extends State<Accessibility> {
               subtitle: Text ("Select the lenguage"),
               trailing: 
                 PopupMenuButton(
-              itemBuilder: (context){
-                return [
-                  PopupMenuItem<int>(
-                    value: 0,
-                    child: Text("Spanish"),
-                  ),
-                  PopupMenuItem<int>(
-                    value: 1,
-                    child: Text("English"),
-                  ),
-                ];
-              },
-            )
+                  itemBuilder: (context){
+                    return [
+                      PopupMenuItem<int>(
+                        value: 0,
+                        child: Text("Spanish"),
+                      ),
+                      PopupMenuItem<int>(
+                        value: 1,
+                        child: Text("English"),
+                      ),
+                    ];
+                  },
+                )
             ), 
             //boto del panic
             SwitchListTile(

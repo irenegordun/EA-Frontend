@@ -3,12 +3,14 @@ import 'package:flutter/src/widgets/framework.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_front/services/parkingServices.dart';
+import 'package:flutter_front/views/ListParkings.dart';
 import 'package:flutter_front/views/accessibility.dart';
 import 'package:flutter_front/widgets/buttonAccessibility.dart';
 import 'package:provider/provider.dart';
 import '../models/parking.dart';
 import '../widgets/drawer.dart';
 
+//enviar camps a backend i slider
 
 class ParkingInfo extends StatefulWidget {
   const ParkingInfo({super.key});
@@ -27,13 +29,21 @@ class _ParkingInfoState extends State<ParkingInfo> {
   ParkingServices _parkingprovider = Provider.of<ParkingServices>(context);
 
   return Scaffold(
-    drawer: const DrawerScreen(),
-
-      appBar: AppBar(
-        title: const Text('INFO PARKING'),
-        
-        backgroundColor: Colors.blueGrey,
+    appBar: AppBar(
+      title: const Center(
+        child: Text("A P A R C A ' M"),
       ),
+      actions: <Widget>[
+        IconButton(
+          icon: new Icon(Icons.close_outlined),
+          onPressed: () {
+            Navigator.of(context).push(MaterialPageRoute(
+            builder: (context) => const ListParkings()));          
+          },
+        ),
+      ],
+      backgroundColor: Colors.blueGrey,
+    ),
       body: Center(
         child:  _buildCard(_parkingprovider.parkingData) ),
      );   
@@ -48,10 +58,10 @@ class _ParkingInfoState extends State<ParkingInfo> {
             ListTile(
               title: Text('Direction',
                   style: TextStyle(fontWeight: FontWeight.w500)),
-              subtitle: Text(parking.city + ' ,' +parking.country + ' ,' + parking.street + ' ,' /*+ parking.spotNumber*/),
+              subtitle: Text(parking.street + ', ' +parking.city + ', ' + parking.country  /*+ parking.spotNumber*/),
               leading: Icon(
                 Icons.where_to_vote_outlined,
-                color: Colors.blue[500],
+                color: Color.fromARGB(255, 39, 51, 58),
               ),
             ),
             Divider(),
@@ -60,7 +70,7 @@ class _ParkingInfoState extends State<ParkingInfo> {
                   style: TextStyle(fontWeight: FontWeight.w500)),
               leading: Icon(
                 Icons.email_outlined,
-                color: Colors.blue[500],
+                color: Color.fromARGB(255, 39, 51, 58),
               ),
             ),
             ListTile(
@@ -68,7 +78,7 @@ class _ParkingInfoState extends State<ParkingInfo> {
               //subtitle: Text(parking.price),
               leading: Icon(
                 Icons.attach_money_outlined,
-                color: Colors.blue[500],
+                color: Color.fromARGB(255, 39, 51, 58),
               ),
             ),
             ListTile(
@@ -76,7 +86,7 @@ class _ParkingInfoState extends State<ParkingInfo> {
               subtitle: Text(parking.type),
               leading: Icon(
                 Icons.two_wheeler,
-                color: Colors.blue[500],
+                color: Color.fromARGB(255, 39, 51, 58),
               ),
             ),
             ListTile(
@@ -84,28 +94,27 @@ class _ParkingInfoState extends State<ParkingInfo> {
               subtitle: Text(parking.size),
               leading: Icon(
                 Icons.aspect_ratio_outlined,
-                color: Colors.blue[500],
+                color: Color.fromARGB(255, 39, 51, 58),
               ),
             ),
             ListTile(
               title: Text('Difficulty'),
               leading: Icon(
                 Icons.hardware_outlined,
-                color: Colors.blue[500],
+                color: Color.fromARGB(255, 39, 51, 58),
               ),
             ),
             ListTile(
-              contentPadding: EdgeInsets.zero,
-              leading: IconButton(
-                  icon: Icon(Icons.check_circle),
-                onPressed: () => print('select'),
-              ),
-              title: Text('BOOK'),
-              trailing: Icon(
-                  Icons.arrow_forward_ios,
-              ),
-              onTap: () => print('on tap')              
-            ),
+                contentPadding: EdgeInsets.zero,
+                title: ElevatedButton(
+                  onPressed: () {},
+                  child: const Text('Book'),
+                  style: ButtonStyle(
+                    backgroundColor: MaterialStatePropertyAll<Color>(Colors.blueGrey),
+                  ),
+                ),
+                
+             ),
           ],
         ),
       ),
