@@ -93,7 +93,6 @@ class UserServices extends ChangeNotifier {
         headers: {'content-type': 'application/json'}, body: userJS);
   }
 
-
   Future<void> activateUser(User user) async {
     var client = http.Client();
     var uri = Uri.parse('http://localhost:5432/api/users/activate');
@@ -102,8 +101,6 @@ class UserServices extends ChangeNotifier {
     await client.put(uri,
         headers: {'content-type': 'application/json'}, body: userJS);
   }
-
-  Future<dynamic> updateUser(User user) async {
 
   Future<dynamic> updateUseremail(User user) async {
     var client = http.Client();
@@ -144,7 +141,6 @@ class UserServices extends ChangeNotifier {
   }
 
   Future<dynamic> updateUserpass(User user) async {
-
     var client = http.Client();
     var id = user.id;
     var uri = Uri.parse('http://localhost:5432/api/users/changepass');
@@ -187,8 +183,7 @@ class UserServices extends ChangeNotifier {
       final Map<String, dynamic> map = json.decode(response.body);
       DetailsModel det = detailsmodelfromJson(map);
 
-      StorageAparcam().addItemsToLocalStorage(det.token, det.id);
-
+      StorageAparcam().addItemsToLocalStorage(det.token, det.id, user.password);
 
       return 1;
     } else if (response.statusCode == 402) {
