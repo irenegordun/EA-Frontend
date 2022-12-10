@@ -145,7 +145,8 @@ class _LoginFormState extends State<LoginForm> {
                   Navigator.of(context).push(MaterialPageRoute(
                       builder: (context) => const ListParkings()));
                 } else {
-                  openDialog('The user does not exist or maybe the password is wrong');
+                  openDialog(
+                      'The user does not exist or maybe the password is wrong');
                 }
               });
             },
@@ -161,7 +162,7 @@ class _LoginFormState extends State<LoginForm> {
           const SizedBox(height: 5),
           ElevatedButton(
             onPressed: () {
-              openDialog('');
+              openDialog('Go to register');
               // Navigator.of(context).push(
               //     MaterialPageRoute(builder: (context) => const Register()));
             },
@@ -192,9 +193,9 @@ class _LoginFormState extends State<LoginForm> {
         ),
       );
   void submit() {
-    Navigator.of(context).pop();
-    // Navigator.of(context).push(
-    //     MaterialPageRoute(builder: (context) => const Login()));
+    //Navigator.of(context).pop();
+    Navigator.of(context)
+        .push(MaterialPageRoute(builder: (context) => const Login()));
   }
 }
 
