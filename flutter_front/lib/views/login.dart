@@ -166,10 +166,8 @@ class _LoginFormState extends State<LoginForm> {
           const SizedBox(height: 5),
           ElevatedButton(
             onPressed: () {
-              openDialog('Go to register');
-
-              // Navigator.of(context).push(
-              //     MaterialPageRoute(builder: (context) => const Register()));
+              Navigator.of(context).push(
+                  MaterialPageRoute(builder: (context) => const Register()));
             },
             style: ElevatedButton.styleFrom(
               elevation: 0,

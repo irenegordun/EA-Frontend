@@ -2,6 +2,7 @@ import 'dart:html';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_front/services/userServices.dart';
+import 'package:flutter_front/views/login.dart';
 import 'package:flutter_front/widgets/buttonAccessibility.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_front/views/MyParkings.dart';
@@ -37,8 +38,8 @@ Widget _buttons(BuildContext context, User user) {
                   email: "",
                   newpassword: "");
               UserServices().deleteUsers(user);
-              Navigator.of(context).push(
-                  MaterialPageRoute(builder: (context) => const UserInfo()));
+              Navigator.of(context)
+                  .push(MaterialPageRoute(builder: (context) => const Login()));
             },
             child: const Text('Delete account'),
             style: ButtonStyle(

@@ -87,7 +87,7 @@ class UserServices extends ChangeNotifier {
 
   Future<void> createUser(User user) async {
     var client = http.Client();
-    var uri = Uri.parse('http://localhost:5432/api/users/register');
+    var uri = Uri.parse('http://localhost:5432/api/users/');
     var userJS = json.encode(user.toJson());
     await client.post(uri,
         headers: {'content-type': 'application/json'}, body: userJS);
