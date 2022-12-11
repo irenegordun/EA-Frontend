@@ -20,7 +20,6 @@ class UserInfo extends StatefulWidget {
 
   @override
   State<UserInfo> createState() => _UserInfoState();
-
 }
 
 Widget _buttons(BuildContext context, User user) {
@@ -37,7 +36,11 @@ Widget _buttons(BuildContext context, User user) {
                   id: StorageAparcam().getId(),
                   password: "",
                   email: "",
-                  newpassword: "");
+                  newpassword: "",
+                  points: 0,
+                  myFavourites: [],
+                  myParkings: [],
+                  deleted: false);
               UserServices().deleteUsers(user);
               Navigator.of(context)
                   .push(MaterialPageRoute(builder: (context) => const Login()));
@@ -86,7 +89,6 @@ class _UserInfoState extends State<UserInfo> {
       myFavourites: [],
       myParkings: [],
       deleted: false,
-
       newpassword: "");
   getData() async {
     user = await UserServices().getOneUser(user1);
@@ -136,17 +138,14 @@ class _UserInfoState extends State<UserInfo> {
                   controller: editingController1,
                   decoration: InputDecoration(hintText: email),
                   style: TextStyle(fontWeight: FontWeight.w500),
-
                 ),
                 leading: Icon(
                   Icons.email_outlined,
-
                   color: Colors.blue[500],
                 ),
                 trailing: TextButton(
                     child: Text("Editar"),
                     onPressed: () {
-
                       email = editingController1.text;
                       user = User(
                           name: "",
@@ -173,13 +172,11 @@ class _UserInfoState extends State<UserInfo> {
                 ),
                 leading: Icon(
                   Icons.verified_user,
-
                   color: Colors.blue[500],
                 ),
                 trailing: TextButton(
                     child: Text("Editar"),
                     onPressed: () {
-
                       name = editingController2.text;
                       user = User(
                           name: name,
@@ -191,15 +188,12 @@ class _UserInfoState extends State<UserInfo> {
                           myFavourites: [],
                           myParkings: [],
                           deleted: false);
-                        if (newpassword != "") {
-                        UserServices().updateUsername(user);
-                      }
+                      UserServices().updateUsername(user);
 
                       Navigator.of(context).push(MaterialPageRoute(
                           builder: (context) => const UserInfo()));
                     }),
               ),
-
               ListTile(
                 title: Text('Password'),
                 subtitle: TextFormField(
@@ -216,11 +210,16 @@ class _UserInfoState extends State<UserInfo> {
                     onPressed: () {
                       newpassword = editingController3.text;
                       user = User(
-                          name: "",
-                          id: StorageAparcam().getId(),
-                          password: StorageAparcam().getpass(),
-                          email: "",
-                          newpassword: newpassword);
+                        name: "",
+                        id: StorageAparcam().getId(),
+                        password: StorageAparcam().getpass(),
+                        email: "",
+                        newpassword: newpassword,
+                        points: 0,
+                        myFavourites: [],
+                        myParkings: [],
+                        deleted: false,
+                      );
                       if (newpassword != "") {
                         UserServices().updateUserpass(user);
                       }
@@ -229,7 +228,6 @@ class _UserInfoState extends State<UserInfo> {
                     }),
               ),
               Container(child: _buttons(context, user)),
-
             ],
           ),
         ),
