@@ -27,11 +27,16 @@ class DetailsModel {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
+
+    data['token'] = this.token;
+    data['id'] = this.id;
+
     return data;
   }
 }
 
 class UserServices extends ChangeNotifier {
+
   User _userData = User(
       name: "",
       id: "",
@@ -42,6 +47,7 @@ class UserServices extends ChangeNotifier {
       deleted: false,
       points: 0,
       newpassword: "");
+
 
   User get userData => _userData;
 
@@ -76,30 +82,49 @@ class UserServices extends ChangeNotifier {
 
   Future<void> deleteUsers(User user) async {
     var client = http.Client();
-    var id = user.id;
-    var uri = Uri.parse('http://localhost:5432/api/users/deleted/$id');
-    var response = await client.delete(uri);
+    var uri = Uri.parse('http://localhost:5432/api/users/');
+    var userJS = json.encode(user.toJson());
+    var response = await client.delete(uri,
+        headers: {
+          'content-type': 'application/json',
+          'x-access-token': StorageAparcam().getToken()
+        },
+        body: userJS);
     if (response.statusCode == 200) {
-      return print("deleted");
+      return print("Account deleted");
+    } else {
+      return print("ERROR: can't delete the account");
     }
-    return null;
   }
 
   Future<void> createUser(User user) async {
     var client = http.Client();
-    var uri = Uri.parse('http://localhost:5432/api/users/register');
+    var uri = Uri.parse('http://localhost:5432/api/users/');
     var userJS = json.encode(user.toJson());
     await client.post(uri,
         headers: {'content-type': 'application/json'}, body: userJS);
   }
 
-  Future<dynamic> updateUser(User user) async {
+  Future<void> activateUser(User user) async {
+    var client = http.Client();
+    var uri = Uri.parse('http://localhost:5432/api/users/activate');
+    var userJS = json.encode(user.toJson());
+    print(userJS.toString());
+    await client.put(uri,
+        headers: {'content-type': 'application/json'}, body: userJS);
+  }
+
+  Future<dynamic> updateUseremail(User user) async {
     var client = http.Client();
     var id = user.id;
-    var uri = Uri.parse('http://localhost:5432/api/users/update/$id');
+    var uri = Uri.parse('http://localhost:5432/api/users/updateEmail');
     var userJS = json.encode(user.toJson());
     var response = await client.put(uri,
-        headers: {'content-type': 'application/json'}, body: userJS);
+        headers: {
+          'content-type': 'application/json',
+          'x-access-token': StorageAparcam().getToken()
+        },
+        body: userJS);
     if (response.statusCode == 200) {
       var json = response.body;
       return true;
@@ -108,7 +133,47 @@ class UserServices extends ChangeNotifier {
     }
   }
 
-  Future<bool> loginUser(User user) async {
+  Future<dynamic> updateUsername(User user) async {
+    var client = http.Client();
+    var id = user.id;
+    var uri = Uri.parse('http://localhost:5432/api/users/updateName');
+    var userJS = json.encode(user.toJson());
+    var response = await client.put(uri,
+        headers: {
+          'content-type': 'application/json',
+          'x-access-token': StorageAparcam().getToken()
+        },
+        body: userJS);
+    if (response.statusCode == 200) {
+      var json = response.body;
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  Future<dynamic> updateUserpass(User user) async {
+    var client = http.Client();
+    var id = user.id;
+    var uri = Uri.parse('http://localhost:5432/api/users/changepass');
+    var userJS = json.encode(user.toJson());
+    var response = await client.put(uri,
+        headers: {
+          'content-type': 'application/json',
+          'x-access-token': StorageAparcam().getToken()
+        },
+        body: userJS);
+    if (response.statusCode == 200) {
+      var json = response.body;
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+
+
+  Future<int> loginUser(User user) async {
     var client = http.Client();
     var uri = Uri.parse('http://localhost:5432/api/auth/login');
     var userJS = json.encode(user.LogintoJson());
@@ -116,18 +181,21 @@ class UserServices extends ChangeNotifier {
         headers: {'content-type': 'application/json'}, body: userJS);
     if (response.statusCode == 200) {
       DetailsModel parametres = new DetailsModel(token: "", id: "");
-      print("333333333333333333333333333333333333333333333333333333");
-      print("response.body: " + response.body);
+
+
+
+
       final Map<String, dynamic> map = json.decode(response.body);
       DetailsModel det = detailsmodelfromJson(map);
-      print("222222222222222222222222222222222222222222222222222222");
-      StorageAparcam().addItemsToLocalStorage(det.token, det.id, user.password);
-      print("111111111111111111111111111111111111111111111111111111");
 
-      return true;
+      StorageAparcam().addItemsToLocalStorage(det.token, det.id, user.password);
+
+      return 1;
+    } else if (response.statusCode == 402) {
+      return 2;
     } else {
       print("contrasenya no valida");
-      return false;
+      return 3;
     }
   }
 }

@@ -1,5 +1,9 @@
 import 'dart:convert';
 
+import 'package:flutter_front/services/localStorage.dart';
+import 'package:localstorage/localstorage.dart';
+
+
 import 'package:flutter/material.dart';
 import 'package:flutter_front/views/ListParkings.dart';
 import '../models/parking.dart';
@@ -77,13 +81,22 @@ class ParkingServices extends ChangeNotifier {
   }
 
   //Future<void> createParking(Parking parking) async {
-  Future<void> createParking(String token) async {
+  Future<void> createParking(Parking parking) async {
     var client = http.Client();
     var uri = Uri.parse('http://localhost:5432/api/parkings/');
-    //var parkingJS = json.encode(parking.toJson());
-    await client.post(uri,
+    var parkingJS = json.encode(parking.toJson());
+    var response = await client.post(uri,
         //headers: {'content-type': 'application/json'}, body: parkingJS);
-        headers: {'x-access-token': token});
+        headers: {
+          'content-type': 'application/json',
+          'x-access-token': StorageAparcam().getToken()
+        },
+        body: parkingJS);
+    if (response.statusCode == 200) {
+      return print("Account deleted");
+    } else {
+      return print("ERROR: can't delete the account");
+    }
   }
 
   Future<dynamic> updatePriceParking(Parking parking) async {

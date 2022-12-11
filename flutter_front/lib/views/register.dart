@@ -182,6 +182,7 @@ class _LoginFormState extends State<LoginForm> {
 
                 if (formPassword == formPassword2) {
                   var user = User(
+
                     name: formName,
                     id: "",
                     password: formPassword,
@@ -192,6 +193,7 @@ class _LoginFormState extends State<LoginForm> {
                     deleted: false,
                     points: 0,
                   );
+
                   await UserServices().createUser(user);
                   Navigator.of(context).push(
                       MaterialPageRoute(builder: (context) => const Login()));

@@ -97,11 +97,13 @@ class _MyStatefulWidgetState extends State<FormWidget> {
                       id: "",
                       password: formPassword,
                       email: formEmail,
+
                       newpassword: "",
                       myParkings: [],
                       myFavourites: [],
                       deleted: false,
                       points: 0);
+
                   await UserServices().createUser(user);
                   //Navigator.of(context).push(
                   //  MaterialPageRoute(builder: (context) => const ListPage())

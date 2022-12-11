@@ -1,5 +1,8 @@
+import 'dart:html';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_front/services/userServices.dart';
+import 'package:flutter_front/views/login.dart';
 import 'package:flutter_front/widgets/buttonAccessibility.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_front/views/MyParkings.dart';
@@ -17,6 +20,41 @@ class UserInfo extends StatefulWidget {
 
   @override
   State<UserInfo> createState() => _UserInfoState();
+
+}
+
+Widget _buttons(BuildContext context, User user) {
+  return Center(
+      child: ButtonBar(
+    mainAxisSize: MainAxisSize.min,
+    children: <Widget>[
+      ButtonTheme(
+          minWidth: 200,
+          child: ElevatedButton(
+            onPressed: () {
+              user = User(
+                  name: "",
+                  id: StorageAparcam().getId(),
+                  password: "",
+                  email: "",
+                  newpassword: "");
+              UserServices().deleteUsers(user);
+              Navigator.of(context)
+                  .push(MaterialPageRoute(builder: (context) => const Login()));
+            },
+            child: const Text('Delete account'),
+            style: ButtonStyle(
+              shape: MaterialStateProperty.all(
+                RoundedRectangleBorder(
+                  // Change your radius here
+                  borderRadius: BorderRadius.circular(16),
+                ),
+              ),
+              backgroundColor: MaterialStatePropertyAll<Color>(Colors.blueGrey),
+            ),
+          )),
+    ],
+  ));
 }
 
 class _UserInfoState extends State<UserInfo> {
@@ -35,8 +73,10 @@ class _UserInfoState extends State<UserInfo> {
   var email;
   var name;
   var password = "*******";
-  var isLoaded = false;
+
   var newpassword = "";
+  var isLoaded = false;
+
   var user1 = User(
       name: "",
       id: StorageAparcam().getId(),
@@ -46,6 +86,7 @@ class _UserInfoState extends State<UserInfo> {
       myFavourites: [],
       myParkings: [],
       deleted: false,
+
       newpassword: "");
   getData() async {
     user = await UserServices().getOneUser(user1);
@@ -95,26 +136,30 @@ class _UserInfoState extends State<UserInfo> {
                   controller: editingController1,
                   decoration: InputDecoration(hintText: email),
                   style: TextStyle(fontWeight: FontWeight.w500),
+
                 ),
                 leading: Icon(
                   Icons.email_outlined,
+
                   color: Colors.blue[500],
                 ),
                 trailing: TextButton(
                     child: Text("Editar"),
                     onPressed: () {
+
                       email = editingController1.text;
                       user = User(
-                          name: user.name,
+                          name: "",
                           id: StorageAparcam().getId(),
-                          password: user.password,
+                          password: "",
                           email: email,
-                          points: user.points,
-                          myFavourites: user.myFavourites,
-                          myParkings: user.myParkings,
-                          deleted: user.deleted,
-                          newpassword: user.newpassword);
-                      UserServices().updateUser(user);
+                          newpassword: "",
+                          points: 0,
+                          myFavourites: [],
+                          myParkings: [],
+                          deleted: false);
+                      UserServices().updateUseremail(user);
+
                       Navigator.of(context).push(MaterialPageRoute(
                           builder: (context) => const UserInfo()));
                     }),
@@ -128,27 +173,33 @@ class _UserInfoState extends State<UserInfo> {
                 ),
                 leading: Icon(
                   Icons.verified_user,
+
                   color: Colors.blue[500],
                 ),
                 trailing: TextButton(
                     child: Text("Editar"),
                     onPressed: () {
+
                       name = editingController2.text;
                       user = User(
                           name: name,
                           id: StorageAparcam().getId(),
-                          password: user.password,
-                          email: user.email,
-                          points: user.points,
-                          myFavourites: user.myFavourites,
-                          myParkings: user.myParkings,
-                          deleted: user.deleted,
-                          newpassword: user.newpassword);
-                      UserServices().updateUser(user);
+                          password: "",
+                          email: "",
+                          newpassword: "",
+                          points: 0,
+                          myFavourites: [],
+                          myParkings: [],
+                          deleted: false);
+                        if (newpassword != "") {
+                        UserServices().updateUsername(user);
+                      }
+
                       Navigator.of(context).push(MaterialPageRoute(
                           builder: (context) => const UserInfo()));
                     }),
               ),
+
               ListTile(
                 title: Text('Password'),
                 subtitle: TextFormField(
@@ -165,22 +216,20 @@ class _UserInfoState extends State<UserInfo> {
                     onPressed: () {
                       newpassword = editingController3.text;
                       user = User(
-                          name: user.name,
+                          name: "",
                           id: StorageAparcam().getId(),
                           password: StorageAparcam().getpass(),
-                          email: user.email,
-                          points: user.points,
-                          myFavourites: user.myFavourites,
-                          myParkings: user.myParkings,
-                          deleted: user.deleted,
+                          email: "",
                           newpassword: newpassword);
                       if (newpassword != "") {
-                        UserServices().updateUser(user);
+                        UserServices().updateUserpass(user);
                       }
                       Navigator.of(context).push(MaterialPageRoute(
                           builder: (context) => const UserInfo()));
                     }),
               ),
+              Container(child: _buttons(context, user)),
+
             ],
           ),
         ),

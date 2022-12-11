@@ -25,13 +25,17 @@ class StorageAparcam extends ChangeNotifier {
     return storage.getItem('id');
   }
 
-  void deleteToken() {
-    storage.deleteItem('token');
-  }
 
   String getpass() {
     return storage.getItem('password');
   }
+
+
+
+  void deleteToken() {
+    storage.deleteItem('token');
+  }
+
 
   void deleteId() {
     storage.deleteItem('id');

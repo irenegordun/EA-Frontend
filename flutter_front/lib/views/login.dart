@@ -8,6 +8,9 @@ import '../models/user.dart';
 import '../services/userServices.dart';
 import 'package:localstorage/localstorage.dart';
 
+import '../services/localStorage.dart';
+
+
 void main() {
   runApp(const Login());
 }
@@ -63,6 +66,8 @@ class _LoginFormState extends State<LoginForm> {
   final emailController = TextEditingController();
 
   final passwordController = TextEditingController();
+  bool _obscureText = true;
+  bool _activateBool = false;
 
   @override
   Widget build(BuildContext context) {
@@ -100,31 +105,32 @@ class _LoginFormState extends State<LoginForm> {
                       child: Icon(Icons.email),
                     )),
                 controller: emailController,
-                validator: (String? value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please enter some text';
-                  }
-                  return null;
-                },
               ),
               const SizedBox(height: 12),
               TextFormField(
-                decoration: const InputDecoration(
+                obscureText: _obscureText,
+                controller: passwordController,
+                decoration: InputDecoration(
                     border: OutlineInputBorder(),
                     labelText: 'Password *',
-                    // ignore: unnecessary_const
-                    icon: const Padding(
+                    suffix: IconButton(
+                      onPressed: () {
+                        setState(() {
+                          if (_obscureText) {
+                            _obscureText = false;
+                          } else {
+                            _obscureText = true;
+                          }
+                        });
+                      },
+                      icon: Icon(_obscureText == true
+                          ? Icons.remove_red_eye
+                          : Icons.password),
+                    ),
+                    icon: Padding(
                       padding: EdgeInsets.only(top: 15.0),
                       child: Icon(Icons.lock),
                     )),
-                controller: passwordController,
-                validator: (String? value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please enter some text';
-                  }
-                  return null;
-                },
-                obscureText: true,
               )
             ]),
           ),
@@ -137,24 +143,42 @@ class _LoginFormState extends State<LoginForm> {
 
                 String formPassword = passwordController.text.toString();
                 print(formPassword);
+                if (emailController.text.isEmpty) {
+                  openDialog("Enter your email please");
+                } else if (passwordController.text.isEmpty) {
+                  openDialog("Enter your password please");
 
-                var user = User(
-                    name: "",
-                    id: "",
-                    password: formPassword,
-                    email: formEmail,
-                    myParkings: [],
-                    myFavourites: [],
-                    deleted: false,
-                    points: 0,
-                    newpassword: "");
-                bool state = await UserServices().loginUser(user);
-                if (state == true) {
-                  Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) => const ListParkings()));
+
                 } else {
-                  openDialog(
-                      'The user does not exist or maybe the password is wrong');
+                  var user = User(
+                      name: "",
+                      id: "",
+                      password: formPassword,
+                      email: formEmail,
+                      newpassword: "",
+                      myParkings: [],
+                     myFavourites: [],
+                     deleted: false,
+                     points: 0);
+                  int state = await UserServices().loginUser(user);
+                  if (state == 1) {
+                    Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => const ListParkings()));
+                  } else if (state == 2) {
+                    await activateUser();
+                    print("hey");
+                    if (_activateBool == true) {
+                      print("sister");
+
+                      await UserServices().activateUser(user);
+                    } else {
+                      openDialog(
+                          "You did not activate your user, please register another one or, if it was a mistake, press login again");
+                    }
+                  } else {
+                    openDialog(
+                        'The user does not exist or maybe the password is wrong');
+                  }
                 }
               });
             },
@@ -201,10 +225,34 @@ class _LoginFormState extends State<LoginForm> {
           ],
         ),
       );
+
+
+  Future activateUser() => showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+          title: Text(
+              "Your user is desactivated do you want to activate it again?"),
+          actions: [
+            TextButton(
+              child: Text('Yes'),
+              onPressed: activate,
+            ),
+            TextButton(
+              child: Text('No'),
+              onPressed: submit,
+            ),
+          ],
+        ),
+      );
+  void activate() {
+    _activateBool = true;
+    print("soul");
+    Navigator.of(context, rootNavigator: true).pop();
+  }
+
   void submit() {
-    //Navigator.of(context).pop();
-    Navigator.of(context)
-        .push(MaterialPageRoute(builder: (context) => const Login()));
+    Navigator.of(context, rootNavigator: true).pop();
+
   }
 }
 
