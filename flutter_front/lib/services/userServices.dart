@@ -27,15 +27,27 @@ class DetailsModel {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
+
     data['token'] = this.token;
     data['id'] = this.id;
+
     return data;
   }
 }
 
 class UserServices extends ChangeNotifier {
-  User _userData =
-      new User(name: "", id: "", password: "", email: "", newpassword: "");
+
+  User _userData = User(
+      name: "",
+      id: "",
+      password: "",
+      email: "",
+      myParkings: [],
+      myFavourites: [],
+      deleted: false,
+      points: 0,
+      newpassword: "");
+
 
   User get userData => _userData;
 
@@ -159,17 +171,7 @@ class UserServices extends ChangeNotifier {
     }
   }
 
-  Future<List<Parking>?> getParkingsOneU(Parking parkingData) async {
-    var client = http.Client();
-    var id = parkingData.id;
-    var uri = Uri.parse('http://localhost:5432/api/users/myparkings/$id');
-    var response = await client.get(uri);
-    if (response.statusCode == 200) {
-      var json = response.body;
-      return parkingFromJson(json);
-    }
-    return null;
-  }
+
 
   Future<int> loginUser(User user) async {
     var client = http.Client();
@@ -179,6 +181,9 @@ class UserServices extends ChangeNotifier {
         headers: {'content-type': 'application/json'}, body: userJS);
     if (response.statusCode == 200) {
       DetailsModel parametres = new DetailsModel(token: "", id: "");
+
+
+
 
       final Map<String, dynamic> map = json.decode(response.body);
       DetailsModel det = detailsmodelfromJson(map);

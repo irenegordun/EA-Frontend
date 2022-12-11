@@ -208,6 +208,7 @@ class _MyStatefulWidgetState extends State<FormWidget> {
 
                   const String secret = 'clavesecreta';
 
+
                   Parking p = Parking(
                       //user_id:  StorageAparcam().getId(),
                       // score: 0,
@@ -221,6 +222,7 @@ class _MyStatefulWidgetState extends State<FormWidget> {
                       price: int.parse(formPrice),
                       size: formSize,
                       difficulty: int.parse(formDifficulty));
+
 
                   ParkingServices().createParking(p);
                   setState(() {

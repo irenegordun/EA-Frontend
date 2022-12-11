@@ -1,25 +1,50 @@
 import 'dart:convert';
+
 import 'package:flutter_front/services/localStorage.dart';
 import 'package:localstorage/localstorage.dart';
 
+
 import 'package:flutter/material.dart';
+import 'package:flutter_front/views/ListParkings.dart';
 import '../models/parking.dart';
 import 'package:http/http.dart' as http;
+import 'package:flutter_front/services/localStorage.dart';
+import 'package:localstorage/localstorage.dart';
+
+DetailsModel detailsmodelfromJson(Map<String, dynamic> prm) =>
+    DetailsModel.fromJson(prm);
+
+class DetailsModel {
+  String token;
+  String id;
+
+  DetailsModel({required this.token, required this.id});
+
+  factory DetailsModel.fromJson(Map<String, dynamic> json) =>
+      DetailsModel(token: json['token'], id: json['id']);
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+
+    return data;
+  }
+}
 
 class ParkingServices extends ChangeNotifier {
   Parking _parkingData = Parking(
-      //email: "",
-      country: "",
-      city: "",
-      street: "",
-      streetNumber: 0,
-      spotNumber: 0,
-      type: "",
-      price: 0,
-      size: "",
-      difficulty: 0,
-      //score: 0,
-      id: "");
+    //email: "",
+    country: "",
+    city: "",
+    street: "",
+    streetNumber: 0,
+    spotNumber: 0,
+    type: "",
+    price: 0,
+    size: "",
+    difficulty: 0,
+    //score: 0,
+    id: "",
+  );
 
   Parking get parkingData => _parkingData;
 
@@ -33,7 +58,7 @@ class ParkingServices extends ChangeNotifier {
     var response = await client.get(uri);
     if (response.statusCode == 200) {
       var json = response.body;
-      return parkingFromJson(json);
+      return parkingsFromJson(json);
     }
     return null;
   }
@@ -41,8 +66,14 @@ class ParkingServices extends ChangeNotifier {
   Future<void> deleteParking(Parking parking) async {
     var client = http.Client();
     var id = parking.id;
-    var uri = Uri.parse('http://localhost:5432/api/parkings/deleted/$id');
-    var response = await client.delete(uri);
+    var uri = Uri.parse('http://localhost:5432/api/parkings/');
+    var parkingJS = jsonEncode(parking.toJson());
+    var response = await client.delete(uri,
+        headers: {
+          'content-type': 'application/json',
+          'x-access-token': StorageAparcam().getToken()
+        },
+        body: parkingJS);
     if (response.statusCode == 200) {
       return print("deleted");
     }
@@ -66,5 +97,55 @@ class ParkingServices extends ChangeNotifier {
     } else {
       return print("ERROR: can't delete the account");
     }
+  }
+
+  Future<dynamic> updatePriceParking(Parking parking) async {
+    var client = http.Client();
+    var uri = Uri.parse('http://localhost:5432/api/parkings/update/');
+    var parkingJS = jsonEncode(parking.toJson());
+    var response = await client.put(uri,
+        headers: {
+          'content-type': 'application/json',
+          'x-access-token': StorageAparcam().getToken(),
+        },
+        body: parkingJS);
+    if (response.statusCode == 200) {
+      var json = response.body;
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  Future<dynamic> updateAddressParking(Parking parking) async {
+    print("4444444444444444444444444");
+    var client = http.Client();
+    var uri = Uri.parse('http://localhost:5432/api/parkings/updateAddress/');
+    var parkingJS = jsonEncode(parking.toJson());
+    var response = await client.put(uri,
+        headers: {
+          'content-type': 'application/json',
+          'x-access-token': StorageAparcam().getToken()
+        },
+        body: parkingJS);
+    print(parkingJS);
+    if (response.statusCode == 200) {
+      var json = response.body;
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  Future<Parking?> getOneParking(String id) async {
+    var client = http.Client();
+    var uri = Uri.parse('http://localhost:5432/api/parkings/$id');
+    var response = await client.get(uri);
+    if (response.statusCode == 200) {
+      final Map<String, dynamic> map = json.decode(response.body);
+      Parking parking = parkingFromJson(map);
+      return parking;
+    }
+    return null;
   }
 }

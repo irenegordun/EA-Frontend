@@ -7,7 +7,9 @@ import '../widgets/adaptive_scaffold.dart';
 import '../models/user.dart';
 import '../services/userServices.dart';
 import 'package:localstorage/localstorage.dart';
+
 import '../services/localStorage.dart';
+
 
 void main() {
   runApp(const Login());
@@ -146,13 +148,18 @@ class _LoginFormState extends State<LoginForm> {
                 } else if (passwordController.text.isEmpty) {
                   openDialog("Enter your password please");
 
+
                 } else {
                   var user = User(
                       name: "",
                       id: "",
                       password: formPassword,
                       email: formEmail,
-                      newpassword: "");
+                      newpassword: "",
+                      myParkings: [],
+                     myFavourites: [],
+                     deleted: false,
+                     points: 0);
                   int state = await UserServices().loginUser(user);
                   if (state == 1) {
                     Navigator.of(context).push(MaterialPageRoute(
@@ -187,8 +194,10 @@ class _LoginFormState extends State<LoginForm> {
           const SizedBox(height: 5),
           ElevatedButton(
             onPressed: () {
-              Navigator.of(context).push(
-                  MaterialPageRoute(builder: (context) => const Register()));
+              openDialog('Go to register');
+
+              // Navigator.of(context).push(
+              //     MaterialPageRoute(builder: (context) => const Register()));
             },
             style: ElevatedButton.styleFrom(
               elevation: 0,
@@ -217,6 +226,7 @@ class _LoginFormState extends State<LoginForm> {
         ),
       );
 
+
   Future activateUser() => showDialog(
         context: context,
         builder: (context) => AlertDialog(
@@ -242,6 +252,7 @@ class _LoginFormState extends State<LoginForm> {
 
   void submit() {
     Navigator.of(context, rootNavigator: true).pop();
+
   }
 }
 

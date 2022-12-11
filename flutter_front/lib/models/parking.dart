@@ -1,7 +1,9 @@
 import 'dart:convert';
 
-List<Parking> parkingFromJson(String str) =>
+List<Parking> parkingsFromJson(String str) =>
     List<Parking>.from(json.decode(str).map((x) => Parking.fromJson(x)));
+
+Parking parkingFromJson(Map<String, dynamic> str) => Parking.fromJson(str);
 
 String parkingToJson(List<Parking> data) =>
     json.encode(List<dynamic>.from(data.map((x) => x.toJson())));

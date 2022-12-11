@@ -1,4 +1,5 @@
 import 'dart:convert';
+import '../models/parking.dart';
 
 List<User> listuserFromJson(String str) =>
     List<User>.from(json.decode(str).map((x) => User.fromJson(x)));
@@ -15,13 +16,30 @@ class User {
       required this.name,
       required this.id,
       required this.password,
+
+      required this.newpassword,
       required this.email,
-      required this.newpassword});
+      required this.myParkings,
+      required this.points,
+      required this.deleted,
+      required this.myFavourites});
+
+
+
+
   String id;
   String name;
   String password;
-  String email;
   String newpassword;
+  String email;
+
+  List<dynamic> myParkings;
+  int points;
+  bool deleted;
+  List<dynamic>? myFavourites;
+
+
+
 
   void setemail(String email) {
     this.email = email;
@@ -39,23 +57,47 @@ class User {
         id: json["_id"],
         name: json["name"],
         password: "",
-        email: json["email"],
+
         newpassword: "",
+        email: json["email"],
+        myParkings: json["myParkings"],
+        points: json["points"],
+        myFavourites: json["myFavourites"],
+        deleted: json["deleted"],
+
+
+
       );
   factory User.fromJsontoken(Map<String, dynamic> json) => User(
         id: json["_id"],
         name: json["name"],
         password: json["password"],
-        email: json["email"],
         newpassword: "",
+        email: json["email"],
+
+        myParkings: json["myParkings"],
+        points: json["points"],
+        myFavourites: json["myFavourites"],
+        deleted: json["deleted"],
+
+
+
       );
 
   Map<String, dynamic> toJson() => {
         "_id": id,
         "name": name,
         "password": password,
-        "email": email,
         "newpassword": newpassword,
+        "email": email,
+
+        "myParkings": myParkings,
+        "points": points,
+        "myFavourites": myFavourites,
+        "deleted": deleted,
+
+
+
       };
 
   Map<String, dynamic> LogintoJson() => {
