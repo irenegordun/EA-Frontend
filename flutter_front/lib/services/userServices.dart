@@ -2,7 +2,8 @@ import 'dart:convert';
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_front/widgets/form_updateUser.dart';
+import 'package:flutter_front/services/localStorage.dart';
+import 'package:localstorage/localstorage.dart';
 
 import '../models/user.dart';
 import '../models/parking.dart';
@@ -12,13 +13,35 @@ import 'package:jwt_decoder/jwt_decoder.dart';
 import 'package:jaguar_jwt/jaguar_jwt.dart';
 import 'package:dart_jsonwebtoken/dart_jsonwebtoken.dart';
 
+DetailsModel detailsmodelfromJson(Map<String, dynamic> prm) =>
+    DetailsModel.fromJson(prm);
+
+class DetailsModel {
+  String token;
+  String id;
+
+  DetailsModel({required this.token, required this.id});
+
+  factory DetailsModel.fromJson(Map<String, dynamic> json) =>
+      DetailsModel(token: json['token'], id: json['id']);
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    return data;
+  }
+}
+
 class UserServices extends ChangeNotifier {
-  User _userData = new User(
-    name: "",
-    id: "",
-    password: "",
-    email: "",
-  );
+  User _userData = User(
+      name: "",
+      id: "",
+      password: "",
+      email: "",
+      myParkings: [],
+      myFavourites: [],
+      deleted: false,
+      points: 0,
+      newpassword: "");
 
   User get userData => _userData;
 
@@ -37,14 +60,16 @@ class UserServices extends ChangeNotifier {
     return null;
   }
 
-  Future<List<User>?> getOneUsers(User user) async {
+  Future<User?> getOneUser(User user) async {
     var client = http.Client();
     var id = user.id;
     var uri = Uri.parse('http://localhost:5432/api/users/$id');
-    var response = await client.get(uri);
+    var response = await client
+        .get(uri, headers: {'x-access-token': StorageAparcam().getToken()});
     if (response.statusCode == 200) {
-      var json = response.body;
-      return listuserFromJson(json);
+      final Map<String, dynamic> map = json.decode(response.body);
+      User user = userFromJson(map);
+      return user;
     }
     return null;
   }
@@ -83,37 +108,26 @@ class UserServices extends ChangeNotifier {
     }
   }
 
-  Future<List<Parking>?> getParkingsOneU(Parking parkingData) async {
-    var client = http.Client();
-    var id = parkingData.id;
-    var uri = Uri.parse('http://localhost:5432/api/users/myparkings/$id');
-    var response = await client.get(uri);
-    if (response.statusCode == 200) {
-      var json = response.body;
-      return parkingFromJson(json);
-    }
-    return null;
-  }
-
-  Future<void> loginUser(User user) async {
+  Future<bool> loginUser(User user) async {
     var client = http.Client();
     var uri = Uri.parse('http://localhost:5432/api/auth/login');
     var userJS = json.encode(user.LogintoJson());
     var response = await client.post(uri,
         headers: {'content-type': 'application/json'}, body: userJS);
     if (response.statusCode == 200) {
-      //print(response.body.toString());
-      //List<String> Resp1 = response.body.toString().split(", ");
-      //print(Resp1.last.characters);
-      // final jwtdecode = JWT.verify(Resp1.last, SecretKey('clavesecreta'));
-      // final payload = jwtdecode.payload.toString();
-      // List<String> tros1 = payload.split(', ');
-      // List<String> tros2 = tros1.first.split(': ');
-      // print(tros1.last);
-      // print(tros2.last);
-      print("tot ok");
+      DetailsModel parametres = new DetailsModel(token: "", id: "");
+      print("333333333333333333333333333333333333333333333333333333");
+      print("response.body: " + response.body);
+      final Map<String, dynamic> map = json.decode(response.body);
+      DetailsModel det = detailsmodelfromJson(map);
+      print("222222222222222222222222222222222222222222222222222222");
+      StorageAparcam().addItemsToLocalStorage(det.token, det.id, user.password);
+      print("111111111111111111111111111111111111111111111111111111");
+
+      return true;
     } else {
       print("contrasenya no valida");
+      return false;
     }
   }
 }

@@ -4,12 +4,13 @@ import 'package:flutter_front/views/ListParkings.dart';
 import 'package:flutter_front/services/parkingServices.dart';
 import 'package:flutter_front/views/Login.dart';
 import 'package:flutter_front/views/ParkingInfo.dart';
+import 'package:flutter_front/views/UserInfo.dart';
+import 'package:flutter_front/views/register.dart';
 import 'package:flutter_front/widgets/button.dart';
 import 'package:flutter_front/widgets/buttonAccessibility.dart';
 import 'package:flutter_front/widgets/form_user.dart';
-
+import 'package:flutter_front/views/MyParkings.dart';
 import 'package:provider/provider.dart';
-
 
 void main() {
   runApp(
@@ -29,7 +30,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const MaterialApp(
-      home: ListParkings(),
+      home: Login(),
     );
   }
 }

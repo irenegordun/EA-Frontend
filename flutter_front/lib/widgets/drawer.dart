@@ -11,7 +11,6 @@ class DrawerScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-        
         child: SizedBox(
             child: Drawer(
                 child: Container(
@@ -56,8 +55,8 @@ class DrawerScreen extends StatelessWidget {
               'My parkings',
             ),
             onTap: () {
-              Navigator.of(context).push(MaterialPageRoute(
-                  builder: (context) => const ListMyParkings()));
+              Navigator.of(context).push(
+                  MaterialPageRoute(builder: (context) => const MyParkings()));
             },
           ),
 

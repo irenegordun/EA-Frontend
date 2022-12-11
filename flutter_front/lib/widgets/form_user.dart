@@ -78,31 +78,37 @@ class _MyStatefulWidgetState extends State<FormWidget> {
             ),
           ),
 
-          TextButton(onPressed: (){
-            setState (() async { //aquí dona error
-              String formName = nameController.text.toString();
-              print(formName);
-              //print(nameController.text.toString());
-              
-              String formEmail = emailController.text.toString();
-              print(formEmail);
+          TextButton(
+              onPressed: () {
+                setState(() async {
+                  //aquí dona error
+                  String formName = nameController.text.toString();
+                  print(formName);
+                  //print(nameController.text.toString());
 
-              String formPassword = passwordController.text.toString();
-              print(formPassword);
+                  String formEmail = emailController.text.toString();
+                  print(formEmail);
 
-              var user = User(
-                name: formName, 
-                id: "", 
-                password: 
-                formPassword, 
-                email: formEmail);
-              await UserServices().createUser(user);
-              //Navigator.of(context).push(
-              //  MaterialPageRoute(builder: (context) => const ListPage())
-              //);
-            });
-            
-          }, child: Text ('Submit')),
+                  String formPassword = passwordController.text.toString();
+                  print(formPassword);
+
+                  var user = User(
+                      name: formName,
+                      id: "",
+                      password: formPassword,
+                      email: formEmail,
+                      newpassword: "",
+                      myParkings: [],
+                      myFavourites: [],
+                      deleted: false,
+                      points: 0);
+                  await UserServices().createUser(user);
+                  //Navigator.of(context).push(
+                  //  MaterialPageRoute(builder: (context) => const ListPage())
+                  //);
+                });
+              },
+              child: Text('Submit')),
           // Padding(
           //   padding: const EdgeInsets.symmetric(vertical: 16.0),
           //   child: ElevatedButton(
