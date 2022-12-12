@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:html';
 import 'dart:math';
 
 import 'package:flutter/material.dart';
@@ -36,7 +37,6 @@ class DetailsModel {
 }
 
 class UserServices extends ChangeNotifier {
-
   User _userData = User(
       name: "",
       id: "",
@@ -47,7 +47,6 @@ class UserServices extends ChangeNotifier {
       deleted: false,
       points: 0,
       newpassword: "");
-
 
   User get userData => _userData;
 
@@ -152,6 +151,23 @@ class UserServices extends ChangeNotifier {
     }
   }
 
+  Future<int> checkemail(User user) async {
+    var client = http.Client();
+    var uri = Uri.parse('http://localhost:5432/api/users/checkemail');
+    var userJS = json.encode(user.toJson());
+    var response = await client.put(uri,
+        headers: {
+          'content-type': 'application/json',
+          'x-access-token': StorageAparcam().getToken()
+        },
+        body: userJS);
+    if (response.statusCode == 403) {
+      return -1;
+    } else {
+      return 1;
+    }
+  }
+
   Future<dynamic> updateUserpass(User user) async {
     var client = http.Client();
     var id = user.id;
@@ -171,8 +187,6 @@ class UserServices extends ChangeNotifier {
     }
   }
 
-
-
   Future<int> loginUser(User user) async {
     var client = http.Client();
     var uri = Uri.parse('http://localhost:5432/api/auth/login');
@@ -181,9 +195,6 @@ class UserServices extends ChangeNotifier {
         headers: {'content-type': 'application/json'}, body: userJS);
     if (response.statusCode == 200) {
       DetailsModel parametres = new DetailsModel(token: "", id: "");
-
-
-
 
       final Map<String, dynamic> map = json.decode(response.body);
       DetailsModel det = detailsmodelfromJson(map);

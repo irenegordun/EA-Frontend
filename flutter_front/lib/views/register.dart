@@ -61,6 +61,23 @@ class _LoginFormState extends State<LoginForm> {
   final passwordController = TextEditingController();
   final passwordController2 = TextEditingController();
 
+  Future openDialog(String text) => showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+          title: Text(text),
+          actions: [
+            TextButton(
+              child: Text('Ok'),
+              onPressed: submit,
+            ),
+          ],
+        ),
+      );
+
+  void submit() {
+    Navigator.of(context, rootNavigator: true).pop();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -182,7 +199,6 @@ class _LoginFormState extends State<LoginForm> {
 
                 if (formPassword == formPassword2) {
                   var user = User(
-
                     name: formName,
                     id: "",
                     password: formPassword,
@@ -193,10 +209,15 @@ class _LoginFormState extends State<LoginForm> {
                     deleted: false,
                     points: 0,
                   );
-
-                  await UserServices().createUser(user);
-                  Navigator.of(context).push(
-                      MaterialPageRoute(builder: (context) => const Login()));
+                  int state = await UserServices().checkemail(user);
+                  if (state == 1) {
+                    await UserServices().createUser(user);
+                    Navigator.of(context).push(
+                        MaterialPageRoute(builder: (context) => const Login()));
+                  } else {
+                    openDialog(
+                        "Can't use this email, belongs to another account!");
+                  }
                 } else {}
               });
             },

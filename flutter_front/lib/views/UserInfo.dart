@@ -22,44 +22,6 @@ class UserInfo extends StatefulWidget {
   State<UserInfo> createState() => _UserInfoState();
 }
 
-Widget _buttons(BuildContext context, User user) {
-  return Center(
-      child: ButtonBar(
-    mainAxisSize: MainAxisSize.min,
-    children: <Widget>[
-      ButtonTheme(
-          minWidth: 200,
-          child: ElevatedButton(
-            onPressed: () {
-              user = User(
-                  name: "",
-                  id: StorageAparcam().getId(),
-                  password: "",
-                  email: "",
-                  newpassword: "",
-                  points: 0,
-                  myFavourites: [],
-                  myParkings: [],
-                  deleted: false);
-              UserServices().deleteUsers(user);
-              Navigator.of(context)
-                  .push(MaterialPageRoute(builder: (context) => const Login()));
-            },
-            child: const Text('Delete account'),
-            style: ButtonStyle(
-              shape: MaterialStateProperty.all(
-                RoundedRectangleBorder(
-                  // Change your radius here
-                  borderRadius: BorderRadius.circular(16),
-                ),
-              ),
-              backgroundColor: MaterialStatePropertyAll<Color>(Colors.blueGrey),
-            ),
-          )),
-    ],
-  ));
-}
-
 class _UserInfoState extends State<UserInfo> {
   User? user;
   deleteU(User user) async {
@@ -73,9 +35,58 @@ class _UserInfoState extends State<UserInfo> {
     getData();
   }
 
-  var email;
-  var name;
+  Widget _buttons(BuildContext context, User user) {
+    return Center(
+        child: ButtonBar(
+      mainAxisSize: MainAxisSize.min,
+      children: <Widget>[
+        ButtonTheme(
+            minWidth: 200,
+            child: ElevatedButton(
+              onPressed: () async {
+                user = User(
+                    name: "",
+                    id: StorageAparcam().getId(),
+                    password: "",
+                    email: "",
+                    newpassword: "",
+                    points: 0,
+                    myFavourites: [],
+                    myParkings: [],
+                    deleted: false);
+                await yousure();
+                if (seguro == true) {
+                  openDialog("Account deleted correctly!");
+                  UserServices().deleteUsers(user);
+                  Navigator.of(context).push(
+                      MaterialPageRoute(builder: (context) => const Login()));
+                } else {
+                  openDialog("Canceled.");
+                  Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) => const UserInfo()));
+                }
+              },
+              child: const Text('Delete account'),
+              style: ButtonStyle(
+                shape: MaterialStateProperty.all(
+                  RoundedRectangleBorder(
+                    // Change your radius here
+                    borderRadius: BorderRadius.circular(16),
+                  ),
+                ),
+                backgroundColor:
+                    MaterialStatePropertyAll<Color>(Colors.blueGrey),
+              ),
+            )),
+      ],
+    ));
+  }
+
+  var email = "";
+  var newemail = "";
+  var name = "";
   var password = "*******";
+  bool seguro = false;
 
   var newpassword = "";
   var isLoaded = false;
@@ -105,6 +116,45 @@ class _UserInfoState extends State<UserInfo> {
             user!.password.toString());
       });
     }
+  }
+
+  Future openDialog(String text) => showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+          title: Text(text),
+          actions: [
+            TextButton(
+              child: Text('Ok'),
+              onPressed: submit,
+            ),
+          ],
+        ),
+      );
+
+  void submit() {
+    Navigator.of(context, rootNavigator: true).pop();
+  }
+
+  Future yousure() => showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+          title: Text("Are you sure you want to delete your account"),
+          actions: [
+            TextButton(
+              child: Text('Yes'),
+              onPressed: sure,
+            ),
+            TextButton(
+              child: Text('No'),
+              onPressed: submit,
+            ),
+          ],
+        ),
+      );
+
+  void sure() {
+    seguro = true;
+    Navigator.of(context, rootNavigator: true).pop();
   }
 
   TextEditingController editingController1 = TextEditingController();
@@ -145,19 +195,40 @@ class _UserInfoState extends State<UserInfo> {
                 ),
                 trailing: TextButton(
                     child: Text("Editar"),
-                    onPressed: () {
-                      email = editingController1.text;
+                    onPressed: () async {
+                      newemail = editingController1.text;
                       user = User(
                           name: "",
                           id: StorageAparcam().getId(),
                           password: "",
-                          email: email,
+                          email: newemail,
                           newpassword: "",
                           points: 0,
                           myFavourites: [],
                           myParkings: [],
                           deleted: false);
-                      UserServices().updateUseremail(user);
+                      if (email != "") {
+                        if (newemail == email) {
+                          openDialog("Alredy your email!");
+                        } else {
+                          int state = await UserServices().checkemail(user);
+                          if (state == 1) {
+                            bool updated =
+                                await UserServices().updateUseremail(user);
+                            if (updated == true) {
+                              openDialog("Email updated correctly!");
+                            } else {
+                              openDialog(
+                                  "Can't use this email, belongs to another account!");
+                            }
+                          } else {
+                            openDialog(
+                                "Can't use this email, belongs to another account!");
+                          }
+                        }
+                      } else {
+                        openDialog("Email field is empty!");
+                      }
 
                       Navigator.of(context).push(MaterialPageRoute(
                           builder: (context) => const UserInfo()));
@@ -176,7 +247,7 @@ class _UserInfoState extends State<UserInfo> {
                 ),
                 trailing: TextButton(
                     child: Text("Editar"),
-                    onPressed: () {
+                    onPressed: () async {
                       name = editingController2.text;
                       user = User(
                           name: name,
@@ -188,7 +259,17 @@ class _UserInfoState extends State<UserInfo> {
                           myFavourites: [],
                           myParkings: [],
                           deleted: false);
-                      UserServices().updateUsername(user);
+                      if (name != "") {
+                        bool updated =
+                            await UserServices().updateUsername(user);
+                        if (updated == true) {
+                          openDialog("Name updated correctly!");
+                        } else {
+                          openDialog("Error updating name, please try again.");
+                        }
+                      } else {
+                        openDialog("Name field is empty!");
+                      }
 
                       Navigator.of(context).push(MaterialPageRoute(
                           builder: (context) => const UserInfo()));
@@ -207,7 +288,7 @@ class _UserInfoState extends State<UserInfo> {
                 ),
                 trailing: TextButton(
                     child: Text("Editar"),
-                    onPressed: () {
+                    onPressed: () async {
                       newpassword = editingController3.text;
                       user = User(
                         name: "",
@@ -221,7 +302,16 @@ class _UserInfoState extends State<UserInfo> {
                         deleted: false,
                       );
                       if (newpassword != "") {
-                        UserServices().updateUserpass(user);
+                        bool updated =
+                            await UserServices().updateUserpass(user);
+                        if (updated == true) {
+                          openDialog("Password updated correctly!");
+                        } else {
+                          openDialog(
+                              "Error updating password, please try again");
+                        }
+                      } else {
+                        openDialog("Password field is empty!");
                       }
                       Navigator.of(context).push(MaterialPageRoute(
                           builder: (context) => const UserInfo()));
