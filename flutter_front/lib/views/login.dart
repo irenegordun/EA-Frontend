@@ -137,10 +137,9 @@ class _LoginFormState extends State<LoginForm> {
           ElevatedButton(
             onPressed: () async {
               String formEmail = emailController.text.toString();
-              print(formEmail);
 
               String formPassword = passwordController.text.toString();
-              print(formPassword);
+
               if (emailController.text.isEmpty) {
                 openDialog("Enter your email please");
               } else if (passwordController.text.isEmpty) {
@@ -162,10 +161,8 @@ class _LoginFormState extends State<LoginForm> {
                       builder: (context) => const ListParkings()));
                 } else if (state == 2) {
                   await activateUser();
-                  print("hey");
-                  if (_activateBool == true) {
-                    print("sister");
 
+                  if (_activateBool == true) {
                     await UserServices().activateUser(user);
                   } else {
                     openDialog(
@@ -239,7 +236,7 @@ class _LoginFormState extends State<LoginForm> {
       );
   void activate() {
     _activateBool = true;
-    print("soul");
+
     Navigator.of(context, rootNavigator: true).pop();
   }
 

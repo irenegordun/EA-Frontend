@@ -60,6 +60,7 @@ class _LoginFormState extends State<LoginForm> {
 
   final passwordController = TextEditingController();
   final passwordController2 = TextEditingController();
+  bool _obscureText = true;
 
   Future openDialog(String text) => showDialog(
         context: context,
@@ -139,43 +140,57 @@ class _LoginFormState extends State<LoginForm> {
                   return null;
                 },
               ),
-              const SizedBox(height: 12),
+              const SizedBox(height: 8),
               TextFormField(
-                decoration: const InputDecoration(
+                decoration: InputDecoration(
                     border: OutlineInputBorder(),
                     labelText: 'Password *',
-                    // ignore: unnecessary_const
-                    icon: const Padding(
+                    suffix: IconButton(
+                      onPressed: () {
+                        setState(() {
+                          if (_obscureText) {
+                            _obscureText = false;
+                          } else {
+                            _obscureText = true;
+                          }
+                        });
+                      },
+                      icon: Icon(_obscureText == true
+                          ? Icons.remove_red_eye
+                          : Icons.password),
+                    ),
+                    icon: Padding(
                       padding: EdgeInsets.only(top: 15.0),
                       child: Icon(Icons.lock),
                     )),
-                obscureText: true,
+                obscureText: _obscureText,
                 controller: passwordController,
-                validator: (String? value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please enter some text';
-                  }
-                  return null;
-                },
               ),
-              const SizedBox(height: 12),
+              const SizedBox(height: 8),
               TextFormField(
-                decoration: const InputDecoration(
+                decoration: InputDecoration(
                     border: OutlineInputBorder(),
                     labelText: 'Repeat your password *',
-                    // ignore: unnecessary_const
-                    icon: const Padding(
+                    suffix: IconButton(
+                      onPressed: () {
+                        setState(() {
+                          if (_obscureText) {
+                            _obscureText = false;
+                          } else {
+                            _obscureText = true;
+                          }
+                        });
+                      },
+                      icon: Icon(_obscureText == true
+                          ? Icons.remove_red_eye
+                          : Icons.password),
+                    ),
+                    icon: Padding(
                       padding: EdgeInsets.only(top: 15.0),
                       child: Icon(Icons.lock),
                     )),
-                obscureText: true,
+                obscureText: _obscureText,
                 controller: passwordController2,
-                validator: (String? value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please enter some text';
-                  }
-                  return null;
-                },
               )
             ]),
           ),
@@ -212,19 +227,21 @@ class _LoginFormState extends State<LoginForm> {
                   int state = await UserServices().checkemail(user);
                   if (state == 1) {
                     await UserServices().createUser(user);
+                    openDialog('User registered, Welcome!');
                     Navigator.of(context).push(
                         MaterialPageRoute(builder: (context) => const Login()));
-                  } else {
+                  } else if (state == 2) {
                     openDialog(
                         "Can't use this email, belongs to another account!");
                   }
-                } else {}
+                } else {
+                  openDialog("Passwords doesn't match");
+                }
               });
             },
             style: ElevatedButton.styleFrom(
               elevation: 0,
               minimumSize: const Size(1024, 60),
-              backgroundColor: const Color.fromARGB(249, 244, 17, 13),
             ),
             child: const Text(
               'Register',
