@@ -156,15 +156,11 @@ class UserServices extends ChangeNotifier {
     var uri = Uri.parse('http://localhost:5432/api/users/checkemail');
     var userJS = json.encode(user.toJson());
     var response = await client.put(uri,
-        headers: {
-          'content-type': 'application/json',
-          'x-access-token': StorageAparcam().getToken()
-        },
-        body: userJS);
-    if (response.statusCode == 403) {
-      return -1;
-    } else {
+        headers: {'content-type': 'application/json'}, body: userJS);
+    if (response.statusCode == 200) {
       return 1;
+    } else {
+      return 2;
     }
   }
 

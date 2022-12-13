@@ -135,49 +135,45 @@ class _LoginFormState extends State<LoginForm> {
           ),
           const SizedBox(height: 24),
           ElevatedButton(
-            onPressed: () {
-              setState(() async {
-                String formEmail = emailController.text.toString();
-                print(formEmail);
+            onPressed: () async {
+              String formEmail = emailController.text.toString();
 
-                String formPassword = passwordController.text.toString();
-                print(formPassword);
-                if (emailController.text.isEmpty) {
-                  openDialog("Enter your email please");
-                } else if (passwordController.text.isEmpty) {
-                  openDialog("Enter your password please");
-                } else {
-                  var user = User(
-                      name: "",
-                      id: "",
-                      password: formPassword,
-                      email: formEmail,
-                      newpassword: "",
-                      myParkings: [],
-                      myFavourites: [],
-                      deleted: false,
-                      points: 0);
-                  int state = await UserServices().loginUser(user);
-                  if (state == 1) {
-                    Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) => const ListParkings()));
-                  } else if (state == 2) {
-                    await activateUser();
-                    print("hey");
-                    if (_activateBool == true) {
-                      print("sister");
+              String formPassword = passwordController.text.toString();
 
-                      await UserServices().activateUser(user);
-                    } else {
-                      openDialog(
-                          "You did not activate your user, please register another one or, if it was a mistake, press login again");
-                    }
+              if (emailController.text.isEmpty) {
+                openDialog("Enter your email please");
+              } else if (passwordController.text.isEmpty) {
+                openDialog("Enter your password please");
+              } else {
+                var user = User(
+                    name: "",
+                    id: "",
+                    password: formPassword,
+                    email: formEmail,
+                    newpassword: "",
+                    myParkings: [],
+                    myFavourites: [],
+                    deleted: false,
+                    points: 0);
+                int state = await UserServices().loginUser(user);
+                if (state == 1) {
+                  Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) => const ListParkings()));
+                } else if (state == 2) {
+                  await activateUser();
+
+                  if (_activateBool == true) {
+                    await UserServices().activateUser(user);
                   } else {
                     openDialog(
-                        'The user does not exist or maybe the password is wrong');
+                        "You did not activate your user, please register another one or, if it was a mistake, press login again");
                   }
+                } else {
+                  openDialog(
+                      'The user does not exist or maybe the password is wrong');
                 }
-              });
+              }
+              setState(() {});
             },
             style: ElevatedButton.styleFrom(
               elevation: 0,
@@ -240,7 +236,7 @@ class _LoginFormState extends State<LoginForm> {
       );
   void activate() {
     _activateBool = true;
-    print("soul");
+
     Navigator.of(context, rootNavigator: true).pop();
   }
 
