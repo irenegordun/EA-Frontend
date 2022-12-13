@@ -25,7 +25,6 @@ class MyParkings extends StatefulWidget {
   State<MyParkings> createState() => _MyParkingsState();
 }
 
-
 class _MyParkingsState extends State<MyParkings> {
   List<Parking> parkings = <Parking>[];
 
@@ -74,7 +73,7 @@ class _MyParkingsState extends State<MyParkings> {
       floatingActionButton: const AccessibilityButton(),
       appBar: AppBar(
         title: new Center(
-          child: new Text("Els Meus Parkings"),
+          child: new Text("My Parkings"),
         ),
         backgroundColor: Colors.blueGrey,
       ),
