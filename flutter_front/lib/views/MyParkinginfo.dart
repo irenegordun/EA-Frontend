@@ -24,6 +24,23 @@ class _MyParkingInfoState extends State<MyParkingInfo> {
     var response = await ParkingServices().deleteParking(parking);
   }
 
+  Future openDialog(String text) => showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+          title: Text(text),
+          actions: [
+            TextButton(
+              child: Text('Ok'),
+              onPressed: submit,
+            ),
+          ],
+        ),
+      );
+
+  void submit() {
+    Navigator.of(context, rootNavigator: true).pop();
+  }
+
   TextEditingController editingController1 = TextEditingController();
   TextEditingController editingController2 = TextEditingController();
   TextEditingController editingController3 = TextEditingController();
@@ -74,9 +91,13 @@ class _MyParkingInfoState extends State<MyParkingInfo> {
                           size: "",
                           difficulty: 0,
                           id: parking.id);
-                      ParkingServices().updateAddressParking(parking);
-                      Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => const MyParkingInfo()));
+                      if (parking.country != "") {
+                        ParkingServices().updateAddressParking(parking);
+                        Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context) => const MyParkingInfo()));
+                      } else {
+                        openDialog("Country field is empty!");
+                      }
                     }),
               ),
               ListTile(
@@ -104,9 +125,13 @@ class _MyParkingInfoState extends State<MyParkingInfo> {
                           size: parking.size,
                           difficulty: parking.difficulty,
                           id: parking.id);
-                      ParkingServices().updateAddressParking(parking);
-                      Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => const MyParkingInfo()));
+                      if (parking.city != "") {
+                        ParkingServices().updateAddressParking(parking);
+                        Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context) => const MyParkingInfo()));
+                      } else {
+                        openDialog("City field is empty!");
+                      }
                     }),
               ),
               ListTile(
@@ -134,9 +159,13 @@ class _MyParkingInfoState extends State<MyParkingInfo> {
                           size: parking.size,
                           difficulty: parking.difficulty,
                           id: parking.id);
-                      ParkingServices().updateAddressParking(parking);
-                      Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => const MyParkingInfo()));
+                      if (parking.street != "") {
+                        ParkingServices().updateAddressParking(parking);
+                        Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context) => const MyParkingInfo()));
+                      } else {
+                        openDialog("Street field is empty!");
+                      }
                     }),
               ),
               ListTile(
@@ -153,21 +182,26 @@ class _MyParkingInfoState extends State<MyParkingInfo> {
                 trailing: TextButton(
                     child: Text("Editar"),
                     onPressed: () {
-                      parking.streetNumber = int.parse(editingController4.text);
-                      parking = Parking(
-                          country: parking.country,
-                          city: parking.city,
-                          street: parking.street,
-                          streetNumber: parking.streetNumber,
-                          spotNumber: parking.spotNumber,
-                          type: parking.type,
-                          price: parking.price,
-                          size: parking.size,
-                          difficulty: parking.difficulty,
-                          id: parking.id);
-                      ParkingServices().updateAddressParking(parking);
-                      Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => const MyParkingInfo()));
+                      if (editingController4.text != "") {
+                        parking.streetNumber =
+                            int.parse(editingController4.text);
+                        parking = Parking(
+                            country: parking.country,
+                            city: parking.city,
+                            street: parking.street,
+                            streetNumber: parking.streetNumber,
+                            spotNumber: parking.spotNumber,
+                            type: parking.type,
+                            price: parking.price,
+                            size: parking.size,
+                            difficulty: parking.difficulty,
+                            id: parking.id);
+                        ParkingServices().updateAddressParking(parking);
+                        Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context) => const MyParkingInfo()));
+                      } else {
+                        openDialog("Street number field is empty!");
+                      }
                     }),
               ),
               ListTile(
@@ -184,21 +218,25 @@ class _MyParkingInfoState extends State<MyParkingInfo> {
                 trailing: TextButton(
                     child: Text("Editar"),
                     onPressed: () {
-                      parking.spotNumber = int.parse(editingController5.text);
-                      parking = Parking(
-                          country: parking.country,
-                          city: parking.city,
-                          street: parking.street,
-                          streetNumber: parking.streetNumber,
-                          spotNumber: parking.spotNumber,
-                          type: parking.type,
-                          price: parking.price,
-                          size: parking.size,
-                          difficulty: parking.difficulty,
-                          id: parking.id);
-                      ParkingServices().updateAddressParking(parking);
-                      Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => const MyParkingInfo()));
+                      if (editingController5.text != "") {
+                        parking.spotNumber = int.parse(editingController5.text);
+                        parking = Parking(
+                            country: parking.country,
+                            city: parking.city,
+                            street: parking.street,
+                            streetNumber: parking.streetNumber,
+                            spotNumber: parking.spotNumber,
+                            type: parking.type,
+                            price: parking.price,
+                            size: parking.size,
+                            difficulty: parking.difficulty,
+                            id: parking.id);
+                        ParkingServices().updateAddressParking(parking);
+                        Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context) => const MyParkingInfo()));
+                      } else {
+                        openDialog("Spot number field is empty!");
+                      }
                     }),
               ),
               ListTile(
@@ -223,21 +261,25 @@ class _MyParkingInfoState extends State<MyParkingInfo> {
                 trailing: TextButton(
                     child: Text("Editar"),
                     onPressed: () {
-                      parking.price = int.parse(editingController6.text);
-                      parking = Parking(
-                          country: parking.country,
-                          city: parking.city,
-                          street: parking.street,
-                          streetNumber: parking.streetNumber,
-                          spotNumber: parking.spotNumber,
-                          type: parking.type,
-                          price: parking.price,
-                          size: parking.size,
-                          difficulty: parking.difficulty,
-                          id: parking.id);
-                      ParkingServices().updatePriceParking(parking);
-                      Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => const MyParkingInfo()));
+                      if (editingController6.text != "") {
+                        parking.price = int.parse(editingController6.text);
+                        parking = Parking(
+                            country: parking.country,
+                            city: parking.city,
+                            street: parking.street,
+                            streetNumber: parking.streetNumber,
+                            spotNumber: parking.spotNumber,
+                            type: parking.type,
+                            price: parking.price,
+                            size: parking.size,
+                            difficulty: parking.difficulty,
+                            id: parking.id);
+                        ParkingServices().updatePriceParking(parking);
+                        Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context) => const MyParkingInfo()));
+                      } else {
+                        openDialog("Price field is empty!");
+                      }
                     }),
               ),
               ListTile(
