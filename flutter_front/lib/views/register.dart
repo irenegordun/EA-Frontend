@@ -100,7 +100,7 @@ class _LoginFormState extends State<LoginForm> {
               fontSize: 14,
             ),
           ),
-          const SizedBox(height: 24),
+          const SizedBox(height: 10),
           Form(
             key: widget._formKey,
             child: Column(children: [
@@ -121,7 +121,7 @@ class _LoginFormState extends State<LoginForm> {
                   return null;
                 },
               ),
-              const SizedBox(height: 12),
+              const SizedBox(height: 10),
               TextFormField(
                 decoration: const InputDecoration(
                     //dependencies: email_validator: '^2.1.16'
@@ -140,7 +140,7 @@ class _LoginFormState extends State<LoginForm> {
                   return null;
                 },
               ),
-              const SizedBox(height: 8),
+              const SizedBox(height: 10),
               TextFormField(
                 decoration: InputDecoration(
                     border: OutlineInputBorder(),
@@ -166,7 +166,7 @@ class _LoginFormState extends State<LoginForm> {
                 obscureText: _obscureText,
                 controller: passwordController,
               ),
-              const SizedBox(height: 8),
+              const SizedBox(height: 10),
               TextFormField(
                 decoration: InputDecoration(
                     border: OutlineInputBorder(),
@@ -194,7 +194,7 @@ class _LoginFormState extends State<LoginForm> {
               )
             ]),
           ),
-          const SizedBox(height: 24),
+          const SizedBox(height: 20),
           ElevatedButton(
             onPressed: () {
               setState(() async {
