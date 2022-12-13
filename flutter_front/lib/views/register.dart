@@ -211,31 +211,37 @@ class _LoginFormState extends State<LoginForm> {
 
                 String formPassword2 = passwordController2.text.toString();
                 print(formPassword2);
-
-                if (formPassword == formPassword2) {
-                  var user = User(
-                    name: formName,
-                    id: "",
-                    password: formPassword,
-                    email: formEmail,
-                    newpassword: "",
-                    myParkings: [],
-                    myFavourites: [],
-                    deleted: false,
-                    points: 0,
-                  );
-                  int state = await UserServices().checkemail(user);
-                  if (state == 1) {
-                    await UserServices().createUser(user);
-                    openDialog('User registered, Welcome!');
-                    Navigator.of(context).push(
-                        MaterialPageRoute(builder: (context) => const Login()));
-                  } else {
-                    openDialog(
-                        "Can't use this email, belongs to another account!");
-                  }
+                if (formPassword.isEmpty ||
+                    formPassword2.isEmpty ||
+                    formEmail.isEmpty ||
+                    formName.isEmpty) {
+                  openDialog("Please fill the blanks");
                 } else {
-                  openDialog("Passwords doesn't match");
+                  if (formPassword == formPassword2) {
+                    var user = User(
+                      name: formName,
+                      id: "",
+                      password: formPassword,
+                      email: formEmail,
+                      newpassword: "",
+                      myParkings: [],
+                      myFavourites: [],
+                      deleted: false,
+                      points: 0,
+                    );
+                    int state = await UserServices().checkemail(user);
+                    if (state == 1) {
+                      await UserServices().createUser(user);
+                      openDialog('User registered, Welcome!');
+                      Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => const Login()));
+                    } else {
+                      openDialog(
+                          "Can't use this email, belongs to another account!");
+                    }
+                  } else {
+                    openDialog("Passwords doesn't match");
+                  }
                 }
               });
             },
