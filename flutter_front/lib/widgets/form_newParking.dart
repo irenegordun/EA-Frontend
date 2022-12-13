@@ -16,6 +16,23 @@ class FormWidget extends StatefulWidget {
 class _MyStatefulWidgetState extends State<FormWidget> {
   String _selectedMenu = '';
 
+  Future openDialog(String text) => showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+          title: Text(text),
+          actions: [
+            TextButton(
+              child: Text('Ok'),
+              onPressed: submit,
+            ),
+          ],
+        ),
+      );
+
+  void submit() {
+    Navigator.of(context, rootNavigator: true).pop();
+  }
+
   final countryController = TextEditingController();
   final cityController = TextEditingController();
   final streetController = TextEditingController();
@@ -206,29 +223,39 @@ class _MyStatefulWidgetState extends State<FormWidget> {
                   String formDifficulty = difficultyController.text.toString();
                   print(formDifficulty);
 
-                  const String secret = 'clavesecreta';
+                  if (formCountry != "" &&
+                      formCity != "" &&
+                      formStreet != "" &&
+                      formNumber != "" &&
+                      formSpot != "" &&
+                      formType != "" &&
+                      formPrice != "" &&
+                      formSize != "" &&
+                      formDifficulty != "") {
+                    Parking p = Parking(
+                        //user_id:  StorageAparcam().getId(),
+                        // score: 0,
+                        id: '',
+                        country: formCountry,
+                        city: formCity,
+                        street: formStreet,
+                        streetNumber: int.parse(formNumber),
+                        spotNumber: int.parse(formSpot),
+                        type: formType,
+                        price: int.parse(formPrice),
+                        size: formSize,
+                        difficulty: int.parse(formDifficulty));
 
-
-                  Parking p = Parking(
-                      //user_id:  StorageAparcam().getId(),
-                      // score: 0,
-                      id: '',
-                      country: formCountry,
-                      city: formCity,
-                      street: formStreet,
-                      streetNumber: int.parse(formNumber),
-                      spotNumber: int.parse(formSpot),
-                      type: formType,
-                      price: int.parse(formPrice),
-                      size: formSize,
-                      difficulty: int.parse(formDifficulty));
-
-
-                  ParkingServices().createParking(p);
-                  setState(() {
-                    Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) => const ListParkings()));
-                  });
+                    ParkingServices().createParking(p);
+                    openDialog("Parking created.");
+                    setState(() {
+                      Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => const ListParkings()));
+                    });
+                  } else {
+                    openDialog(
+                        "Please make sure all the flieds are filled before submit.");
+                  }
                   ElevatedButton.styleFrom(
                       backgroundColor: Color.fromARGB(65, 143, 74, 163));
                 },

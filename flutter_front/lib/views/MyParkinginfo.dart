@@ -5,6 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_front/services/parkingServices.dart';
 
 import 'package:flutter_front/views/MyParkings.dart';
+import 'package:flutter_front/views/ListParkings.dart';
+import 'package:flutter_front/views/ParkingInfo.dart';
 import 'package:provider/provider.dart';
 import '../models/parking.dart';
 import '../widgets/drawer.dart';
@@ -20,8 +22,41 @@ class MyParkingInfo extends StatefulWidget {
 
 class _MyParkingInfoState extends State<MyParkingInfo> {
   var isLoaded = false;
+  bool seguro = false;
   deleteOneParking(Parking parking) async {
-    var response = await ParkingServices().deleteParking(parking);
+    await yousure();
+    if (seguro == true) {
+      ParkingServices().deleteParking(parking);
+      openDialog("Parking deleted.");
+      Navigator.of(context)
+          .push(MaterialPageRoute(builder: (context) => const ListParkings()));
+    } else {
+      openDialog("Canceled.");
+      Navigator.of(context)
+          .push(MaterialPageRoute(builder: (context) => const MyParkingInfo()));
+    }
+  }
+
+  Future yousure() => showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+          title: Text("Are you sure you want to delete your account"),
+          actions: [
+            TextButton(
+              child: Text('Yes'),
+              onPressed: sure,
+            ),
+            TextButton(
+              child: Text('No'),
+              onPressed: submit,
+            ),
+          ],
+        ),
+      );
+
+  void sure() {
+    seguro = true;
+    Navigator.of(context, rootNavigator: true).pop();
   }
 
   Future openDialog(String text) => showDialog(

@@ -207,20 +207,15 @@ class _UserInfoState extends State<UserInfo> {
                           myFavourites: [],
                           myParkings: [],
                           deleted: false);
-                      if (email != "") {
+                      if (newemail != "") {
                         if (newemail == email) {
                           openDialog("Alredy your email!");
                         } else {
                           int state = await UserServices().checkemail(user);
+                          print(state);
                           if (state == 1) {
-                            bool updated =
-                                await UserServices().updateUseremail(user);
-                            if (updated == true) {
-                              openDialog("Email updated correctly!");
-                            } else {
-                              openDialog(
-                                  "Can't use this email, belongs to another account!");
-                            }
+                            UserServices().updateUseremail(user);
+                            openDialog("Email updated correctly!");
                           } else {
                             openDialog(
                                 "Can't use this email, belongs to another account!");
