@@ -3,6 +3,7 @@ import 'package:flutter_front/views/Login.dart';
 import '../models/user.dart';
 import '../services/userServices.dart';
 import '../widgets/adaptive_scaffold.dart';
+import 'package:password_strength_checker/password_strength_checker.dart';
 
 void main() {
   runApp(const Register());
@@ -81,6 +82,10 @@ class _LoginFormState extends State<LoginForm> {
 
   @override
   Widget build(BuildContext context) {
+    final passNotifier = ValueNotifier<PasswordStrength?>(null);
+    // should contain: upepercase, lowercase, digit, spec char, 8 chars
+    RegExp regex =
+        RegExp(r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{8,}$');
     return Padding(
       padding: const EdgeInsets.all(24.0),
       child: Column(
@@ -142,6 +147,9 @@ class _LoginFormState extends State<LoginForm> {
               ),
               const SizedBox(height: 10),
               TextFormField(
+                onChanged: (value) {
+                  passNotifier.value = PasswordStrength.calculate(text: value);
+                },
                 decoration: InputDecoration(
                     border: OutlineInputBorder(),
                     labelText: 'Password *',
@@ -159,12 +167,16 @@ class _LoginFormState extends State<LoginForm> {
                           ? Icons.remove_red_eye
                           : Icons.password),
                     ),
-                    icon: Padding(
+                    icon: const Padding(
                       padding: EdgeInsets.only(top: 15.0),
                       child: Icon(Icons.lock),
                     )),
                 obscureText: _obscureText,
                 controller: passwordController,
+              ),
+              const SizedBox(height: 20),
+              PasswordStrengthChecker(
+                strength: passNotifier,
               ),
               const SizedBox(height: 10),
               TextFormField(
@@ -185,7 +197,7 @@ class _LoginFormState extends State<LoginForm> {
                           ? Icons.remove_red_eye
                           : Icons.password),
                     ),
-                    icon: Padding(
+                    icon: const Padding(
                       padding: EdgeInsets.only(top: 15.0),
                       child: Icon(Icons.lock),
                     )),
@@ -201,7 +213,6 @@ class _LoginFormState extends State<LoginForm> {
                 //aquí dona error
                 String formName = nameController.text.toString();
                 print(formName);
-                //print(nameController.text.toString());
 
                 String formEmail = emailController.text.toString();
                 print(formEmail);
@@ -216,6 +227,9 @@ class _LoginFormState extends State<LoginForm> {
                     formEmail.isEmpty ||
                     formName.isEmpty) {
                   openDialog("Please fill the blanks");
+                } else if (!regex.hasMatch(formPassword)) {
+                  openDialog(
+                      'Password too weak, try adding different characters');
                 } else {
                   if (formPassword == formPassword2) {
                     var user = User(
