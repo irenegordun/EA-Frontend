@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_front/views/ListParkings.dart';
 import '../services/parkingServices.dart';
-import 'package:dart_jsonwebtoken/dart_jsonwebtoken.dart';
 import 'package:flutter_front/models/parking.dart';
-
-enum Menu { car, moto }
 
 class FormWidget extends StatefulWidget {
   const FormWidget({super.key});
@@ -12,6 +9,11 @@ class FormWidget extends StatefulWidget {
   @override
   State<FormWidget> createState() => _MyStatefulWidgetState();
 }
+
+const List<String> typeList = <String>['car', 'moto', 'van'];
+const List<String> sizeList = <String>['2x1', '5x2.5', '8x3.5'];
+String dropdownTypeValue = typeList.first;
+String dropdownSizeValue = sizeList.first;
 
 class _MyStatefulWidgetState extends State<FormWidget> {
   String _selectedMenu = '';
@@ -22,8 +24,8 @@ class _MyStatefulWidgetState extends State<FormWidget> {
           title: Text(text),
           actions: [
             TextButton(
-              child: Text('Ok'),
               onPressed: submit,
+              child: const Text('Ok'),
             ),
           ],
         ),
@@ -38,9 +40,7 @@ class _MyStatefulWidgetState extends State<FormWidget> {
   final streetController = TextEditingController();
   final numberController = TextEditingController();
   final spotController = TextEditingController();
-  final typeController = TextEditingController();
   final priceController = TextEditingController();
-  final sizeController = TextEditingController();
   final difficultyController = TextEditingController();
 
   final GlobalKey<FormState> _formKey =
@@ -54,26 +54,22 @@ class _MyStatefulWidgetState extends State<FormWidget> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           ListTile(
-            leading: Icon(Icons.public),
+            leading: const Icon(Icons.public),
             title: TextFormField(
               decoration: const InputDecoration(
                 hintText: 'Enter the country',
               ),
               controller: countryController,
-
               validator: (String? value) {
                 if (value == null || value.isEmpty) {
                   return 'Please enter some text';
                 }
                 return null;
               },
-              // onSaved: (value) {
-              //   nameValue = value!;
-              // },
             ),
           ),
           ListTile(
-            leading: Icon(Icons.location_city),
+            leading: const Icon(Icons.location_city),
             title: TextFormField(
               decoration: const InputDecoration(
                 hintText: 'Enter the city',
@@ -88,7 +84,7 @@ class _MyStatefulWidgetState extends State<FormWidget> {
             ),
           ),
           ListTile(
-            leading: Icon(Icons.signpost),
+            leading: const Icon(Icons.signpost),
             title: TextFormField(
               decoration: const InputDecoration(
                 hintText: 'Enter the street name',
@@ -103,7 +99,7 @@ class _MyStatefulWidgetState extends State<FormWidget> {
             ),
           ),
           ListTile(
-            leading: Icon(Icons.numbers_outlined),
+            leading: const Icon(Icons.numbers_outlined),
             title: TextFormField(
               decoration: const InputDecoration(
                 hintText: 'Enter the street number',
@@ -118,7 +114,7 @@ class _MyStatefulWidgetState extends State<FormWidget> {
             ),
           ),
           ListTile(
-            leading: Icon(Icons.numbers),
+            leading: const Icon(Icons.numbers),
             title: TextFormField(
               decoration: const InputDecoration(
                 hintText: 'Enter the parking spot number',
@@ -133,28 +129,29 @@ class _MyStatefulWidgetState extends State<FormWidget> {
             ),
           ),
           ListTile(
-            leading: Icon(Icons.car_rental_sharp),
-            title: Text("Select the vehicle type",
-                style: TextStyle(color: Colors.grey)),
-            trailing: PopupMenuButton<Menu>(
-                onSelected: (Menu item) {
+              leading: const Icon(Icons.car_rental_sharp),
+              title: const Text("Select the vehicle type",
+                  style: TextStyle(color: Colors.grey)),
+              trailing: DropdownButton<String>(
+                value: dropdownTypeValue,
+                icon: const Icon(Icons.arrow_downward),
+                elevation: 16,
+                style: const TextStyle(color: Colors.blueGrey),
+                underline: Container(height: 2, color: Colors.blueGrey),
+                onChanged: (String? value) {
                   setState(() {
-                    _selectedMenu = item.name;
+                    dropdownTypeValue = value!;
                   });
                 },
-                itemBuilder: (BuildContext context) => <PopupMenuEntry<Menu>>[
-                      const PopupMenuItem<Menu>(
-                        value: Menu.car,
-                        child: Text('Car'),
-                      ),
-                      const PopupMenuItem<Menu>(
-                        value: Menu.moto,
-                        child: Text('Moto'),
-                      ),
-                    ]),
-          ),
+                items: typeList.map<DropdownMenuItem<String>>((String value) {
+                  return DropdownMenuItem<String>(
+                    value: value,
+                    child: Text(value),
+                  );
+                }).toList(),
+              )),
           ListTile(
-            leading: Icon(Icons.price_change),
+            leading: const Icon(Icons.price_change),
             title: TextFormField(
               decoration: const InputDecoration(
                 hintText: 'Enter the price',
@@ -169,22 +166,29 @@ class _MyStatefulWidgetState extends State<FormWidget> {
             ),
           ),
           ListTile(
-            leading: Icon(Icons.aspect_ratio),
-            title: TextFormField(
-              decoration: const InputDecoration(
-                hintText: 'Enter the parking spot size',
-              ),
-              controller: sizeController,
-              validator: (String? value) {
-                if (value == null || value.isEmpty) {
-                  return 'Please enter some text';
-                }
-                return null;
-              },
-            ),
-          ),
+              leading: const Icon(Icons.aspect_ratio),
+              title: const Text("Select the dimensions of the parking spot",
+                  style: TextStyle(color: Colors.grey)),
+              trailing: DropdownButton<String>(
+                value: dropdownSizeValue,
+                icon: const Icon(Icons.arrow_downward),
+                elevation: 16,
+                style: const TextStyle(color: Colors.blueGrey),
+                underline: Container(height: 2, color: Colors.blueGrey),
+                onChanged: (String? value) {
+                  setState(() {
+                    dropdownSizeValue = value!;
+                  });
+                },
+                items: sizeList.map<DropdownMenuItem<String>>((String value) {
+                  return DropdownMenuItem<String>(
+                    value: value,
+                    child: Text(value),
+                  );
+                }).toList(),
+              )),
           ListTile(
-            leading: Icon(Icons.balance),
+            leading: const Icon(Icons.balance),
             title: TextFormField(
               decoration: const InputDecoration(
                 hintText: 'Enter the difficulty',
@@ -213,12 +217,12 @@ class _MyStatefulWidgetState extends State<FormWidget> {
                   String formSpot = spotController.text.toString();
                   print(formSpot);
 
-                  String formType = _selectedMenu.toString();
+                  String formType = dropdownTypeValue.toString();
                   print(formType);
 
                   String formPrice = priceController.text.toString();
                   print(formPrice);
-                  String formSize = sizeController.text.toString();
+                  String formSize = dropdownSizeValue.toString();
                   print(formSize);
                   String formDifficulty = difficultyController.text.toString();
                   print(formDifficulty);
@@ -257,7 +261,7 @@ class _MyStatefulWidgetState extends State<FormWidget> {
                         "Please make sure all the flieds are filled before submit.");
                   }
                   ElevatedButton.styleFrom(
-                      backgroundColor: Color.fromARGB(65, 143, 74, 163));
+                      backgroundColor: const Color.fromARGB(65, 143, 74, 163));
                 },
                 child: const Text('Submit')),
           )

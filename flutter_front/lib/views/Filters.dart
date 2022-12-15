@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
 
 class Filters extends StatefulWidget {
   const Filters({super.key});
@@ -8,137 +7,166 @@ class Filters extends StatefulWidget {
   State<Filters> createState() => _FiltersState();
 }
 
+const List<String> sizeList = <String>['2x1', '5x2.5', '8x3.5'];
+const List<String> typeList = <String>['car', 'moto', 'van'];
+const List<String> sortList = <String>[
+  'score (high to low)',
+  'price (low to high)'
+];
+String dropdownTypeValue = typeList.first;
+String dropdownSizeValue = sizeList.first;
+String dropdownSortValue = sortList.first;
+
+double sliderScore = 0.0;
+double _startValue = 0.0;
+double _endValue = 100.0;
+
 class _FiltersState extends State<Filters> {
-  double _slider2Val = 50.0;
-  double _slider1Val = 0.5;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: new Center(
-          child: new Text('F i l t e r s'),
+        title: const Center(
+          child: Text('F i l t e r s'),
         ),
         backgroundColor: Colors.blueGrey,
       ),
-
       body: Center(
         child: Card(
           color: Colors.white,
           child: Column(
-          children: [
-            ListTile(
-              title: Text('Ordenar por',
-                  style: TextStyle(fontWeight: FontWeight.w500)),
-              subtitle: Text("Ordenar por:"),
-              trailing: 
-                PopupMenuButton(
-                  itemBuilder: (context){
-                    return [
-                      PopupMenuItem<int>(
-                        value: 0,
-                        child: Text("Score (from lowest to highest)"),
-                      ),
-                      PopupMenuItem<int>(
-                        value: 1,
-                        child: Text("Price(from lowest to highest)"),
-                      ),
-                    ];
-                  },
-                )
-              
-            ),
-            Divider(),
-            ListTile(
-              title: Text('Minimum score',
-                  style: TextStyle(fontWeight: FontWeight.w500)),
-              
-            ),
-            Divider(),
-            ListTile(
-              title: Text('Maximum score',
-                  style: TextStyle(fontWeight: FontWeight.w500)),
-              
-            ),
-            Divider(),
-            ListTile(
-              title: Text('Maximum price',
-                  style: TextStyle(fontWeight: FontWeight.w500)),
-                
-              /*trailing: Slider(
-                onChanged: (double value) {
-                  setState(() => this._slider1Val = value);
+            children: [
+              ListTile(
+                  title: const Text('Sort by',
+                      style: TextStyle(fontWeight: FontWeight.w500)),
+                  trailing: DropdownButton<String>(
+                    value: dropdownSortValue,
+                    icon: const Icon(Icons.arrow_downward),
+                    elevation: 16,
+                    style: const TextStyle(color: Colors.blueGrey),
+                    underline: Container(height: 2, color: Colors.blueGrey),
+                    onChanged: (String? newvalue) {
+                      setState(() {
+                        dropdownSortValue = newvalue!;
+                      });
+                    },
+                    items:
+                        sortList.map<DropdownMenuItem<String>>((String item) {
+                      return DropdownMenuItem<String>(
+                        value: item,
+                        child: Text(item),
+                      );
+                    }).toList(),
+                  )),
+              const Divider(),
+              const ListTile(
+                title: Text('Minimum score',
+                    style: TextStyle(fontWeight: FontWeight.w500)),
+              ),
+              Slider(
+                value: sliderScore,
+                onChanged: (newScore) {
+                  setState(() {
+                    sliderScore = newScore;
+                  });
                 },
-                value: this._slider1Val,
-              ),*/
-              /*trailing: 
-                Slider(
-                  value: _currentSliderValue,
-                  min: 0,
-                  max: 100,
-                  divisions: 10,
-                  label: _currentSliderValue.round().toString(),
-                  onChanged: (double value) {
-                    setState(() {
-                      _currentSliderValue = value;
-                    });
-                  },
-                ),*/
-            ),
-            Divider(),
-            ListTile(
-              title: Text('Type of vehicle',
-                  style: TextStyle(fontWeight: FontWeight.w500)),
-              trailing: 
-                PopupMenuButton(
-                  itemBuilder: (context){
-                    return [
-                      PopupMenuItem<int>(
-                        value: 0,
-                        child: Text("20x30x50"),
-                      ),
-                      PopupMenuItem<int>(
-                        value: 1,
-                        child: Text("20x50x80"),
-                      ),
-                    ];
-                  },
-                )
-            ),
-            Divider(),
-            ListTile(
-              title: Text('Dimensions',
-                  style: TextStyle(fontWeight: FontWeight.w500)),
-              trailing: 
-                PopupMenuButton(
-                  itemBuilder: (context){
-                    return [
-                      PopupMenuItem<int>(
-                        value: 0,
-                        child: Text("Car"),
-                      ),
-                      PopupMenuItem<int>(
-                        value: 1,
-                        child: Text("Motorbike"),
-                      ),
-                    ];
-                  },
-                )
-            ),
-             ListTile(
+                min: 0.0,
+                max: 10.0,
+                divisions: 5,
+                activeColor: Colors.blueGrey,
+                inactiveColor: Colors.blueGrey.shade100,
+                thumbColor: Colors.blueAccent,
+                label: "$sliderScore",
+              ),
+              const Divider(),
+              const ListTile(
+                title: Text('Price range',
+                    style: TextStyle(fontWeight: FontWeight.w500)),
+              ),
+              RangeSlider(
+                values: RangeValues(_startValue, _endValue),
+                onChanged: (newValues) {
+                  setState(() {
+                    _startValue = newValues.start;
+                    _endValue = newValues.end;
+                  });
+                },
+                min: 0.0,
+                max: 100.0,
+                divisions: 5,
+                activeColor: Colors.blueGrey,
+                inactiveColor: Colors.blueGrey.shade100,
+                labels: RangeLabels(
+                  _startValue.round().toString(),
+                  _endValue.round().toString(),
+                ),
+              ),
+              const Divider(),
+              ListTile(
+                  title: const Text('Type of vehicle',
+                      style: TextStyle(fontWeight: FontWeight.w500)),
+                  trailing: DropdownButton<String>(
+                    value: dropdownTypeValue,
+                    icon: const Icon(Icons.arrow_downward),
+                    elevation: 16,
+                    style: const TextStyle(color: Colors.blueGrey),
+                    underline: Container(height: 2, color: Colors.blueGrey),
+                    onChanged: (String? value) {
+                      setState(() {
+                        dropdownTypeValue = value!;
+                      });
+                    },
+                    items:
+                        typeList.map<DropdownMenuItem<String>>((String value) {
+                      return DropdownMenuItem<String>(
+                        value: value,
+                        child: Text(value),
+                      );
+                    }).toList(),
+                  )),
+              const Divider(),
+              ListTile(
+                  title: const Text('Dimensions',
+                      style: TextStyle(fontWeight: FontWeight.w500)),
+                  trailing: DropdownButton<String>(
+                    value: dropdownSizeValue,
+                    icon: const Icon(Icons.arrow_downward),
+                    elevation: 16,
+                    style: const TextStyle(color: Colors.blueGrey),
+                    underline: Container(height: 2, color: Colors.blueGrey),
+                    onChanged: (String? value) {
+                      setState(() {
+                        dropdownSizeValue = value!;
+                      });
+                    },
+                    items:
+                        sizeList.map<DropdownMenuItem<String>>((String value) {
+                      return DropdownMenuItem<String>(
+                        value: value,
+                        child: Text(value),
+                      );
+                    }).toList(),
+                  )),
+              ListTile(
                 contentPadding: EdgeInsets.zero,
                 title: ElevatedButton(
-                  onPressed: () {},
-                  child: const Text('View the results'),
-                  style: ButtonStyle(
-                    backgroundColor: MaterialStatePropertyAll<Color>(Colors.blueGrey),
+                  onPressed: () {
+                    print('price range:');
+                    print(_startValue);
+                    print(_endValue);
+                    print('min score: ');
+                    print(sliderScore);
+                  },
+                  style: const ButtonStyle(
+                    backgroundColor:
+                        MaterialStatePropertyAll<Color>(Colors.blueGrey),
                   ),
+                  child: const Text('View the results'),
                 ),
-                
-             )
-          ],
+              )
+            ],
+          ),
         ),
-        ),
-        
       ),
     );
   }

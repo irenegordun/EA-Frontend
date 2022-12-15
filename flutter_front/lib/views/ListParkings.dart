@@ -49,8 +49,8 @@ class _ListParkingsState extends State<ListParkings> {
       drawer: const DrawerScreen(),
       floatingActionButton: const AccessibilityButton(),
       appBar: AppBar(
-        title: new Center(
-          child: new Text("A P A R C A ' M"),
+        title: const Center(
+          child: Text("A P A R C A ' M"),
         ),
         backgroundColor: Colors.blueGrey,
       ),

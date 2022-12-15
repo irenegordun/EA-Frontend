@@ -1,22 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_front/services/parkingServices.dart';
 import 'package:flutter_front/services/userServices.dart';
-
 import 'package:flutter_front/views/MyParkingInfo.dart';
 import 'package:flutter_front/widgets/buttonAccessibility.dart';
-
-import 'package:flutter_front/views/UserInfo.dart';
-
 import 'package:provider/provider.dart';
 import '../models/user.dart';
 import '../models/parking.dart';
-import 'package:localstorage/localstorage.dart';
 import 'package:flutter_front/services/localStorage.dart';
 //import '../widgets/buttonAccessibility.dart';
 import '../widgets/drawer.dart';
-
-//millorar visualment
 
 class MyParkings extends StatefulWidget {
   const MyParkings({super.key});
