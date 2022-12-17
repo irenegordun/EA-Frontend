@@ -53,6 +53,7 @@ dependencies:
   localstorage: ^4.0.0+1
   encrypt: ^5.0.1
   hex: ^0.2.0
+  password_strength_checker: ^1.2.1
 dev_dependencies:
   flutter_test:
     sdk: flutter

@@ -1,17 +1,10 @@
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_front/views/MyParkings.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_front/services/parkingServices.dart';
-
-import 'package:flutter_front/views/MyParkings.dart';
 import 'package:flutter_front/views/ListParkings.dart';
-import 'package:flutter_front/views/ParkingInfo.dart';
 import 'package:provider/provider.dart';
 import '../models/parking.dart';
 import '../widgets/drawer.dart';
-import 'package:flutter_front/services/localStorage.dart';
-import 'package:localstorage/localstorage.dart';
 
 class MyParkingInfo extends StatefulWidget {
   const MyParkingInfo({super.key});
@@ -19,6 +12,9 @@ class MyParkingInfo extends StatefulWidget {
   @override
   State<MyParkingInfo> createState() => _MyParkingInfoState();
 }
+
+const List<String> sizeList = <String>['2x1', '5x2.5', '8x3.5'];
+String dropdownSizeValue = sizeList.first;
 
 class _MyParkingInfoState extends State<MyParkingInfo> {
   var isLoaded = false;
@@ -40,7 +36,7 @@ class _MyParkingInfoState extends State<MyParkingInfo> {
   Future yousure() => showDialog(
         context: context,
         builder: (context) => AlertDialog(
-          title: Text("Are you sure you want to delete your account"),
+          title: Text("Are you sure you want to delete this"),
           actions: [
             TextButton(
               child: Text('Yes'),
@@ -323,6 +319,24 @@ class _MyParkingInfoState extends State<MyParkingInfo> {
                 leading: Icon(
                   Icons.aspect_ratio_outlined,
                   color: Colors.blue[500],
+                ),
+                trailing: DropdownButton<String>(
+                  value: dropdownSizeValue,
+                  icon: const Icon(Icons.arrow_downward),
+                  elevation: 16,
+                  style: const TextStyle(color: Colors.blueGrey),
+                  underline: Container(height: 2, color: Colors.blueGrey),
+                  onChanged: (String? value) {
+                    setState(() {
+                      dropdownSizeValue = value!;
+                    });
+                  },
+                  items: sizeList.map<DropdownMenuItem<String>>((String value) {
+                    return DropdownMenuItem<String>(
+                      value: value,
+                      child: Text(value),
+                    );
+                  }).toList(),
                 ),
               ),
               ListTile(

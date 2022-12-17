@@ -70,21 +70,27 @@ class _MyStatefulWidgetState extends State<FormWidget> {
               ),
               controller: passwordController,
               validator: (String? value) {
+                // should contain: upepercase, lowercase, digit, spec char, 8 chars
+                RegExp regex = RegExp(
+                    r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{8,}$');
                 if (value == null || value.isEmpty) {
                   return 'Please enter some text';
+                } else {
+                  if (!regex.hasMatch(value)) {
+                    return 'Password too weak, try adding different characters';
+                  } else {
+                    return null;
+                  }
                 }
-                return null;
               },
             ),
           ),
-
           TextButton(
               onPressed: () {
                 setState(() async {
-                  //aquí dona error
+                  //aquí dona problemes
                   String formName = nameController.text.toString();
                   print(formName);
-                  //print(nameController.text.toString());
 
                   String formEmail = emailController.text.toString();
                   print(formEmail);
@@ -97,7 +103,6 @@ class _MyStatefulWidgetState extends State<FormWidget> {
                       id: "",
                       password: formPassword,
                       email: formEmail,
-
                       newpassword: "",
                       myParkings: [],
                       myFavourites: [],
@@ -105,25 +110,9 @@ class _MyStatefulWidgetState extends State<FormWidget> {
                       points: 0);
 
                   await UserServices().createUser(user);
-                  //Navigator.of(context).push(
-                  //  MaterialPageRoute(builder: (context) => const ListPage())
-                  //);
                 });
               },
               child: Text('Submit')),
-          // Padding(
-          //   padding: const EdgeInsets.symmetric(vertical: 16.0),
-          //   child: ElevatedButton(
-          //     onPressed: () {
-          //       // Validate will return true if the form is valid, or false if
-          //       // the form is invalid.
-          //       if (_formKey.currentState!.validate()) {
-          //         // Process data.
-          //       }
-          //     },
-          //     child: const Text('Submit'),
-          //   ),
-          // ),
         ],
       ),
     );
