@@ -1,15 +1,8 @@
 import 'dart:convert';
-
 import 'package:flutter_front/services/localStorage.dart';
-import 'package:localstorage/localstorage.dart';
-
-
 import 'package:flutter/material.dart';
-import 'package:flutter_front/views/ListParkings.dart';
 import '../models/parking.dart';
 import 'package:http/http.dart' as http;
-import 'package:flutter_front/services/localStorage.dart';
-import 'package:localstorage/localstorage.dart';
 
 DetailsModel detailsmodelfromJson(Map<String, dynamic> prm) =>
     DetailsModel.fromJson(prm);
@@ -63,6 +56,19 @@ class ParkingServices extends ChangeNotifier {
     return null;
   }
 
+  Future<List<Parking>?> getFilteredParkings(String filters) async {
+    var client = http.Client();
+    print(filters);
+    var uri = Uri.parse('http://localhost:5432/api/parkings/filter');
+    var response = await client.post(uri,
+        headers: {'content-type': 'application/json'}, body: filters);
+    if (response.statusCode == 200) {
+      var json = response.body;
+      return parkingsFromJson(json);
+    }
+    return null;
+  }
+
   Future<void> deleteParking(Parking parking) async {
     var client = http.Client();
     var id = parking.id;
@@ -80,13 +86,11 @@ class ParkingServices extends ChangeNotifier {
     return null;
   }
 
-  //Future<void> createParking(Parking parking) async {
   Future<void> createParking(Parking parking) async {
     var client = http.Client();
     var uri = Uri.parse('http://localhost:5432/api/parkings/');
     var parkingJS = json.encode(parking.toJson());
     var response = await client.post(uri,
-        //headers: {'content-type': 'application/json'}, body: parkingJS);
         headers: {
           'content-type': 'application/json',
           'x-access-token': StorageAparcam().getToken()
@@ -118,7 +122,6 @@ class ParkingServices extends ChangeNotifier {
   }
 
   Future<dynamic> updateAddressParking(Parking parking) async {
-    print("4444444444444444444444444");
     var client = http.Client();
     var uri = Uri.parse('http://localhost:5432/api/parkings/updateAddress/');
     var parkingJS = jsonEncode(parking.toJson());
@@ -128,7 +131,6 @@ class ParkingServices extends ChangeNotifier {
           'x-access-token': StorageAparcam().getToken()
         },
         body: parkingJS);
-    print(parkingJS);
     if (response.statusCode == 200) {
       var json = response.body;
       return true;
