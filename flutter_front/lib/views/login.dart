@@ -153,6 +153,7 @@ class _LoginFormState extends State<LoginForm> {
                     newpassword: "",
                     myParkings: [],
                     myFavourites: [],
+                    myBookings: [],
                     deleted: false,
                     points: 0);
                 int state = await UserServices().loginUser(user);

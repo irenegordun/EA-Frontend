@@ -16,16 +16,13 @@ class User {
       required this.name,
       required this.id,
       required this.password,
-
       required this.newpassword,
       required this.email,
       required this.myParkings,
       required this.points,
       required this.deleted,
-      required this.myFavourites});
-
-
-
+      required this.myFavourites,
+      required this.myBookings});
 
   String id;
   String name;
@@ -37,9 +34,7 @@ class User {
   int points;
   bool deleted;
   List<dynamic>? myFavourites;
-
-
-
+  List<dynamic>? myBookings;
 
   void setemail(String email) {
     this.email = email;
@@ -57,16 +52,13 @@ class User {
         id: json["_id"],
         name: json["name"],
         password: "",
-
         newpassword: "",
         email: json["email"],
         myParkings: json["myParkings"],
         points: json["points"],
         myFavourites: json["myFavourites"],
+        myBookings: json["myBookings"],
         deleted: json["deleted"],
-
-
-
       );
   factory User.fromJsontoken(Map<String, dynamic> json) => User(
         id: json["_id"],
@@ -74,14 +66,11 @@ class User {
         password: json["password"],
         newpassword: "",
         email: json["email"],
-
         myParkings: json["myParkings"],
         points: json["points"],
         myFavourites: json["myFavourites"],
+        myBookings: json["myBookings"],
         deleted: json["deleted"],
-
-
-
       );
 
   Map<String, dynamic> toJson() => {
@@ -90,14 +79,11 @@ class User {
         "password": password,
         "newpassword": newpassword,
         "email": email,
-
         "myParkings": myParkings,
         "points": points,
         "myFavourites": myFavourites,
+        "myBookings": myBookings,
         "deleted": deleted,
-
-
-
       };
 
   Map<String, dynamic> LogintoJson() => {

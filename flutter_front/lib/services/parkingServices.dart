@@ -97,9 +97,9 @@ class ParkingServices extends ChangeNotifier {
         },
         body: parkingJS);
     if (response.statusCode == 200) {
-      return print("Account deleted");
+      return print("Parking created");
     } else {
-      return print("ERROR: can't delete the account");
+      return print("ERROR: can't create the parkings spot");
     }
   }
 

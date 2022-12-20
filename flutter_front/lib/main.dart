@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_front/services/bookingServices.dart';
 import 'package:flutter_front/services/userServices.dart';
 import 'package:flutter_front/views/Filters.dart';
 import 'package:flutter_front/views/ListParkings.dart';
@@ -23,6 +24,7 @@ void main() {
       providers: [
         ChangeNotifierProvider(create: (_) => UserServices()),
         ChangeNotifierProvider(create: (_) => ParkingServices()),
+        ChangeNotifierProvider(create: (_) => BookingServices()),
       ],
       child: const MyApp(),
     ),
