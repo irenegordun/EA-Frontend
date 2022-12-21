@@ -44,6 +44,7 @@ class UserServices extends ChangeNotifier {
       email: "",
       myParkings: [],
       myFavourites: [],
+      myBookings: [],
       deleted: false,
       points: 0,
       newpassword: "");

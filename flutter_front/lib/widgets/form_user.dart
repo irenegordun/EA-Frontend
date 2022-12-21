@@ -106,6 +106,7 @@ class _MyStatefulWidgetState extends State<FormWidget> {
                       newpassword: "",
                       myParkings: [],
                       myFavourites: [],
+                      myBookings: [],
                       deleted: false,
                       points: 0);
 

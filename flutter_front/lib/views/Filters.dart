@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_front/services/localStorage.dart';
+import 'package:flutter_front/views/ListParkings.dart';
 
 class Filters extends StatefulWidget {
   const Filters({super.key});
@@ -9,10 +11,7 @@ class Filters extends StatefulWidget {
 
 const List<String> sizeList = <String>['2x1', '5x2.5', '8x3.5'];
 const List<String> typeList = <String>['car', 'moto', 'van'];
-const List<String> sortList = <String>[
-  'score (high to low)',
-  'price (low to high)'
-];
+const List<String> sortList = <String>['score', 'price'];
 String dropdownTypeValue = typeList.first;
 String dropdownSizeValue = sizeList.first;
 String dropdownSortValue = sortList.first;
@@ -151,11 +150,16 @@ class _FiltersState extends State<Filters> {
                 contentPadding: EdgeInsets.zero,
                 title: ElevatedButton(
                   onPressed: () {
-                    print('price range:');
-                    print(_startValue);
-                    print(_endValue);
-                    print('min score: ');
-                    print(sliderScore);
+                    StorageAparcam().addFiltersToLocalStorage(
+                        true,
+                        dropdownSortValue,
+                        sliderScore,
+                        _startValue,
+                        _endValue,
+                        dropdownTypeValue,
+                        dropdownSizeValue);
+                    Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => const ListParkings()));
                   },
                   style: const ButtonStyle(
                     backgroundColor:

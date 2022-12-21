@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:flutter_front/services/localStorage.dart';
 import 'package:flutter_front/services/parkingServices.dart';
 import 'package:flutter_front/views/MyParkings.dart';
 import 'package:flutter_front/views/ParkingInfo.dart';
 import 'package:flutter_front/widgets/buttonAccessibility.dart';
 import 'package:provider/provider.dart';
+import 'dart:convert';
 
 import '../models/parking.dart';
 //import '../widgets/buttonAccessibility.dart';
@@ -33,7 +35,22 @@ class _ListParkingsState extends State<ListParkings> {
   }
 
   getData() async {
-    parkings = await ParkingServices().getParkings();
+    if (StorageAparcam().getFiltered()) {
+      print('main llista: filtered TRUE');
+      var filters = {};
+      filters["sortby"] = StorageAparcam().getSortby();
+      filters["type"] = StorageAparcam().getType();
+      filters["size"] = StorageAparcam().getDimensions();
+      filters["smin"] = StorageAparcam().getminScore();
+      filters["pmax"] = StorageAparcam().getmaxPrice();
+      filters["pmin"] = StorageAparcam().getminPrice();
+      String body = json.encode(filters);
+      parkings = await ParkingServices().getFilteredParkings(body);
+      print(parkings);
+    } else {
+      print('main llista: filtered FALSE');
+      parkings = await ParkingServices().getParkings();
+    }
     if (parkings != null) {
       setState(() {
         isLoaded = true;

@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:localstorage/localstorage.dart';
 
@@ -17,6 +15,25 @@ class StorageAparcam extends ChangeNotifier {
     storage.setItem('user', user);*/
   }
 
+  void addFiltersToLocalStorage(bool filtered, String sortby, double minscore,
+      double minprice, double maxprice, String type, String dimensions) {
+    storage.setItem('filtered', filtered);
+    storage.setItem('sortby', sortby);
+    storage.setItem('minscore', minscore);
+    storage.setItem('minprice', minprice);
+    storage.setItem('maxprice', maxprice);
+    storage.setItem('type', type);
+    storage.setItem('dimensions', dimensions);
+  }
+
+  void setFiltered(bool filtered) {
+    storage.setItem('filtered', filtered);
+  }
+
+  bool getFiltered() {
+    return storage.getItem('filtered');
+  }
+
   String getToken() {
     return storage.getItem('token');
   }
@@ -25,17 +42,37 @@ class StorageAparcam extends ChangeNotifier {
     return storage.getItem('id');
   }
 
-
   String getpass() {
     return storage.getItem('password');
   }
 
+  String getSortby() {
+    return storage.getItem('sortby');
+  }
 
+  String getType() {
+    return storage.getItem('type');
+  }
+
+  String getDimensions() {
+    return storage.getItem('dimensions');
+  }
+
+  double getminScore() {
+    return storage.getItem('minscore');
+  }
+
+  double getminPrice() {
+    return storage.getItem('minprice');
+  }
+
+  double getmaxPrice() {
+    return storage.getItem('maxprice');
+  }
 
   void deleteToken() {
     storage.deleteItem('token');
   }
-
 
   void deleteId() {
     storage.deleteItem('id');
