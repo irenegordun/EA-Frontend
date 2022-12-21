@@ -64,7 +64,10 @@ class _AccessibilitytState extends State<Accessibility> {
             children: [
             //dark mode
               SwitchListTile(
-                title: Text('Dark mode'),
+                secondary: const Icon(Icons.shield_moon_outlined),
+                title: Text(
+                  translation(context).darkMode
+                ),
                 value: _darkmode,
                 activeColor: Colors.blueGrey,
                 inactiveTrackColor: Colors.grey,
@@ -73,16 +76,19 @@ class _AccessibilitytState extends State<Accessibility> {
                     _darkmode = value;
                   });
                 },
-                subtitle: Text('change the colour palette',style: TextStyle(
+                subtitle: Text(
+                  translation(context).changeTheColourPalette,
+                  style: TextStyle(
                   color: Colors.blueGrey[600],
                 ),
                 ),
                 controlAffinity: ListTileControlAffinity.trailing,
             ),
                         
-            //boto del panic
+            //panic button
             SwitchListTile(
-              title: Text("Panic button",
+              title: Text(
+                translation(context).panicButton,
                 style: TextStyle(
                     color: Color.fromARGB(255, 239, 16, 16),
                     fontWeight: FontWeight.w800,
@@ -97,7 +103,9 @@ class _AccessibilitytState extends State<Accessibility> {
                     _help = value;
                   });
                 },
-                subtitle: Text('press in case of danger',style: TextStyle(
+                subtitle: Text(
+                translation(context).pressInCaseOfDanger,
+                style: TextStyle(
                   color: Colors.blueGrey[600],
                 ),
                 ),
