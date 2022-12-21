@@ -14,6 +14,7 @@ class Parking {
     //required this.opinions,
     //required this.email,
     required this.country,
+    
     required this.city,
     required this.street,
     required this.streetNumber,

@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 
+import 'package:flutter_front/models/language.dart';
+import 'package:flutter_front/models/language_constants.dart';
+import 'package:flutter_front/main.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class Accessibility extends StatefulWidget {
   const Accessibility({super.key});
@@ -15,10 +19,43 @@ class _AccessibilitytState extends State<Accessibility> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: new Center(
-          child: new Text("A P A R C A ' M"),
-        ),
         backgroundColor: Colors.blueGrey,
+        title: Text(AppLocalizations.of(context)!.homePage),
+        actions: <Widget>[
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: DropdownButton<Language>(
+              underline: const SizedBox(),
+              icon: const Icon(
+                Icons.language,
+                color: Colors.white,
+              ),
+              onChanged: (Language? language) async {
+                if (language != null) {
+                  Locale _locale = await setLocale(language.languageCode);
+                  MyApp.setLocale(context, _locale);
+                }
+              },
+              items: Language.languageList()
+                  .map<DropdownMenuItem<Language>>(
+                    (e) => DropdownMenuItem<Language>(
+                      value: e,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: <Widget>[
+                          Text(
+                            e.flag,
+                            style: const TextStyle(fontSize: 30),
+                          ),
+                          Text(e.name)
+                        ],
+                      ),
+                    ),
+                  )
+                  .toList(),
+            ),
+          ),
+        ],
       ),
       body: Center(
         child: Card(
@@ -36,35 +73,16 @@ class _AccessibilitytState extends State<Accessibility> {
                     _darkmode = value;
                   });
                 },
-                subtitle: Text('White --> dark per daltonics',style: TextStyle(
+                subtitle: Text('change the colour palette',style: TextStyle(
                   color: Colors.blueGrey[600],
                 ),
                 ),
                 controlAffinity: ListTileControlAffinity.trailing,
             ),
-            //lenguage
-            ListTile(
-              title: Text ("Lenguage"),
-              subtitle: Text ("Select the lenguage"),
-              trailing: 
-                PopupMenuButton(
-                  itemBuilder: (context){
-                    return [
-                      PopupMenuItem<int>(
-                        value: 0,
-                        child: Text("Spanish"),
-                      ),
-                      PopupMenuItem<int>(
-                        value: 1,
-                        child: Text("English"),
-                      ),
-                    ];
-                  },
-                )
-            ), 
+                        
             //boto del panic
             SwitchListTile(
-              title: Text("Botó del pànic",
+              title: Text("Panic button",
                 style: TextStyle(
                     color: Color.fromARGB(255, 239, 16, 16),
                     fontWeight: FontWeight.w800,
@@ -79,7 +97,7 @@ class _AccessibilitytState extends State<Accessibility> {
                     _help = value;
                   });
                 },
-                subtitle: Text('blablabla',style: TextStyle(
+                subtitle: Text('press in case of danger',style: TextStyle(
                   color: Colors.blueGrey[600],
                 ),
                 ),
