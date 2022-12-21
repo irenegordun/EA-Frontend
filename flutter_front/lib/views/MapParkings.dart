@@ -115,7 +115,6 @@ class _MapParkingsState extends State<MapParkings> {
                           )),
         ])), 
         
-
         ],      
       ),
     );
