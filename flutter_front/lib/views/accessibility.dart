@@ -11,10 +11,12 @@ class Accessibility extends StatefulWidget {
   State<Accessibility> createState() => _AccessibilitytState();
 }
 
+double sliderFont = 0.0;
+
 class _AccessibilitytState extends State<Accessibility> {
   bool _darkmode = false;
   bool _help = false;
-
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -114,6 +116,34 @@ class _AccessibilitytState extends State<Accessibility> {
                 ),
                 controlAffinity: ListTileControlAffinity.trailing,
             ),
+
+            const Divider(),
+            
+            //large fonts
+            ListTile(
+              title: Text("hola",
+                style: TextStyle (
+                  fontSize: MediaQuery.of(context).size.width * sliderFont,
+                ),
+              ),
+
+            ),
+            Slider(
+              
+                value: sliderFont,
+                onChanged: (newFont) {
+                  setState(() {
+                    sliderFont = newFont;
+                  });
+                },
+                min: 0.0,
+                max: 0.5,
+                divisions: 2,
+                activeColor: Colors.blueGrey,
+                inactiveColor: Colors.blueGrey.shade100,
+                thumbColor: Colors.blueGrey,
+                label: "$sliderFont",
+              ),
           ],
           ),
         ),
