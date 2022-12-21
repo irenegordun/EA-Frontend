@@ -20,7 +20,10 @@ class _AccessibilitytState extends State<Accessibility> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.blueGrey,
-        title: Text(AppLocalizations.of(context)!.homePage),
+        title: Text(
+          AppLocalizations.of(context)!.homePage,
+        ),
+      
         actions: <Widget>[
           Padding(
             padding: const EdgeInsets.all(8.0),
@@ -111,10 +114,10 @@ class _AccessibilitytState extends State<Accessibility> {
                 ),
                 controlAffinity: ListTileControlAffinity.trailing,
             ),
-            
           ],
           ),
         ),
+
       ),
     );
   }

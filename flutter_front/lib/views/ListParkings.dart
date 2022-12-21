@@ -57,15 +57,30 @@ class _ListParkingsState extends State<ListParkings> {
       body: Column(
         children: <Widget>[
           Expanded(
-              child: Row(children: <Widget>[
-            Expanded(
-                child: Container(
-                    color: Color.fromARGB(255, 227, 244, 248),
-                    child: const Center(
-                        child: Text("Calendar",
-                            style: TextStyle(fontSize: 20.0))))),
+            child: Row(children: <Widget>[
+
             Expanded(
                 child: GestureDetector(
+                  onTap: () async {
+                    FocusScope.of(context).requestFocus(FocusNode());
+                    await showDatePicker(
+                      context: context,
+                      initialDate: DateTime.now(),
+                      firstDate: DateTime(DateTime.now().year),
+                      lastDate: DateTime(DateTime.now().year + 20),
+                    );
+                  },
+                  child: Container (
+                    color: Color.fromARGB(255, 227, 244, 248),
+                    child: const Center(
+                      child: Text("Calendar", style: TextStyle(fontSize: 20.0))
+                    )
+                  ),
+                )
+            ),
+
+            Expanded(
+              child: GestureDetector(
               onTap: () {
                 Navigator.of(context).push(
                     MaterialPageRoute(builder: (context) => const Filters()));
