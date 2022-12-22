@@ -74,9 +74,9 @@ class _ListParkingsState extends State<ListParkings> {
       body: Column(
         children: <Widget>[
           Expanded(
-            child: Row(children: <Widget>[
-
+              child: Row(children: <Widget>[
             Expanded(
+                flex: 1,
                 child: GestureDetector(
                   onTap: () async {
                     FocusScope.of(context).requestFocus(FocusNode());
@@ -87,17 +87,14 @@ class _ListParkingsState extends State<ListParkings> {
                       lastDate: DateTime(DateTime.now().year + 20),
                     );
                   },
-                  child: Container (
-                    color: Color.fromARGB(255, 227, 244, 248),
-                    child: const Center(
-                      child: Text("Calendar", style: TextStyle(fontSize: 20.0))
-                    )
-                  ),
-                )
-            ),
-
+                  child: Container(
+                      color: Color.fromARGB(255, 227, 244, 248),
+                      child: const Center(
+                          child: Text("Calendar",
+                              style: TextStyle(fontSize: 20.0)))),
+                )),
             Expanded(
-              child: GestureDetector(
+                child: GestureDetector(
               onTap: () {
                 Navigator.of(context).push(
                     MaterialPageRoute(builder: (context) => const Filters()));
@@ -114,7 +111,7 @@ class _ListParkingsState extends State<ListParkings> {
               child: Row(children: <Widget>[
             Expanded(
                 child: Container(
-                    height: 40,
+                    height: 60,
                     width: 50,
                     child: ElevatedButton(
                         onPressed: () {},
@@ -125,7 +122,7 @@ class _ListParkingsState extends State<ListParkings> {
                         )))),
             Expanded(
                 child: Container(
-                    height: 40,
+                    height: 60,
                     width: 50,
                     child: ElevatedButton(
                         onPressed: () {
@@ -141,6 +138,7 @@ class _ListParkingsState extends State<ListParkings> {
 
           //Row 2/2
           Expanded(
+            flex: 9,
             child: ListView.builder(
               itemCount: parkings?.length,
               itemBuilder: (context, index) {
