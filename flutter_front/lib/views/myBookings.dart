@@ -1,24 +1,25 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_front/models/booking.dart';
+import 'package:flutter_front/models/parking.dart';
+import 'package:flutter_front/models/user.dart';
+import 'package:flutter_front/services/bookingServices.dart';
 import 'package:flutter_front/services/parkingServices.dart';
-import 'package:flutter_front/services/userServices.dart';
-import 'package:flutter_front/views/MyParkingInfo.dart';
 import 'package:flutter_front/widgets/buttonAccessibility.dart';
 import 'package:provider/provider.dart';
-import '../models/user.dart';
-import '../models/parking.dart';
-import 'package:flutter_front/services/localStorage.dart';
-//import '../widgets/buttonAccessibility.dart';
+
+import '../services/localStorage.dart';
+import '../services/userServices.dart';
 import '../widgets/drawer.dart';
 
-class MyParkings extends StatefulWidget {
-  const MyParkings({super.key});
+class myBookings extends StatefulWidget {
+  const myBookings({super.key});
 
   @override
-  State<MyParkings> createState() => _MyParkingsState();
+  State<myBookings> createState() => _myBookingsState();
 }
 
-class _MyParkingsState extends State<MyParkings> {
-  List<Parking> parkings = <Parking>[];
+class _myBookingsState extends State<myBookings> {
+  List<Booking> bookings = <Booking>[];
 
   var isLoaded = false;
 
@@ -44,13 +45,15 @@ class _MyParkingsState extends State<MyParkings> {
   getData() async {
     final user = await UserServices().getOneUser(user1);
     if (user != null) {
-      for (int i = 0; i < user.myParkings.length; i++) {
-        Parking p = Parking.fromJson(user.myParkings[i]);
-        if (p != null) {
-          parkings.add(p);
+      for (int i = 0; i < user.myBookings!.length; i++) {
+        Booking b = Booking.fromJson(user.myBookings![i]);
+        Parking? p = await ParkingServices().getOneParking(b.parking);
+        b.parking = p!.street;
+        if (b != null) {
+          bookings.add(b);
         }
       }
-      if (parkings != null) {
+      if (bookings != null) {
         setState(() {
           isLoaded = true;
         });
@@ -60,13 +63,13 @@ class _MyParkingsState extends State<MyParkings> {
 
   @override
   Widget build(BuildContext context) {
-    ParkingServices _parkingprovider = Provider.of<ParkingServices>(context);
+    BookingServices _bookingprovider = Provider.of<BookingServices>(context);
     return Scaffold(
       drawer: const DrawerScreen(),
       floatingActionButton: const AccessibilityButton(),
       appBar: AppBar(
         title: new Center(
-          child: new Text("My Parkings"),
+          child: new Text("My Bookings"),
         ),
         backgroundColor: Colors.blueGrey,
       ),
@@ -75,7 +78,7 @@ class _MyParkingsState extends State<MyParkings> {
           //Row 2/2
           Expanded(
             child: ListView.builder(
-              itemCount: parkings.length,
+              itemCount: bookings.length,
               itemBuilder: (context, index) {
                 return Card(
                   color: Color.fromARGB(255, 144, 180, 199),
@@ -84,8 +87,8 @@ class _MyParkingsState extends State<MyParkings> {
                       width: 80,
                       height: 80,
                     ),
-                    title: Text(parkings[index].street),
-                    subtitle: Text(parkings[index].city),
+                    title: Text(bookings[index].parking),
+                    subtitle: Text(bookings[index].cost.toString()),
                     trailing: SizedBox(
                         width: 120,
                         child: Row(
@@ -94,13 +97,7 @@ class _MyParkingsState extends State<MyParkings> {
                                 child: IconButton(
                               icon: const Icon(Icons.info_outline),
                               tooltip: 'More Info',
-                              onPressed: () {
-                                _parkingprovider
-                                    .setParkingData(parkings[index]);
-                                Navigator.of(context).push(MaterialPageRoute(
-                                    builder: (context) =>
-                                        const MyParkingInfo()));
-                              },
+                              onPressed: () {},
                             )),
                           ],
                         )),

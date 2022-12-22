@@ -229,7 +229,7 @@ class _LoginFormState extends State<LoginForm> {
                   openDialog("Please fill the blanks");
                 } else if (!regex.hasMatch(formPassword)) {
                   openDialog(
-                      'Password too weak, try adding different characters');
+                      'Password too weak, check if you at least have: 1 mayus, 1 minus, 1 number, 1 special char, at least 8 characters');
                 } else {
                   if (formPassword == formPassword2) {
                     var user = User(
@@ -240,6 +240,7 @@ class _LoginFormState extends State<LoginForm> {
                       newpassword: "",
                       myParkings: [],
                       myFavourites: [],
+                      myBookings: [],
                       deleted: false,
                       points: 0,
                     );

@@ -53,6 +53,7 @@ class _UserInfoState extends State<UserInfo> {
                     points: 0,
                     myFavourites: [],
                     myParkings: [],
+                    myBookings: [],
                     deleted: false);
                 await yousure();
                 if (seguro == true) {
@@ -99,6 +100,7 @@ class _UserInfoState extends State<UserInfo> {
       points: 0,
       myFavourites: [],
       myParkings: [],
+      myBookings: [],
       deleted: false,
       newpassword: "");
   getData() async {
@@ -206,6 +208,7 @@ class _UserInfoState extends State<UserInfo> {
                           points: 0,
                           myFavourites: [],
                           myParkings: [],
+                          myBookings: [],
                           deleted: false);
                       if (newemail != "") {
                         if (newemail == email) {
@@ -253,6 +256,7 @@ class _UserInfoState extends State<UserInfo> {
                           points: 0,
                           myFavourites: [],
                           myParkings: [],
+                          myBookings: [],
                           deleted: false);
                       if (name != "") {
                         bool updated =
@@ -294,6 +298,7 @@ class _UserInfoState extends State<UserInfo> {
                         points: 0,
                         myFavourites: [],
                         myParkings: [],
+                        myBookings: [],
                         deleted: false,
                       );
                       if (newpassword != "") {

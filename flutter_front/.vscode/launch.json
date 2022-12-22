@@ -7,7 +7,7 @@
         {
             "name": "flutter_front",
             "request": "launch",
-            "type": "dart"
+            "type": "dart"            
         },
         {
             "name": "flutter_front (profile mode)",

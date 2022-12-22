@@ -6,21 +6,30 @@ import 'package:flutter_front/views/accessibility.dart';
 import 'package:flutter_front/widgets/drawer.dart';
 import 'package:draggable_fab/draggable_fab.dart'; 
 
-class AccessibilityButton extends StatelessWidget {
+class AccessibilityButton extends StatefulWidget {
   const AccessibilityButton({super.key});
-
+  
+  @override
+  State<AccessibilityButton> createState() => _AccessibilityButtonState();
+}
+  
+  class _AccessibilityButtonState extends State<AccessibilityButton> {
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: SizedBox(
-        child: FloatingActionButton(
-              onPressed: (){
-                Navigator.of(context).push(MaterialPageRoute(
-                  builder: (context) => const Accessibility()));
-              },
-              child: Icon(Icons.accessibility_new_outlined),
-            ),
-      )
-    );
+    return DraggableFab(
+      child: FloatingActionButton(
+        onPressed: (){
+          setState(() {
+          Navigator.of(context).push(MaterialPageRoute(
+          builder: (context) => const Accessibility()));
+          });
+        },
+        child: Icon(Icons.accessibility_new_outlined),
+      ),
+      );
+    
   }
 }
+  
+  
+  

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_front/views/ListParkings.dart';
 import 'package:flutter_front/views/MyParkings.dart';
 import 'package:flutter_front/views/UserInfo.dart';
+import 'package:flutter_front/views/myBookings.dart';
 
 import '../views/NewParking.dart';
 
@@ -64,6 +65,10 @@ class DrawerScreen extends StatelessWidget {
           ListTile(
             leading: const Icon(Icons.bookmark_outline),
             title: const Text('My bookings'),
+            onTap: () {
+              Navigator.of(context).push(
+                  MaterialPageRoute(builder: (context) => const myBookings()));
+            },
           ),
 
           //Els meus preferits

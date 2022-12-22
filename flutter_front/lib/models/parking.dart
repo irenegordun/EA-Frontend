@@ -10,10 +10,9 @@ String parkingToJson(List<Parking> data) =>
 
 class Parking {
   Parking({
-    //required this.email,
     //required this.opinions,
-    //required this.email,
     required this.country,
+    
     required this.city,
     required this.street,
     required this.streetNumber,
@@ -26,12 +25,9 @@ class Parking {
     required this.id,
   });
 
-  //String email;
-  //String email;
   String country;
   String city;
   String street;
-
   int streetNumber;
   int spotNumber;
   String type;
@@ -43,8 +39,6 @@ class Parking {
 
   factory Parking.fromJson(Map<String, dynamic> json) => Parking(
         id: json["_id"],
-        //email: json["email"],
-        //email: json["email"],
         country: json["country"],
         city: json["city"],
         street: json["street"],
@@ -59,7 +53,6 @@ class Parking {
 
   Map<String, dynamic> toJson() => {
         "_id": id,
-        //"email": email,
         "country": country,
         "city": city,
         "street": street,
