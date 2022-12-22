@@ -22,7 +22,10 @@ version: 1.0.0+1
 environment:
   sdk: '>=2.18.0-255.2.beta <3.0.0'
 
-google_maps_flutter: ^2.0.1
+latlong: ^0.6.1
+flutter_map: any
+flutter_map_marker_cluster: any
+
 
 # Dependencies specify other packages that your package needs in order to work.
 # To automatically upgrade your package dependencies to the latest versions
@@ -54,6 +57,7 @@ dependencies:
   encrypt: ^5.0.1
   hex: ^0.2.0
   password_strength_checker: ^1.2.1
+  flutter_open_street_map: ^0.0.3
 dev_dependencies:
   flutter_test:
     sdk: flutter
