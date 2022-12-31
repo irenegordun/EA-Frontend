@@ -18,6 +18,7 @@ class Booking {
     required this.departure,
     required this.cost,
     required this.id,
+    required this.owner,
   });
 
   String id;
@@ -26,6 +27,7 @@ class Booking {
   String arrival;
   String departure;
   int cost;
+  String owner;
 
   factory Booking.fromJson(Map<String, dynamic> json) => Booking(
         id: json["_id"],
@@ -34,6 +36,7 @@ class Booking {
         parking: json["parking"],
         customer: json["customer"],
         cost: json["cost"],
+        owner: json["owner"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -43,5 +46,6 @@ class Booking {
         "parking": parking,
         "customer": customer,
         "cost": cost,
+        "owner": owner,
       };
 }

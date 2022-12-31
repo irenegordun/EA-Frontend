@@ -109,7 +109,6 @@ class UserServices extends ChangeNotifier {
     var client = http.Client();
     var uri = Uri.parse('http://localhost:5432/api/users/activate');
     var userJS = json.encode(user.toJson());
-    print(userJS.toString());
     await client.put(uri,
         headers: {'content-type': 'application/json'}, body: userJS);
   }
@@ -202,7 +201,6 @@ class UserServices extends ChangeNotifier {
     } else if (response.statusCode == 402) {
       return 2;
     } else {
-      print("contrasenya no valida");
       return 3;
     }
   }

@@ -121,7 +121,9 @@ class _MyParkingInfoState extends State<MyParkingInfo> {
                           price: 0,
                           size: "",
                           difficulty: 0,
-                          id: parking.id);
+                          score: 0,
+                          id: parking.id,
+                          user: parking.user);
                       if (parking.country != "") {
                         ParkingServices().updateAddressParking(parking);
                         Navigator.of(context).push(MaterialPageRoute(
@@ -155,7 +157,9 @@ class _MyParkingInfoState extends State<MyParkingInfo> {
                           price: parking.price,
                           size: parking.size,
                           difficulty: parking.difficulty,
-                          id: parking.id);
+                          score: parking.score,
+                          id: parking.id,
+                          user: parking.user);
                       if (parking.city != "") {
                         ParkingServices().updateAddressParking(parking);
                         Navigator.of(context).push(MaterialPageRoute(
@@ -189,7 +193,9 @@ class _MyParkingInfoState extends State<MyParkingInfo> {
                           price: parking.price,
                           size: parking.size,
                           difficulty: parking.difficulty,
-                          id: parking.id);
+                          score: parking.score,
+                          id: parking.id,
+                          user: parking.user);
                       if (parking.street != "") {
                         ParkingServices().updateAddressParking(parking);
                         Navigator.of(context).push(MaterialPageRoute(
@@ -226,7 +232,9 @@ class _MyParkingInfoState extends State<MyParkingInfo> {
                             price: parking.price,
                             size: parking.size,
                             difficulty: parking.difficulty,
-                            id: parking.id);
+                            score: parking.score,
+                            id: parking.id,
+                            user: parking.user);
                         ParkingServices().updateAddressParking(parking);
                         Navigator.of(context).push(MaterialPageRoute(
                             builder: (context) => const MyParkingInfo()));
@@ -261,7 +269,9 @@ class _MyParkingInfoState extends State<MyParkingInfo> {
                             price: parking.price,
                             size: parking.size,
                             difficulty: parking.difficulty,
-                            id: parking.id);
+                            score: parking.score,
+                            id: parking.id,
+                            user: parking.user);
                         ParkingServices().updateAddressParking(parking);
                         Navigator.of(context).push(MaterialPageRoute(
                             builder: (context) => const MyParkingInfo()));
@@ -279,7 +289,7 @@ class _MyParkingInfoState extends State<MyParkingInfo> {
                 ),
               ),
               ListTile(
-                title: Text('Price',
+                title: Text('Price per day',
                     style: TextStyle(fontWeight: FontWeight.w500)),
                 subtitle: TextFormField(
                     controller: editingController6,
@@ -304,7 +314,9 @@ class _MyParkingInfoState extends State<MyParkingInfo> {
                             price: parking.price,
                             size: parking.size,
                             difficulty: parking.difficulty,
-                            id: parking.id);
+                            score: parking.score,
+                            id: parking.id,
+                            user: parking.user);
                         ParkingServices().updatePriceParking(parking);
                         Navigator.of(context).push(MaterialPageRoute(
                             builder: (context) => const MyParkingInfo()));

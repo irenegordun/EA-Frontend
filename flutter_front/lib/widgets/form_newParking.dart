@@ -207,25 +207,14 @@ class _MyStatefulWidgetState extends State<FormWidget> {
             child: ElevatedButton(
                 onPressed: () {
                   String formCountry = countryController.text.toString();
-                  print(formCountry);
                   String formCity = cityController.text.toString();
-                  print(formCity);
                   String formStreet = streetController.text.toString();
-                  print(formStreet);
                   String formNumber = numberController.text.toString();
-                  print(formNumber);
                   String formSpot = spotController.text.toString();
-                  print(formSpot);
-
                   String formType = dropdownTypeValue.toString();
-                  print(formType);
-
                   String formPrice = priceController.text.toString();
-                  print(formPrice);
                   String formSize = dropdownSizeValue.toString();
-                  print(formSize);
                   String formDifficulty = difficultyController.text.toString();
-                  print(formDifficulty);
 
                   if (formCountry != "" &&
                       formCity != "" &&
@@ -238,8 +227,9 @@ class _MyStatefulWidgetState extends State<FormWidget> {
                       formDifficulty != "") {
                     Parking p = Parking(
                         //user_id:  StorageAparcam().getId(),
-                        // score: 0,
+                        score: 0,
                         id: '',
+                        user: '',
                         country: formCountry,
                         city: formCity,
                         street: formStreet,

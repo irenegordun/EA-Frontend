@@ -15,8 +15,6 @@ import '../widgets/drawer.dart';
 import 'Filters.dart';
 import 'MapParkings.dart';
 
-//millorar visualment
-
 class ListParkings extends StatefulWidget {
   const ListParkings({super.key});
 
@@ -36,7 +34,6 @@ class _ListParkingsState extends State<ListParkings> {
 
   getData() async {
     if (StorageAparcam().getFiltered()) {
-      print('main llista: filtered TRUE');
       var filters = {};
       filters["sortby"] = StorageAparcam().getSortby();
       filters["type"] = StorageAparcam().getType();
@@ -46,9 +43,7 @@ class _ListParkingsState extends State<ListParkings> {
       filters["pmin"] = StorageAparcam().getminPrice();
       String body = json.encode(filters);
       parkings = await ParkingServices().getFilteredParkings(body);
-      print(parkings);
     } else {
-      print('main llista: filtered FALSE');
       parkings = await ParkingServices().getParkings();
     }
     if (parkings != null) {
@@ -88,7 +83,7 @@ class _ListParkingsState extends State<ListParkings> {
                     );
                   },
                   child: Container(
-                      color: Color.fromARGB(255, 227, 244, 248),
+                      color: const Color.fromARGB(255, 227, 244, 248),
                       child: const Center(
                           child: Text("Calendar",
                               style: TextStyle(fontSize: 20.0)))),
@@ -115,11 +110,11 @@ class _ListParkingsState extends State<ListParkings> {
                     width: 50,
                     child: ElevatedButton(
                         onPressed: () {},
-                        child: const Text('List'),
                         style: const ButtonStyle(
                           backgroundColor:
                               MaterialStatePropertyAll<Color>(Colors.blueGrey),
-                        )))),
+                        ),
+                        child: const Text('List')))),
             Expanded(
                 child: Container(
                     height: 60,
@@ -129,11 +124,11 @@ class _ListParkingsState extends State<ListParkings> {
                           Navigator.of(context).push(MaterialPageRoute(
                               builder: (context) => const MapParkings()));
                         },
-                        child: const Text('Map'),
-                        style: ButtonStyle(
+                        style: const ButtonStyle(
                           backgroundColor:
                               MaterialStatePropertyAll<Color>(Colors.blueGrey),
-                        )))),
+                        ),
+                        child: const Text('Map')))),
           ])),
 
           //Row 2/2
@@ -143,15 +138,17 @@ class _ListParkingsState extends State<ListParkings> {
               itemCount: parkings?.length,
               itemBuilder: (context, index) {
                 return Card(
-                  color: Color.fromARGB(255, 144, 180, 199),
+                  color: const Color.fromARGB(255, 144, 180, 199),
                   child: ListTile(
                     leading: Container(
                       width: 80,
                       height: 80,
                       child: Image.asset('parking1.jpg'),
                     ),
-                    title: Text(parkings![index].street),
-                    subtitle: Text(parkings![index].city),
+                    title: Text(
+                        '${parkings![index].street}, ${parkings![index].city}'),
+                    subtitle: Text(
+                        'Price: ${parkings![index].price}/day || User score: ${parkings![index].score}'),
                     trailing: SizedBox(
                         width: 120,
                         child: Row(

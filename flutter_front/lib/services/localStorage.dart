@@ -8,11 +8,6 @@ class StorageAparcam extends ChangeNotifier {
     storage.setItem('token', token);
     storage.setItem('id', id);
     storage.setItem('password', password);
-
-    //        FORMAT LLISTA SET ITEM
-
-    /* final user = json.encode({'email': email, 'id': id});
-    storage.setItem('user', user);*/
   }
 
   void addFiltersToLocalStorage(bool filtered, String sortby, double minscore,
@@ -78,11 +73,5 @@ class StorageAparcam extends ChangeNotifier {
     storage.deleteItem('id');
   }
 
-  void getitemFromLocalStorage() {
-    //        FORMAT LLISTA GET ITEM
-
-    /* Map<String, dynamic> user = json.decode(storage.getItem('user'));
-    final user_email = user['email'];
-    final user_id = user['id']; */
-  }
+  void getitemFromLocalStorage() {}
 }

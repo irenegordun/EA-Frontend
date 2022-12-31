@@ -90,14 +90,8 @@ class _MyStatefulWidgetState extends State<FormWidget> {
                 setState(() async {
                   //aquí dona problemes
                   String formName = nameController.text.toString();
-                  print(formName);
-
                   String formEmail = emailController.text.toString();
-                  print(formEmail);
-
                   String formPassword = passwordController.text.toString();
-                  print(formPassword);
-
                   var user = User(
                       name: formName,
                       id: "",

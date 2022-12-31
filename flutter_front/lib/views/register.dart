@@ -83,9 +83,8 @@ class _LoginFormState extends State<LoginForm> {
   @override
   Widget build(BuildContext context) {
     final passNotifier = ValueNotifier<PasswordStrength?>(null);
-    // should contain: upepercase, lowercase, digit, spec char, 8 chars
-    RegExp regex =
-        RegExp(r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{8,}$');
+    RegExp regex = RegExp(
+        r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~-]).{8,}$');
     return Padding(
       padding: const EdgeInsets.all(24.0),
       child: Column(
@@ -208,56 +207,51 @@ class _LoginFormState extends State<LoginForm> {
           ),
           const SizedBox(height: 20),
           ElevatedButton(
-            onPressed: () {
-              setState(() async {
-                //aquí dona error
-                String formName = nameController.text.toString();
-                print(formName);
+            onPressed: () async {
+              String formName = nameController.text.toString();
+              String formEmail = emailController.text.toString();
+              String formPassword = passwordController.text.toString();
+              String formPassword2 = passwordController2.text.toString();
 
-                String formEmail = emailController.text.toString();
-                print(formEmail);
-
-                String formPassword = passwordController.text.toString();
-                print(formPassword);
-
-                String formPassword2 = passwordController2.text.toString();
-                print(formPassword2);
-                if (formPassword.isEmpty ||
-                    formPassword2.isEmpty ||
-                    formEmail.isEmpty ||
-                    formName.isEmpty) {
-                  openDialog("Please fill the blanks");
-                } else if (!regex.hasMatch(formPassword)) {
-                  openDialog(
-                      'Password too weak, check if you at least have: 1 mayus, 1 minus, 1 number, 1 special char, at least 8 characters');
-                } else {
-                  if (formPassword == formPassword2) {
-                    var user = User(
-                      name: formName,
-                      id: "",
-                      password: formPassword,
-                      email: formEmail,
-                      newpassword: "",
-                      myParkings: [],
-                      myFavourites: [],
-                      myBookings: [],
-                      deleted: false,
-                      points: 0,
-                    );
-                    int state = await UserServices().checkemail(user);
-                    if (state == 1) {
-                      await UserServices().createUser(user);
-                      openDialog('User registered, Welcome!');
-                      Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => const Login()));
-                    } else {
-                      openDialog(
-                          "Can't use this email, belongs to another account!");
-                    }
+              if (formPassword.isEmpty ||
+                  formPassword2.isEmpty ||
+                  formEmail.isEmpty ||
+                  formName.isEmpty) {
+                openDialog("Please fill the blanks");
+              } else if (!regex.hasMatch(formPassword)) {
+                openDialog(
+                    'Password too weak, check if you have: 1 uppercase, 1 lowercase, 1 number, 1 special char, at least 8 characters');
+              } else {
+                if (formPassword == formPassword2) {
+                  var user = User(
+                    name: formName,
+                    id: "",
+                    password: formPassword,
+                    email: formEmail,
+                    newpassword: "",
+                    myParkings: [],
+                    myFavourites: [],
+                    myBookings: [],
+                    deleted: false,
+                    points: 0,
+                  );
+                  int state = await UserServices().checkemail(user);
+                  if (state == 1) {
+                    await UserServices().createUser(user);
+                    openDialog('User registered, Welcome!');
+                    Navigator.of(context).push(
+                        MaterialPageRoute(builder: (context) => const Login()));
                   } else {
-                    openDialog("Passwords doesn't match");
+                    openDialog(
+                        "Can't use this email, belongs to another account!");
                   }
+                } else {
+                  openDialog("Passwords doesn't match");
                 }
+              }
+
+              setState(() {
+                //aquí dona error
               });
             },
             style: ElevatedButton.styleFrom(

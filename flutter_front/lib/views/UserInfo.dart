@@ -1,18 +1,11 @@
-import 'dart:html';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_front/services/userServices.dart';
 import 'package:flutter_front/views/login.dart';
 import 'package:flutter_front/widgets/buttonAccessibility.dart';
+import 'package:password_strength_checker/password_strength_checker.dart';
 import 'package:provider/provider.dart';
-import 'package:flutter_front/views/MyParkings.dart';
-
 import '../models/user.dart';
 import '../widgets/drawer.dart';
-
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:localstorage/localstorage.dart';
 import 'package:flutter_front/services/localStorage.dart';
 
 class UserInfo extends StatefulWidget {
@@ -31,7 +24,6 @@ class _UserInfoState extends State<UserInfo> {
   @override
   void initState() {
     super.initState();
-    print("StorageAparcam: " + StorageAparcam().getId());
     getData();
   }
 
@@ -67,7 +59,6 @@ class _UserInfoState extends State<UserInfo> {
                       builder: (context) => const UserInfo()));
                 }
               },
-              child: const Text('Delete account'),
               style: ButtonStyle(
                 shape: MaterialStateProperty.all(
                   RoundedRectangleBorder(
@@ -76,8 +67,9 @@ class _UserInfoState extends State<UserInfo> {
                   ),
                 ),
                 backgroundColor:
-                    MaterialStatePropertyAll<Color>(Colors.blueGrey),
+                    const MaterialStatePropertyAll<Color>(Colors.blueGrey),
               ),
+              child: const Text('Delete account'),
             )),
       ],
     ));
@@ -110,12 +102,6 @@ class _UserInfoState extends State<UserInfo> {
         isLoaded = true;
         email = user!.email.toString();
         name = user!.name.toString();
-        print("email: " +
-            user!.email.toString() +
-            "name: " +
-            user!.name.toString() +
-            "pass: " +
-            user!.password.toString());
       });
     }
   }
@@ -126,8 +112,8 @@ class _UserInfoState extends State<UserInfo> {
           title: Text(text),
           actions: [
             TextButton(
-              child: Text('Ok'),
               onPressed: submit,
+              child: const Text('Ok'),
             ),
           ],
         ),
@@ -140,15 +126,15 @@ class _UserInfoState extends State<UserInfo> {
   Future yousure() => showDialog(
         context: context,
         builder: (context) => AlertDialog(
-          title: Text("Are you sure you want to delete your account"),
+          title: const Text("Are you sure you want to delete your account"),
           actions: [
             TextButton(
-              child: Text('Yes'),
               onPressed: sure,
+              child: const Text('Yes'),
             ),
             TextButton(
-              child: Text('No'),
               onPressed: submit,
+              child: const Text('No'),
             ),
           ],
         ),
@@ -163,10 +149,13 @@ class _UserInfoState extends State<UserInfo> {
   TextEditingController editingController2 = TextEditingController();
   TextEditingController editingController3 = TextEditingController();
 
+  final passNotifier = ValueNotifier<PasswordStrength?>(null);
+  RegExp regex =
+      RegExp(r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~-]).{8,}$');
+
   @override
   Widget build(BuildContext context) {
     UserServices _userprovider = Provider.of<UserServices>(context);
-
     return Scaffold(
       drawer: const DrawerScreen(),
       floatingActionButton: const AccessibilityButton(),
@@ -184,19 +173,19 @@ class _UserInfoState extends State<UserInfo> {
           child: Column(
             children: [
               ListTile(
-                title: Text('email',
+                title: const Text('email',
                     style: TextStyle(fontWeight: FontWeight.w500)),
                 subtitle: TextFormField(
                   controller: editingController1,
                   decoration: InputDecoration(hintText: email),
-                  style: TextStyle(fontWeight: FontWeight.w500),
+                  style: const TextStyle(fontWeight: FontWeight.w500),
                 ),
                 leading: Icon(
                   Icons.email_outlined,
                   color: Colors.blue[500],
                 ),
                 trailing: TextButton(
-                    child: Text("Editar"),
+                    child: const Text("Editar"),
                     onPressed: () async {
                       newemail = editingController1.text;
                       user = User(
@@ -215,7 +204,6 @@ class _UserInfoState extends State<UserInfo> {
                           openDialog("Alredy your email!");
                         } else {
                           int state = await UserServices().checkemail(user);
-                          print(state);
                           if (state == 1) {
                             UserServices().updateUseremail(user);
                             openDialog("Email updated correctly!");
@@ -233,18 +221,18 @@ class _UserInfoState extends State<UserInfo> {
                     }),
               ),
               ListTile(
-                title: Text('Name'),
+                title: const Text('Name'),
                 subtitle: TextFormField(
                   controller: editingController2,
                   decoration: InputDecoration(hintText: name),
-                  style: TextStyle(fontWeight: FontWeight.w500),
+                  style: const TextStyle(fontWeight: FontWeight.w500),
                 ),
                 leading: Icon(
                   Icons.verified_user,
                   color: Colors.blue[500],
                 ),
                 trailing: TextButton(
-                    child: Text("Editar"),
+                    child: const Text("Editar"),
                     onPressed: () async {
                       name = editingController2.text;
                       user = User(
@@ -275,18 +263,22 @@ class _UserInfoState extends State<UserInfo> {
                     }),
               ),
               ListTile(
-                title: Text('Password'),
+                title: const Text('Password'),
                 subtitle: TextFormField(
+                  onChanged: (value) {
+                    passNotifier.value =
+                        PasswordStrength.calculate(text: value);
+                  },
                   controller: editingController3,
                   decoration: InputDecoration(hintText: password),
-                  style: TextStyle(fontWeight: FontWeight.w500),
+                  style: const TextStyle(fontWeight: FontWeight.w500),
                 ),
                 leading: Icon(
                   Icons.password,
                   color: Colors.blue[500],
                 ),
                 trailing: TextButton(
-                    child: Text("Editar"),
+                    child: const Text("Editar"),
                     onPressed: () async {
                       newpassword = editingController3.text;
                       user = User(
@@ -302,9 +294,10 @@ class _UserInfoState extends State<UserInfo> {
                         deleted: false,
                       );
                       if (newpassword != "") {
-                        bool updated =
-                            await UserServices().updateUserpass(user);
-                        if (updated == true) {
+                        if (!regex.hasMatch(newpassword)) {
+                          openDialog(
+                              'Password too weak, check if you have: 1 uppercase, 1 lowercase, 1 number, 1 special char, at least 8 characters');
+                        } else if (await UserServices().updateUserpass(user)) {
                           openDialog("Password updated correctly!");
                         } else {
                           openDialog(
@@ -316,6 +309,9 @@ class _UserInfoState extends State<UserInfo> {
                       Navigator.of(context).push(MaterialPageRoute(
                           builder: (context) => const UserInfo()));
                     }),
+              ),
+              PasswordStrengthChecker(
+                strength: passNotifier,
               ),
               Container(child: _buttons(context, user)),
             ],
