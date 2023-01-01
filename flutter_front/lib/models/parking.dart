@@ -9,21 +9,22 @@ String parkingToJson(List<Parking> data) =>
     json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
 
 class Parking {
-  Parking({
-    //required this.opinions,
-    required this.country,
-    
-    required this.city,
-    required this.street,
-    required this.streetNumber,
-    required this.spotNumber,
-    required this.type,
-    required this.price,
-    required this.size,
-    required this.difficulty,
-    //required this.score,
-    required this.id,
-  });
+  Parking(
+      {
+      //required this.opinions,
+      required this.country,
+      required this.city,
+      required this.street,
+      required this.streetNumber,
+      required this.spotNumber,
+      required this.type,
+      required this.price,
+      required this.size,
+      required this.difficulty,
+      //required this.score,
+      required this.id,
+      required this.latitude,
+      required this.longitude});
 
   String country;
   String city;
@@ -36,6 +37,8 @@ class Parking {
   int difficulty;
   //int score;
   String id;
+  double latitude;
+  double longitude;
 
   factory Parking.fromJson(Map<String, dynamic> json) => Parking(
         id: json["_id"],
@@ -48,7 +51,8 @@ class Parking {
         price: json["price"],
         size: json["size"],
         difficulty: json["difficulty"],
-        //score: json["score"],
+        latitude: json["latitude"],
+        longitude: json["longitude"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -62,6 +66,8 @@ class Parking {
         "price": price,
         "size": size,
         "difficulty": difficulty,
+        "latitude": latitude,
+        "longitude": longitude
         //"score": score,
       };
 }

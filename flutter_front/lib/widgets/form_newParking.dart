@@ -1,5 +1,8 @@
+import 'dart:html';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_front/views/ListParkings.dart';
+import 'package:flutter_open_street_map/flutter_open_street_map.dart';
 import '../services/parkingServices.dart';
 import 'package:flutter_front/models/parking.dart';
 
@@ -14,6 +17,8 @@ const List<String> typeList = <String>['car', 'moto', 'van'];
 const List<String> sizeList = <String>['2x1', '5x2.5', '8x3.5'];
 String dropdownTypeValue = typeList.first;
 String dropdownSizeValue = sizeList.first;
+String longitude = "";
+String latitude = "";
 
 class _MyStatefulWidgetState extends State<FormWidget> {
   String _selectedMenu = '';
@@ -44,7 +49,7 @@ class _MyStatefulWidgetState extends State<FormWidget> {
   final difficultyController = TextEditingController();
 
   final GlobalKey<FormState> _formKey =
-      GlobalKey<FormState>(); // Permet accedir al form desde qualseevol lloc
+      GlobalKey<FormState>(); // Permet accedir al form desde qualsevol lloc
 
   @override
   Widget build(BuildContext context) {
@@ -202,6 +207,16 @@ class _MyStatefulWidgetState extends State<FormWidget> {
               },
             ),
           ),
+          Expanded(
+              child: FlutterOpenStreetMap(
+                  center: LatLong((41.3948), (2.1596)),
+                  showZoomButtons: true,
+                  onPicked: (pickedData) {
+                    latitude:
+                    pickedData.latLong.latitude;
+                    longitude:
+                    pickedData.latLong.longitude;
+                  })),
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 30.0),
             child: ElevatedButton(
@@ -226,16 +241,20 @@ class _MyStatefulWidgetState extends State<FormWidget> {
                   print(formSize);
                   String formDifficulty = difficultyController.text.toString();
                   print(formDifficulty);
+                  print(longitude);
+                  print(latitude);
 
-                  if (formCountry != "" &&
-                      formCity != "" &&
-                      formStreet != "" &&
-                      formNumber != "" &&
-                      formSpot != "" &&
-                      formType != "" &&
-                      formPrice != "" &&
-                      formSize != "" &&
-                      formDifficulty != "") {
+                  if (formCountry.isNotEmpty &&
+                      formCity.isNotEmpty &&
+                      formStreet.isNotEmpty &&
+                      formNumber.isNotEmpty &&
+                      formSpot.isNotEmpty &&
+                      formType.isNotEmpty &&
+                      formPrice.isNotEmpty &&
+                      formSize.isNotEmpty &&
+                      formDifficulty.isNotEmpty &&
+                      latitude.isNotEmpty &&
+                      longitude.isNotEmpty) {
                     Parking p = Parking(
                         //user_id:  StorageAparcam().getId(),
                         // score: 0,
@@ -248,7 +267,9 @@ class _MyStatefulWidgetState extends State<FormWidget> {
                         type: formType,
                         price: int.parse(formPrice),
                         size: formSize,
-                        difficulty: int.parse(formDifficulty));
+                        difficulty: int.parse(formDifficulty),
+                        longitude: double.parse(longitude),
+                        latitude: double.parse(latitude));
 
                     ParkingServices().createParking(p);
                     openDialog("Parking created.");

@@ -6,6 +6,7 @@ import 'package:flutter_front/services/parkingServices.dart';
 import 'package:flutter_front/views/MyParkings.dart';
 import 'package:flutter_front/views/ParkingInfo.dart';
 import 'package:flutter_front/widgets/buttonAccessibility.dart';
+import 'package:localstorage/localstorage.dart';
 import 'package:provider/provider.dart';
 import 'dart:convert';
 
@@ -175,6 +176,19 @@ class _ListParkingsState extends State<ListParkings> {
                                     builder: (context) => const ParkingInfo()));
                               },
                             )),
+                            Expanded(
+                              child: IconButton(
+                                icon: const Icon(Icons.map_rounded),
+                                onPressed: () {
+                                  StorageAparcam().setMapLocation(
+                                      parkings![index].latitude,
+                                      parkings![index].longitude);
+                                  Navigator.of(context).push(MaterialPageRoute(
+                                      builder: (context) =>
+                                          const MapParkings()));
+                                },
+                              ),
+                            ),
                           ],
                         )),
                   ),

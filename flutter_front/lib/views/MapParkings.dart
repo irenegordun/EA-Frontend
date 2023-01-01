@@ -1,3 +1,4 @@
+import 'dart:html';
 import 'dart:math';
 
 import 'package:flutter/material.dart';
@@ -8,6 +9,8 @@ import 'package:flutter_front/views/MyParkings.dart';
 import 'package:flutter_front/views/ParkingInfo.dart';
 import 'package:flutter_front/widgets/buttonAccessibility.dart';
 import 'package:flutter_open_street_map/flutter_open_street_map.dart';
+import 'package:flutter_front/services/localStorage.dart';
+//import 'package:flutter_osm_plugin/flutter_osm_plugin.dart';
 import 'package:provider/provider.dart';
 
 import '../models/parking.dart';
@@ -26,6 +29,7 @@ class MapParkings extends StatefulWidget {
 
 class _MapParkingsState extends State<MapParkings> {
   List<Parking>? parkings;
+
   var isLoaded = false;
 
   @override
@@ -46,7 +50,16 @@ class _MapParkingsState extends State<MapParkings> {
   @override
   Widget build(BuildContext context) {
     ParkingServices _parkingprovider = Provider.of<ParkingServices>(context);
-
+    double longitude;
+    double latitude;
+    if (StorageAparcam().getLatitude() == 0 &&
+        StorageAparcam().getLongitude() == 0) {
+      longitude = 2.1596;
+      latitude = 41.3948;
+    } else {
+      longitude = StorageAparcam().getLongitude();
+      latitude = StorageAparcam().getLatitude();
+    }
     return Scaffold(
       drawer: const DrawerScreen(),
       appBar: AppBar(
@@ -115,10 +128,20 @@ class _MapParkingsState extends State<MapParkings> {
               child: Row(children: <Widget>[
                 Expanded(
                     child: FlutterOpenStreetMap(
-                        center: LatLong((41.3948), (2.1596)),
+                        center: LatLong((latitude), (longitude)),
                         showZoomButtons: true,
                         onPicked: (pickedData) {
-                          const Point(41.3948, 2.1596);
+                          Geolocation;
+                          // GeoPoint(
+                          //     latitude: pickedData.latLong.latitude,
+                          //     longitude: pickedData.latLong.longitude);
+                          // GeoPoint p = showSimplePickerLocation(
+                          //   context: context,
+                          //   isDismissible: true,
+                          //   title: "Title dialog",
+                          //   textConfirmPicker: "pick",
+                          //   initCurrentUserPosition: true,
+                          //) as GeoPoint;
                           // print(pickedData.latLong.latitude);
                           // print(pickedData.latLong.longitude);
                           // print(pickedData.address);

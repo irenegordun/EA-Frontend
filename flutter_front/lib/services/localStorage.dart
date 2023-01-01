@@ -78,6 +78,19 @@ class StorageAparcam extends ChangeNotifier {
     storage.deleteItem('id');
   }
 
+  void setMapLocation(double latitude, double longitude) {
+    storage.setItem('longitude', longitude);
+    storage.setItem('latitude', latitude);
+  }
+
+  double getLatitude() {
+    return storage.getItem('latitude');
+  }
+
+  double getLongitude() {
+    return storage.getItem('longitude');
+  }
+
   void getitemFromLocalStorage() {
     //        FORMAT LLISTA GET ITEM
 

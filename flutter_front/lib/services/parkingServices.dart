@@ -37,6 +37,8 @@ class ParkingServices extends ChangeNotifier {
     difficulty: 0,
     //score: 0,
     id: "",
+    latitude: 0,
+    longitude: 0,
   );
 
   Parking get parkingData => _parkingData;

@@ -112,16 +112,19 @@ class _MyParkingInfoState extends State<MyParkingInfo> {
                     onPressed: () {
                       parking.country = editingController1.text;
                       parking = Parking(
-                          country: parking.country,
-                          city: parking.city,
-                          street: parking.street,
-                          streetNumber: parking.streetNumber,
-                          spotNumber: parking.spotNumber,
-                          type: "",
-                          price: 0,
-                          size: "",
-                          difficulty: 0,
-                          id: parking.id);
+                        country: parking.country,
+                        city: parking.city,
+                        street: parking.street,
+                        streetNumber: parking.streetNumber,
+                        spotNumber: parking.spotNumber,
+                        type: "",
+                        price: 0,
+                        size: "",
+                        difficulty: 0,
+                        id: parking.id,
+                        longitude: parking.longitude,
+                        latitude: parking.latitude,
+                      );
                       if (parking.country != "") {
                         ParkingServices().updateAddressParking(parking);
                         Navigator.of(context).push(MaterialPageRoute(
@@ -146,16 +149,19 @@ class _MyParkingInfoState extends State<MyParkingInfo> {
                     onPressed: () {
                       parking.city = editingController2.text;
                       parking = Parking(
-                          country: parking.country,
-                          city: parking.city,
-                          street: parking.street,
-                          streetNumber: parking.streetNumber,
-                          spotNumber: parking.spotNumber,
-                          type: parking.type,
-                          price: parking.price,
-                          size: parking.size,
-                          difficulty: parking.difficulty,
-                          id: parking.id);
+                        country: parking.country,
+                        city: parking.city,
+                        street: parking.street,
+                        streetNumber: parking.streetNumber,
+                        spotNumber: parking.spotNumber,
+                        type: parking.type,
+                        price: parking.price,
+                        size: parking.size,
+                        difficulty: parking.difficulty,
+                        id: parking.id,
+                        latitude: parking.latitude,
+                        longitude: parking.longitude,
+                      );
                       if (parking.city != "") {
                         ParkingServices().updateAddressParking(parking);
                         Navigator.of(context).push(MaterialPageRoute(
@@ -180,16 +186,19 @@ class _MyParkingInfoState extends State<MyParkingInfo> {
                     onPressed: () {
                       parking.street = editingController3.text;
                       parking = Parking(
-                          country: parking.country,
-                          city: parking.city,
-                          street: parking.street,
-                          streetNumber: parking.streetNumber,
-                          spotNumber: parking.spotNumber,
-                          type: parking.type,
-                          price: parking.price,
-                          size: parking.size,
-                          difficulty: parking.difficulty,
-                          id: parking.id);
+                        country: parking.country,
+                        city: parking.city,
+                        street: parking.street,
+                        streetNumber: parking.streetNumber,
+                        spotNumber: parking.spotNumber,
+                        type: parking.type,
+                        price: parking.price,
+                        size: parking.size,
+                        difficulty: parking.difficulty,
+                        id: parking.id,
+                        latitude: parking.latitude,
+                        longitude: parking.longitude,
+                      );
                       if (parking.street != "") {
                         ParkingServices().updateAddressParking(parking);
                         Navigator.of(context).push(MaterialPageRoute(
@@ -205,7 +214,8 @@ class _MyParkingInfoState extends State<MyParkingInfo> {
                 subtitle: TextFormField(
                     controller: editingController4,
                     decoration: InputDecoration(
-                        hintText: parking.streetNumber.toString())),
+                        // hintText: parking.streetNumber.toString()
+                        )),
                 leading: Icon(
                   Icons.where_to_vote_outlined,
                   color: Colors.blue[500],
@@ -214,19 +224,22 @@ class _MyParkingInfoState extends State<MyParkingInfo> {
                     child: Text("Editar"),
                     onPressed: () {
                       if (editingController4.text != "") {
-                        parking.streetNumber =
-                            int.parse(editingController4.text);
+                        // parking.streetNumber =
+                        //     int.parse(editingController4.text);
                         parking = Parking(
-                            country: parking.country,
-                            city: parking.city,
-                            street: parking.street,
-                            streetNumber: parking.streetNumber,
-                            spotNumber: parking.spotNumber,
-                            type: parking.type,
-                            price: parking.price,
-                            size: parking.size,
-                            difficulty: parking.difficulty,
-                            id: parking.id);
+                          country: parking.country,
+                          city: parking.city,
+                          street: parking.street,
+                          streetNumber: parking.streetNumber,
+                          spotNumber: parking.spotNumber,
+                          type: parking.type,
+                          price: parking.price,
+                          size: parking.size,
+                          difficulty: parking.difficulty,
+                          id: parking.id,
+                          latitude: parking.latitude,
+                          longitude: parking.longitude,
+                        );
                         ParkingServices().updateAddressParking(parking);
                         Navigator.of(context).push(MaterialPageRoute(
                             builder: (context) => const MyParkingInfo()));
@@ -252,16 +265,19 @@ class _MyParkingInfoState extends State<MyParkingInfo> {
                       if (editingController5.text != "") {
                         parking.spotNumber = int.parse(editingController5.text);
                         parking = Parking(
-                            country: parking.country,
-                            city: parking.city,
-                            street: parking.street,
-                            streetNumber: parking.streetNumber,
-                            spotNumber: parking.spotNumber,
-                            type: parking.type,
-                            price: parking.price,
-                            size: parking.size,
-                            difficulty: parking.difficulty,
-                            id: parking.id);
+                          country: parking.country,
+                          city: parking.city,
+                          street: parking.street,
+                          streetNumber: parking.streetNumber,
+                          spotNumber: parking.spotNumber,
+                          type: parking.type,
+                          price: parking.price,
+                          size: parking.size,
+                          difficulty: parking.difficulty,
+                          id: parking.id,
+                          latitude: parking.latitude,
+                          longitude: parking.longitude,
+                        );
                         ParkingServices().updateAddressParking(parking);
                         Navigator.of(context).push(MaterialPageRoute(
                             builder: (context) => const MyParkingInfo()));
@@ -295,16 +311,19 @@ class _MyParkingInfoState extends State<MyParkingInfo> {
                       if (editingController6.text != "") {
                         parking.price = int.parse(editingController6.text);
                         parking = Parking(
-                            country: parking.country,
-                            city: parking.city,
-                            street: parking.street,
-                            streetNumber: parking.streetNumber,
-                            spotNumber: parking.spotNumber,
-                            type: parking.type,
-                            price: parking.price,
-                            size: parking.size,
-                            difficulty: parking.difficulty,
-                            id: parking.id);
+                          country: parking.country,
+                          city: parking.city,
+                          street: parking.street,
+                          streetNumber: parking.streetNumber,
+                          spotNumber: parking.spotNumber,
+                          type: parking.type,
+                          price: parking.price,
+                          size: parking.size,
+                          difficulty: parking.difficulty,
+                          id: parking.id,
+                          latitude: parking.latitude,
+                          longitude: parking.longitude,
+                        );
                         ParkingServices().updatePriceParking(parking);
                         Navigator.of(context).push(MaterialPageRoute(
                             builder: (context) => const MyParkingInfo()));

@@ -24,7 +24,7 @@ environment:
 
 latlong: ^0.6.1
 flutter_map: any
-flutter_map_marker_cluster: any
+
 
 
 # Dependencies specify other packages that your package needs in order to work.
