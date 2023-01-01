@@ -149,6 +149,12 @@ class _myBookingsState extends State<myBookings> {
                           children: <Widget>[
                             Expanded(
                                 child: IconButton(
+                              icon: const Icon(Icons.chat_bubble_outline),
+                              tooltip: 'Chat with the owner',
+                              onPressed: () {},
+                            )),
+                            Expanded(
+                                child: IconButton(
                               icon: const Icon(Icons.info_outline),
                               tooltip: 'More Info',
                               onPressed: () {

@@ -1,12 +1,9 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_front/views/ListParkings.dart';
 import 'package:flutter_front/views/register.dart';
 import '../widgets/adaptive_scaffold.dart';
 import '../models/user.dart';
 import '../services/userServices.dart';
-import 'package:localstorage/localstorage.dart';
 
 import '../services/localStorage.dart';
 
@@ -110,7 +107,7 @@ class _LoginFormState extends State<LoginForm> {
                 obscureText: _obscureText,
                 controller: passwordController,
                 decoration: InputDecoration(
-                    border: OutlineInputBorder(),
+                    border: const OutlineInputBorder(),
                     labelText: 'Password *',
                     suffix: IconButton(
                       onPressed: () {
@@ -126,7 +123,7 @@ class _LoginFormState extends State<LoginForm> {
                           ? Icons.remove_red_eye
                           : Icons.password),
                     ),
-                    icon: Padding(
+                    icon: const Padding(
                       padding: EdgeInsets.only(top: 15.0),
                       child: Icon(Icons.lock),
                     )),
@@ -158,7 +155,8 @@ class _LoginFormState extends State<LoginForm> {
                     points: 0);
                 int state = await UserServices().loginUser(user);
                 if (state == 1) {
-                  StorageAparcam().setFiltered(false);
+                  StorageAparcam().addFiltersToLocalStorage(
+                      false, 'none', 0, 0, 1000, 'any', 'any');
                   Navigator.of(context).push(MaterialPageRoute(
                       builder: (context) => const ListParkings()));
                 } else if (state == 2) {
@@ -212,7 +210,7 @@ class _LoginFormState extends State<LoginForm> {
           title: Text(text),
           actions: [
             TextButton(
-              child: Text('Ok'),
+              child: const Text('Ok'),
               onPressed: submit,
             ),
           ],
@@ -222,15 +220,15 @@ class _LoginFormState extends State<LoginForm> {
   Future activateUser() => showDialog(
         context: context,
         builder: (context) => AlertDialog(
-          title: Text(
+          title: const Text(
               "Your user is desactivated do you want to activate it again?"),
           actions: [
             TextButton(
-              child: Text('Yes'),
+              child: const Text('Yes'),
               onPressed: activate,
             ),
             TextButton(
-              child: Text('No'),
+              child: const Text('No'),
               onPressed: submit,
             ),
           ],

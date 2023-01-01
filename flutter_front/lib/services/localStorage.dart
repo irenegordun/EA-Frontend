@@ -25,6 +25,30 @@ class StorageAparcam extends ChangeNotifier {
     storage.setItem('filtered', filtered);
   }
 
+  void setSortby(String s) {
+    storage.setItem('sortby', s);
+  }
+
+  void setType(String s) {
+    storage.setItem('type', s);
+  }
+
+  void setDimensions(String s) {
+    storage.setItem('dimensions', s);
+  }
+
+  void setminPrice(int n) {
+    storage.setItem('minprice', n);
+  }
+
+  void setmaxPrice(int n) {
+    storage.setItem('maxprice', n);
+  }
+
+  void setminScore(int n) {
+    storage.setItem('minscore', n);
+  }
+
   bool getFiltered() {
     return storage.getItem('filtered');
   }

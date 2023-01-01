@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_front/services/localStorage.dart';
 import 'package:flutter_front/services/parkingServices.dart';
-import 'package:flutter_front/views/MyParkings.dart';
 import 'package:flutter_front/views/ParkingInfo.dart';
 import 'package:flutter_front/widgets/buttonAccessibility.dart';
 import 'package:provider/provider.dart';
@@ -130,6 +127,129 @@ class _ListParkingsState extends State<ListParkings> {
                         ),
                         child: const Text('Map')))),
           ])),
+          Expanded(
+              child: Row(
+            children: <Widget>[
+              Expanded(
+                  child: Container(
+                      height: 35,
+                      width: 50,
+                      child: ElevatedButton.icon(
+                        onPressed: () {
+                          StorageAparcam().setSortby('none');
+                          Navigator.of(context).push(MaterialPageRoute(
+                              builder: (context) => const ListParkings()));
+                        },
+                        icon: const Icon(Icons.cancel_sharp, size: 20.0),
+                        label: Text('Sort by: ${StorageAparcam().getSortby()}'),
+                        style: ElevatedButton.styleFrom(
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(20.0),
+                            ),
+                            backgroundColor:
+                                const Color.fromARGB(255, 142, 162, 172)),
+                      ))),
+              Expanded(
+                  child: Container(
+                      height: 35,
+                      width: 50,
+                      child: ElevatedButton.icon(
+                        onPressed: () {
+                          StorageAparcam().setType('any');
+                          Navigator.of(context).push(MaterialPageRoute(
+                              builder: (context) => const ListParkings()));
+                        },
+                        icon: const Icon(Icons.cancel_sharp, size: 20.0),
+                        label: Text('Type: ${StorageAparcam().getType()}'),
+                        style: ElevatedButton.styleFrom(
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(20.0),
+                            ),
+                            backgroundColor:
+                                const Color.fromARGB(255, 142, 162, 172)),
+                      ))),
+              Expanded(
+                  child: Container(
+                      height: 35,
+                      width: 50,
+                      child: ElevatedButton.icon(
+                        onPressed: () {
+                          StorageAparcam().setDimensions('any');
+                          Navigator.of(context).push(MaterialPageRoute(
+                              builder: (context) => const ListParkings()));
+                        },
+                        icon: const Icon(Icons.cancel_sharp, size: 20.0),
+                        label:
+                            Text('Size: ${StorageAparcam().getDimensions()}'),
+                        style: ElevatedButton.styleFrom(
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(20.0),
+                            ),
+                            backgroundColor:
+                                const Color.fromARGB(255, 142, 162, 172)),
+                      ))),
+              Expanded(
+                  child: Container(
+                      height: 35,
+                      width: 50,
+                      child: ElevatedButton.icon(
+                        onPressed: () {
+                          StorageAparcam().setminPrice(0);
+                          Navigator.of(context).push(MaterialPageRoute(
+                              builder: (context) => const ListParkings()));
+                        },
+                        icon: const Icon(Icons.cancel_sharp, size: 20.0),
+                        label: Text(
+                            'Min price: ${StorageAparcam().getminPrice().toString()}'),
+                        style: ElevatedButton.styleFrom(
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(20.0),
+                            ),
+                            backgroundColor:
+                                const Color.fromARGB(255, 142, 162, 172)),
+                      ))),
+              Expanded(
+                  child: Container(
+                      height: 35,
+                      width: 50,
+                      child: ElevatedButton.icon(
+                        onPressed: () {
+                          StorageAparcam().setmaxPrice(999);
+                          Navigator.of(context).push(MaterialPageRoute(
+                              builder: (context) => const ListParkings()));
+                        },
+                        icon: const Icon(Icons.cancel_sharp, size: 20.0),
+                        label: Text(
+                            'Max price: ${StorageAparcam().getmaxPrice().toString()}'),
+                        style: ElevatedButton.styleFrom(
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(20.0),
+                            ),
+                            backgroundColor:
+                                const Color.fromARGB(255, 142, 162, 172)),
+                      ))),
+              Expanded(
+                  child: Container(
+                      height: 35,
+                      width: 50,
+                      child: ElevatedButton.icon(
+                        onPressed: () {
+                          StorageAparcam().setminScore(0);
+                          Navigator.of(context).push(MaterialPageRoute(
+                              builder: (context) => const ListParkings()));
+                        },
+                        icon: const Icon(Icons.cancel_sharp, size: 20.0),
+                        label: Text(
+                            'Min score: ${StorageAparcam().getminScore().toString()}'),
+                        style: ElevatedButton.styleFrom(
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(20.0),
+                            ),
+                            backgroundColor:
+                                const Color.fromARGB(255, 142, 162, 172)),
+                      ))),
+            ],
+          )),
 
           //Row 2/2
           Expanded(
