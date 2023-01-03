@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_front/dates/toDateTime.dart';
 import 'package:flutter_front/services/localStorage.dart';
 import 'package:flutter_front/services/parkingServices.dart';
 import 'package:flutter_front/views/ParkingInfo.dart';
@@ -27,6 +28,16 @@ class _ListParkingsState extends State<ListParkings> {
   void initState() {
     super.initState();
     getData();
+    // print(DateTime.now());
+    // print(DateTime.now().toIso8601String());
+    // print('${DateTime.now().toIso8601String()}Z');
+    // const data = "2021-12-15T11:10:01.521Z";
+    // DateTime dateTime = toDateTimeDart(data);
+    // print('Date de mongo $data a datetime de DART $dateTime');
+    // // MIRAR SI CALENDARI TORNA LA Z O NO
+    // DateTime datetime2 = DateTime.parse('2021-12-15T11:10:01.521Z');
+    // String data1 = toDateMongo(datetime2);
+    // print('Datetime de dart $datetime2 a date de MONGO: $data1');
   }
 
   getData() async {
