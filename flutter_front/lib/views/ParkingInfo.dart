@@ -1,8 +1,14 @@
+import 'dart:html';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_front/services/localStorage.dart';
 import 'package:flutter_front/services/parkingServices.dart';
+import 'package:flutter_front/services/bookingServices.dart';
 import 'package:flutter_front/views/ListParkings.dart';
+import 'package:flutter_open_street_map/flutter_open_street_map.dart';
 import 'package:provider/provider.dart';
 import '../models/parking.dart';
+import '../models/booking.dart';
 
 class ParkingInfo extends StatefulWidget {
   const ParkingInfo({super.key});
@@ -13,6 +19,13 @@ class ParkingInfo extends StatefulWidget {
 
 class _ParkingInfoState extends State<ParkingInfo> {
   var isLoaded = false;
+  DateTime? firstdate;
+
+  BookingParking(Booking booking) async {
+    BookingServices().createBooking(booking);
+    Navigator.of(context)
+        .push(MaterialPageRoute(builder: (context) => const ListParkings()));
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -86,17 +99,48 @@ class _ParkingInfoState extends State<ParkingInfo> {
                   color: Color.fromARGB(255, 39, 51, 58),
                 ),
               ),
-              ListTile(
-                contentPadding: EdgeInsets.zero,
-                title: ElevatedButton(
-                  onPressed: () {},
-                  style: const ButtonStyle(
-                    backgroundColor:
-                        MaterialStatePropertyAll<Color>(Colors.blueGrey),
-                  ),
-                  child: const Text('Book'),
+              TextButton(
+                child: Text("Book"),
+                style: TextButton.styleFrom(
+                  foregroundColor: Color.fromARGB(255, 255, 255, 255),
+                  backgroundColor: Color.fromARGB(255, 39, 51, 58),
+                  padding: const EdgeInsets.all(16.0),
+                  textStyle: const TextStyle(fontSize: 20),
                 ),
-              ),
+                onPressed: () async {
+                  FocusScope.of(context).requestFocus(FocusNode());
+                  await showDatePicker(
+                          context: context,
+                          initialDate: DateTime.now(),
+                          firstDate: DateTime(DateTime.now().year),
+                          lastDate: DateTime(DateTime.now().year + 20))
+                      .then((PickedDate1) {
+                    if (PickedDate1 == null) {
+                      return;
+                    }
+                    firstdate = PickedDate1;
+                  });
+                  await showDatePicker(
+                          context: context,
+                          initialDate: DateTime.now(),
+                          firstDate: DateTime(DateTime.now().year),
+                          lastDate: DateTime(DateTime.now().year + 20))
+                      .then((PickedDate2) {
+                    if (PickedDate2 == null) {
+                      return;
+                    }
+                    Booking booking1 = Booking(
+                        arrival: firstdate.toString(),
+                        departure: PickedDate2.toString(),
+                        cost: parking.price,
+                        customer: StorageAparcam().getId(),
+                        parking: parking.id,
+                        id: "",
+                        owner: "");
+                    BookingParking(booking1);
+                  });
+                },
+              )
             ],
           ),
         ),
