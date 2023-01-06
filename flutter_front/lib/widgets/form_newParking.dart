@@ -17,8 +17,6 @@ const List<String> typeList = <String>['car', 'moto', 'van'];
 const List<String> sizeList = <String>['2x1', '5x2.5', '8x3.5'];
 String dropdownTypeValue = typeList.first;
 String dropdownSizeValue = sizeList.first;
-String longitude = "";
-String latitude = "";
 
 class _MyStatefulWidgetState extends State<FormWidget> {
   String _selectedMenu = '';
@@ -47,6 +45,9 @@ class _MyStatefulWidgetState extends State<FormWidget> {
   final spotController = TextEditingController();
   final priceController = TextEditingController();
   final difficultyController = TextEditingController();
+  double latitudeController = 0;
+  double longitudeController = 0;
+  String addressController = "";
 
   final GlobalKey<FormState> _formKey =
       GlobalKey<FormState>(); // Permet accedir al form desde qualsevol lloc
@@ -58,36 +59,36 @@ class _MyStatefulWidgetState extends State<FormWidget> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          ListTile(
-            leading: const Icon(Icons.public),
-            title: TextFormField(
-              decoration: const InputDecoration(
-                hintText: 'Enter the country',
-              ),
-              controller: countryController,
-              validator: (String? value) {
-                if (value == null || value.isEmpty) {
-                  return 'Please enter some text';
-                }
-                return null;
-              },
-            ),
-          ),
-          ListTile(
-            leading: const Icon(Icons.location_city),
-            title: TextFormField(
-              decoration: const InputDecoration(
-                hintText: 'Enter the city',
-              ),
-              controller: cityController,
-              validator: (String? value) {
-                if (value == null || value.isEmpty) {
-                  return 'Please enter some text';
-                }
-                return null;
-              },
-            ),
-          ),
+          // ListTile(
+          //   leading: const Icon(Icons.public),
+          //   title: TextFormField(
+          //     decoration: const InputDecoration(
+          //       hintText: 'Enter the country',
+          //     ),
+          //     controller: countryController,
+          //     validator: (String? value) {
+          //       if (value == null || value.isEmpty) {
+          //         return 'Please enter some text';
+          //       }
+          //       return null;
+          //     },
+          //   ),
+          // ),
+          // ListTile(
+          //   leading: const Icon(Icons.location_city),
+          //   title: TextFormField(
+          //     decoration: const InputDecoration(
+          //       hintText: 'Enter the city',
+          //     ),
+          //     controller: cityController,
+          //     validator: (String? value) {
+          //       if (value == null || value.isEmpty) {
+          //         return 'Please enter some  text';
+          //       }
+          //       return null;
+          //     },
+          //   ),
+          // ),
           ListTile(
             leading: const Icon(Icons.signpost),
             title: TextFormField(
@@ -212,19 +213,36 @@ class _MyStatefulWidgetState extends State<FormWidget> {
                   center: LatLong((41.3948), (2.1596)),
                   showZoomButtons: true,
                   onPicked: (pickedData) {
-                    latitude:
-                    pickedData.latLong.latitude;
-                    longitude:
-                    pickedData.latLong.longitude;
+                    latitudeController = pickedData.latLong.latitude.toDouble();
+                    print(latitudeController);
+                    longitudeController =
+                        pickedData.latLong.longitude.toDouble();
+                    print(longitudeController);
+                    addressController = pickedData.address.toString();
+
+                    print(addressController);
+                    // var list = addressController.split(',');
+                    // print("city " + list.last);
+                    // list.removeLast();
+                    // print("codigo postal " + list.last);
+                    // list.removeLast();
+                    // print(list);
                   })),
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 30.0),
             child: ElevatedButton(
                 onPressed: () {
-                  String formCountry = countryController.text.toString();
+                  var list = addressController.split(', ');
+                  String formCountry =
+                      list.last; //countryController.text.toString();
                   print(formCountry);
-                  String formCity = cityController.text.toString();
+                  list.removeLast(); //city
+                  list.removeLast(); //codigopostal
+                  list.removeLast(); //Catalunya
+
+                  String formCity = list.last; //cityController.text.toString();
                   print(formCity);
+                  list.removeLast(); //Ciutat
                   String formStreet = streetController.text.toString();
                   print(formStreet);
                   String formNumber = numberController.text.toString();
@@ -241,8 +259,10 @@ class _MyStatefulWidgetState extends State<FormWidget> {
                   print(formSize);
                   String formDifficulty = difficultyController.text.toString();
                   print(formDifficulty);
-                  print(longitude);
-                  print(latitude);
+                  String formLongitude = longitudeController.toString();
+                  String formLatitude = latitudeController.toString();
+                  print(formLatitude);
+                  print(formLongitude);
 
                   if (formCountry.isNotEmpty &&
                       formCity.isNotEmpty &&
@@ -252,9 +272,7 @@ class _MyStatefulWidgetState extends State<FormWidget> {
                       formType.isNotEmpty &&
                       formPrice.isNotEmpty &&
                       formSize.isNotEmpty &&
-                      formDifficulty.isNotEmpty &&
-                      latitude.isNotEmpty &&
-                      longitude.isNotEmpty) {
+                      formDifficulty.isNotEmpty) {
                     Parking p = Parking(
                         //user_id:  StorageAparcam().getId(),
                         // score: 0,
@@ -268,8 +286,8 @@ class _MyStatefulWidgetState extends State<FormWidget> {
                         price: int.parse(formPrice),
                         size: formSize,
                         difficulty: int.parse(formDifficulty),
-                        longitude: double.parse(longitude),
-                        latitude: double.parse(latitude));
+                        longitude: double.parse(formLongitude),
+                        latitude: double.parse(formLatitude));
 
                     ParkingServices().createParking(p);
                     openDialog("Parking created.");
