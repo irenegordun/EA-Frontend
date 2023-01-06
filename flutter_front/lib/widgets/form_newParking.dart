@@ -244,25 +244,13 @@ class _MyStatefulWidgetState extends State<FormWidget> {
                   print(formCity);
                   list.removeLast(); //Ciutat
                   String formStreet = streetController.text.toString();
-                  print(formStreet);
                   String formNumber = numberController.text.toString();
-                  print(formNumber);
                   String formSpot = spotController.text.toString();
-                  print(formSpot);
-
                   String formType = dropdownTypeValue.toString();
-                  print(formType);
-
                   String formPrice = priceController.text.toString();
-                  print(formPrice);
                   String formSize = dropdownSizeValue.toString();
-                  print(formSize);
                   String formDifficulty = difficultyController.text.toString();
                   print(formDifficulty);
-                  String formLongitude = longitudeController.toString();
-                  String formLatitude = latitudeController.toString();
-                  print(formLatitude);
-                  print(formLongitude);
 
                   if (formCountry.isNotEmpty &&
                       formCity.isNotEmpty &&
@@ -275,8 +263,9 @@ class _MyStatefulWidgetState extends State<FormWidget> {
                       formDifficulty.isNotEmpty) {
                     Parking p = Parking(
                         //user_id:  StorageAparcam().getId(),
-                        // score: 0,
+                        score: 0,
                         id: '',
+                        user: '',
                         country: formCountry,
                         city: formCity,
                         street: formStreet,
@@ -286,8 +275,8 @@ class _MyStatefulWidgetState extends State<FormWidget> {
                         price: int.parse(formPrice),
                         size: formSize,
                         difficulty: int.parse(formDifficulty),
-                        longitude: double.parse(formLongitude),
-                        latitude: double.parse(formLatitude));
+                        longitude: double.parse(latitudeController.toString()),
+                        latitude: double.parse(longitudeController.toString()));
 
                     ParkingServices().createParking(p);
                     openDialog("Parking created.");

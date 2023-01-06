@@ -121,7 +121,9 @@ class _MyParkingInfoState extends State<MyParkingInfo> {
                         price: 0,
                         size: "",
                         difficulty: 0,
+                        score: 0,
                         id: parking.id,
+                        user: parking.user,
                         longitude: parking.longitude,
                         latitude: parking.latitude,
                       );
@@ -158,7 +160,9 @@ class _MyParkingInfoState extends State<MyParkingInfo> {
                         price: parking.price,
                         size: parking.size,
                         difficulty: parking.difficulty,
+                        score: parking.score,
                         id: parking.id,
+                        user: parking.user,
                         latitude: parking.latitude,
                         longitude: parking.longitude,
                       );
@@ -195,7 +199,9 @@ class _MyParkingInfoState extends State<MyParkingInfo> {
                         price: parking.price,
                         size: parking.size,
                         difficulty: parking.difficulty,
+                        score: parking.score,
                         id: parking.id,
+                        user: parking.user,
                         latitude: parking.latitude,
                         longitude: parking.longitude,
                       );
@@ -236,7 +242,9 @@ class _MyParkingInfoState extends State<MyParkingInfo> {
                           price: parking.price,
                           size: parking.size,
                           difficulty: parking.difficulty,
+                          score: parking.score,
                           id: parking.id,
+                          user: parking.user,
                           latitude: parking.latitude,
                           longitude: parking.longitude,
                         );
@@ -274,10 +282,13 @@ class _MyParkingInfoState extends State<MyParkingInfo> {
                           price: parking.price,
                           size: parking.size,
                           difficulty: parking.difficulty,
+                          score: parking.score,
                           id: parking.id,
+                          user: parking.user,
                           latitude: parking.latitude,
                           longitude: parking.longitude,
                         );
+
                         ParkingServices().updateAddressParking(parking);
                         Navigator.of(context).push(MaterialPageRoute(
                             builder: (context) => const MyParkingInfo()));
@@ -295,7 +306,7 @@ class _MyParkingInfoState extends State<MyParkingInfo> {
                 ),
               ),
               ListTile(
-                title: Text('Price',
+                title: Text('Price per day',
                     style: TextStyle(fontWeight: FontWeight.w500)),
                 subtitle: TextFormField(
                     controller: editingController6,
@@ -320,10 +331,13 @@ class _MyParkingInfoState extends State<MyParkingInfo> {
                           price: parking.price,
                           size: parking.size,
                           difficulty: parking.difficulty,
+                          score: parking.score,
                           id: parking.id,
+                          user: parking.user,
                           latitude: parking.latitude,
                           longitude: parking.longitude,
                         );
+
                         ParkingServices().updatePriceParking(parking);
                         Navigator.of(context).push(MaterialPageRoute(
                             builder: (context) => const MyParkingInfo()));

@@ -18,8 +18,6 @@ import '../widgets/drawer.dart';
 import 'Filters.dart';
 import 'ListParkings.dart';
 
-//per sprint4
-
 class MapParkings extends StatefulWidget {
   const MapParkings({super.key});
 
@@ -145,6 +143,7 @@ class _MapParkingsState extends State<MapParkings> {
                           // print(pickedData.latLong.latitude);
                           // print(pickedData.latLong.longitude);
                           // print(pickedData.address);
+                          const Point(41.3948, 2.1596);
                         }))
               ]))
         ],

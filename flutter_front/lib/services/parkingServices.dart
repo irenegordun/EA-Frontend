@@ -35,10 +35,11 @@ class ParkingServices extends ChangeNotifier {
     price: 0,
     size: "",
     difficulty: 0,
-    //score: 0,
+    score: 0,
     id: "",
     latitude: 0,
     longitude: 0,
+    user: "",
   );
 
   Parking get parkingData => _parkingData;
@@ -60,7 +61,6 @@ class ParkingServices extends ChangeNotifier {
 
   Future<List<Parking>?> getFilteredParkings(String filters) async {
     var client = http.Client();
-    print(filters);
     var uri = Uri.parse('http://localhost:5432/api/parkings/filter');
     var response = await client.post(uri,
         headers: {'content-type': 'application/json'}, body: filters);
@@ -144,6 +144,18 @@ class ParkingServices extends ChangeNotifier {
   Future<Parking?> getOneParking(String id) async {
     var client = http.Client();
     var uri = Uri.parse('http://localhost:5432/api/parkings/$id');
+    var response = await client.get(uri);
+    if (response.statusCode == 200) {
+      final Map<String, dynamic> map = json.decode(response.body);
+      Parking parking = parkingFromJson(map);
+      return parking;
+    }
+    return null;
+  }
+
+  Future<Parking?> getByStreet(String street) async {
+    var client = http.Client();
+    var uri = Uri.parse('http://localhost:5432/api/parkings/byStreet/$street');
     var response = await client.get(uri);
     if (response.statusCode == 200) {
       final Map<String, dynamic> map = json.decode(response.body);

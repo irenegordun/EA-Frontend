@@ -8,11 +8,6 @@ class StorageAparcam extends ChangeNotifier {
     storage.setItem('token', token);
     storage.setItem('id', id);
     storage.setItem('password', password);
-
-    //        FORMAT LLISTA SET ITEM
-
-    /* final user = json.encode({'email': email, 'id': id});
-    storage.setItem('user', user);*/
   }
 
   void addFiltersToLocalStorage(bool filtered, String sortby, double minscore,
@@ -28,6 +23,30 @@ class StorageAparcam extends ChangeNotifier {
 
   void setFiltered(bool filtered) {
     storage.setItem('filtered', filtered);
+  }
+
+  void setSortby(String s) {
+    storage.setItem('sortby', s);
+  }
+
+  void setType(String s) {
+    storage.setItem('type', s);
+  }
+
+  void setDimensions(String s) {
+    storage.setItem('dimensions', s);
+  }
+
+  void setminPrice(int n) {
+    storage.setItem('minprice', n);
+  }
+
+  void setmaxPrice(int n) {
+    storage.setItem('maxprice', n);
+  }
+
+  void setminScore(int n) {
+    storage.setItem('minscore', n);
   }
 
   bool getFiltered() {

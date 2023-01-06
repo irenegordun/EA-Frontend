@@ -27,7 +27,13 @@ class DetailsModel {
 
 class BookingServices extends ChangeNotifier {
   Booking _bookingData = Booking(
-      arrival: "", departure: "", cost: 0, customer: "", parking: "", id: "");
+      arrival: "",
+      departure: "",
+      cost: 0,
+      customer: "",
+      parking: "",
+      id: "",
+      owner: "");
 
   Booking get bookingData => _bookingData;
 
@@ -37,7 +43,6 @@ class BookingServices extends ChangeNotifier {
 
   Future<void> deleteBooking(Booking booking) async {
     var client = http.Client();
-    var id = booking.id;
     var uri = Uri.parse('http://localhost:5432/api/bookings/');
     var bookingJS = jsonEncode(booking.toJson());
     var response = await client.delete(uri,

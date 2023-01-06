@@ -9,8 +9,8 @@ class Filters extends StatefulWidget {
   State<Filters> createState() => _FiltersState();
 }
 
-const List<String> sizeList = <String>['2x1', '5x2.5', '8x3.5'];
-const List<String> typeList = <String>['car', 'moto', 'van'];
+const List<String> sizeList = <String>['any', '2x1', '5x2.5', '8x3.5'];
+const List<String> typeList = <String>['any', 'car', 'moto', 'van'];
 const List<String> sortList = <String>['score', 'price'];
 String dropdownTypeValue = typeList.first;
 String dropdownSizeValue = sizeList.first;
