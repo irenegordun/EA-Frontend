@@ -40,6 +40,7 @@ class ParkingServices extends ChangeNotifier {
     latitude: 0,
     longitude: 0,
     user: "",
+    range: "",
   );
 
   Parking get parkingData => _parkingData;

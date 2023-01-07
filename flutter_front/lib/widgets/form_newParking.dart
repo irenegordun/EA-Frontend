@@ -364,7 +364,9 @@ class _MyStatefulWidgetState extends State<FormWidget> {
                         size: formSize,
                         difficulty: int.parse(formDifficulty),
                         longitude: double.parse(latitudeController.toString()),
-                        latitude: double.parse(longitudeController.toString()));
+                        latitude: double.parse(longitudeController.toString()),
+                        range: _range
+                        );
 
                     ParkingServices().createParking(p);
                     openDialog("Parking created.");

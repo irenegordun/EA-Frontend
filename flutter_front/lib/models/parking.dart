@@ -25,7 +25,9 @@ class Parking {
       required this.id,
       required this.user,
       required this.latitude,
-      required this.longitude});
+      required this.longitude,
+      required this.range
+      });
 
   String country;
   String city;
@@ -41,6 +43,7 @@ class Parking {
   double latitude;
   double longitude;
   String user;
+  String range;
 
   factory Parking.fromJson(Map<String, dynamic> json) => Parking(
         id: json["_id"],
@@ -57,6 +60,7 @@ class Parking {
         longitude: json["longitude"],
         score: json["score"],
         user: json["user"],
+        range: json["range"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -75,5 +79,6 @@ class Parking {
         //"score": score,
         "score": score,
         "user": user,
+        "range": range,
       };
 }
