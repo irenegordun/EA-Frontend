@@ -6,6 +6,9 @@ import 'package:flutter_open_street_map/flutter_open_street_map.dart';
 import '../services/parkingServices.dart';
 import 'package:flutter_front/models/parking.dart';
 
+import 'package:syncfusion_flutter_datepicker/datepicker.dart';
+import 'package:intl/intl.dart';
+
 class FormWidget extends StatefulWidget {
   const FormWidget({super.key});
 
@@ -19,6 +22,20 @@ String dropdownTypeValue = typeList.first;
 String dropdownSizeValue = sizeList.first;
 
 class _MyStatefulWidgetState extends State<FormWidget> {
+  Widget getDateRangePicker() {
+    return Container(
+        height: 250,
+        child: Card(
+          child: SfDateRangePicker(
+            view: DateRangePickerView.month,
+            selectionMode: DateRangePickerSelectionMode.range,
+            onSelectionChanged: _onSelectionChanged,
+            initialSelectedRange: PickerDateRange(
+              DateTime.now().subtract(const Duration(days: 4)),
+              DateTime.now().add(const Duration(days: 3))),
+          )));
+  }
+  
   String _selectedMenu = '';
 
   Future openDialog(String text) => showDialog(
@@ -49,8 +66,29 @@ class _MyStatefulWidgetState extends State<FormWidget> {
   double longitudeController = 0;
   String addressController = "";
 
+  String _selectedDate = '';
+  String _dateCount = '';
+  String _range = '';
+  String _rangeCount = '';
+
   final GlobalKey<FormState> _formKey =
       GlobalKey<FormState>(); // Permet accedir al form desde qualsevol lloc
+
+  void _onSelectionChanged(DateRangePickerSelectionChangedArgs args) {
+    setState(() {
+      if (args.value is PickerDateRange) {
+        _range = '${DateFormat('dd/MM/yyyy').format(args.value.startDate)} -'
+            // ignore: lines_longer_than_80_chars
+            ' ${DateFormat('dd/MM/yyyy').format(args.value.endDate ?? args.value.startDate)}';
+      } else if (args.value is DateTime) {
+        _selectedDate = args.value.toString();
+      } else if (args.value is List<DateTime>) {
+        _dateCount = args.value.length.toString();
+      } else {
+        _rangeCount = args.value.length.toString();
+      }
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -208,6 +246,56 @@ class _MyStatefulWidgetState extends State<FormWidget> {
               },
             ),
           ),
+          ListTile(
+            leading: Icon(Icons.calendar_month_outlined),
+            title: Text("Enter the availability",
+              style: TextStyle(color: Colors.grey)),
+            trailing: IconButton(
+              icon: Icon(Icons.calendar_month_outlined),
+              tooltip: 'Select the availability',
+              onPressed: () async {
+                    FocusScope.of(context).requestFocus(FocusNode());
+                    await showDatePicker(
+                      context: context,
+                      initialDate: DateTime.now(),
+                      firstDate: DateTime(DateTime.now().year),
+                      lastDate: DateTime(DateTime.now().year + 20),
+                    );
+                  }, 
+            ),
+          ),
+
+          ListTile(
+            leading: Icon(Icons.calendar_month_outlined),
+            title: Text("Enter the availability",
+              style: TextStyle(color: Colors.grey)),
+            trailing: IconButton(
+              icon: Icon(Icons.calendar_month_outlined),
+              tooltip: 'Select the availability',
+             onPressed: () {
+              showDialog(
+                  context: context,
+                  builder: (BuildContext context) {
+                    return AlertDialog(
+                        title: Text(''),
+                        content: Container(
+                          height: 350,
+                          child: Column(
+                            children: <Widget>[
+                              getDateRangePicker(),
+                              MaterialButton(
+                                child: Text("OK"),
+                                onPressed: () {
+                                  Navigator.pop(context);
+                                },
+                              )
+                            ],
+                          ),
+                        ));
+                  });
+            }, 
+            ),
+          ),
           Expanded(
               child: FlutterOpenStreetMap(
                   center: LatLong((41.3948), (2.1596)),
@@ -298,3 +386,5 @@ class _MyStatefulWidgetState extends State<FormWidget> {
     );
   }
 }
+
+

@@ -17,7 +17,7 @@ class NewParkingPage extends StatelessWidget {
         floatingActionButton :const AccessibilityButton(),
 
         appBar: AppBar(
-          title: const Text("Aparca'm - Create new parking spot"),
+          title: const Text("Aparca'm"),
           backgroundColor: Colors.blueGrey,
         ),
         body: const FormWidget(),

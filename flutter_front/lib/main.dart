@@ -12,6 +12,7 @@ import 'package:flutter_front/views/UserInfo.dart';
 
 import 'package:flutter_front/views/register.dart';
 import 'package:flutter_front/views/accessibility.dart';
+import 'package:flutter_front/widgets/calendar.dart';
 
 import 'package:provider/provider.dart';
 
@@ -70,7 +71,7 @@ class _MyAppState extends State<MyApp> {
       ),
       localizationsDelegates: AppLocalizations.localizationsDelegates,
       supportedLocales: AppLocalizations.supportedLocales,
-      home: Login(),
+      home: NewParkingPage(),
       locale: _locale,
     );
   }
