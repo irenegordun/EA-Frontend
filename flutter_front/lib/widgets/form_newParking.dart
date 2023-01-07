@@ -246,6 +246,7 @@ class _MyStatefulWidgetState extends State<FormWidget> {
               },
             ),
           ),
+          /*
           ListTile(
             leading: Icon(Icons.calendar_month_outlined),
             title: Text("Enter the availability",
@@ -264,10 +265,11 @@ class _MyStatefulWidgetState extends State<FormWidget> {
                   }, 
             ),
           ),
+          */
 
           ListTile(
             leading: Icon(Icons.calendar_month_outlined),
-            title: Text("Enter the availability",
+            title: Text("Enter the availability  " + "SELECTED "+" "+_range,
               style: TextStyle(color: Colors.grey)),
             trailing: IconButton(
               icon: Icon(Icons.calendar_month_outlined),
@@ -287,6 +289,8 @@ class _MyStatefulWidgetState extends State<FormWidget> {
                                 child: Text("OK"),
                                 onPressed: () {
                                   Navigator.pop(context);
+                                
+                                print(_range);
                                 },
                               )
                             ],

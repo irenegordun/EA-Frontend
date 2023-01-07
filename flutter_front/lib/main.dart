@@ -71,7 +71,7 @@ class _MyAppState extends State<MyApp> {
       ),
       localizationsDelegates: AppLocalizations.localizationsDelegates,
       supportedLocales: AppLocalizations.supportedLocales,
-      home: NewParkingPage(),
+      home: Login(),
       locale: _locale,
     );
   }
