@@ -37,7 +37,7 @@ class Parking {
   String type;
   int price;
   String size;
-  int difficulty;
+  double difficulty;
   int score;
   String id;
   double latitude;
