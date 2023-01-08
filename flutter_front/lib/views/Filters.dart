@@ -74,7 +74,7 @@ class _FiltersState extends State<Filters> {
                 divisions: 5,
                 activeColor: Colors.blueGrey,
                 inactiveColor: Colors.blueGrey.shade100,
-                thumbColor: Colors.blueAccent,
+                thumbColor: Colors.blueGrey,
                 label: "$sliderScore",
               ),
               const Divider(),

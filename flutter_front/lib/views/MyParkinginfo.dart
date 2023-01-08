@@ -126,6 +126,7 @@ class _MyParkingInfoState extends State<MyParkingInfo> {
                         user: parking.user,
                         longitude: parking.longitude,
                         latitude: parking.latitude,
+                        range: parking.range,
                       );
                       if (parking.country != "") {
                         ParkingServices().updateAddressParking(parking);
@@ -165,6 +166,7 @@ class _MyParkingInfoState extends State<MyParkingInfo> {
                         user: parking.user,
                         latitude: parking.latitude,
                         longitude: parking.longitude,
+                        range: parking.range,
                       );
                       if (parking.city != "") {
                         ParkingServices().updateAddressParking(parking);
@@ -204,6 +206,7 @@ class _MyParkingInfoState extends State<MyParkingInfo> {
                         user: parking.user,
                         latitude: parking.latitude,
                         longitude: parking.longitude,
+                        range: parking.range,
                       );
                       if (parking.street != "") {
                         ParkingServices().updateAddressParking(parking);
@@ -247,6 +250,7 @@ class _MyParkingInfoState extends State<MyParkingInfo> {
                           user: parking.user,
                           latitude: parking.latitude,
                           longitude: parking.longitude,
+                          range: parking.range,
                         );
                         ParkingServices().updateAddressParking(parking);
                         Navigator.of(context).push(MaterialPageRoute(
@@ -287,6 +291,7 @@ class _MyParkingInfoState extends State<MyParkingInfo> {
                           user: parking.user,
                           latitude: parking.latitude,
                           longitude: parking.longitude,
+                          range: parking.range,
                         );
 
                         ParkingServices().updateAddressParking(parking);
@@ -336,6 +341,7 @@ class _MyParkingInfoState extends State<MyParkingInfo> {
                           user: parking.user,
                           latitude: parking.latitude,
                           longitude: parking.longitude,
+                          range: parking.range,
                         );
 
                         ParkingServices().updatePriceParking(parking);
