@@ -21,19 +21,6 @@ String dropdownSizeValue = sizeList.first;
 class _MyStatefulWidgetState extends State<FormWidget> {
   String _selectedMenu = '';
 
-  Future openDialog(String text) => showDialog(
-        context: context,
-        builder: (context) => AlertDialog(
-          title: Text(text),
-          actions: [
-            TextButton(
-              onPressed: submit,
-              child: const Text('Ok'),
-            ),
-          ],
-        ),
-      );
-
   void submit() {
     Navigator.of(context, rootNavigator: true).pop();
   }
@@ -232,17 +219,6 @@ class _MyStatefulWidgetState extends State<FormWidget> {
             padding: const EdgeInsets.symmetric(vertical: 30.0),
             child: ElevatedButton(
                 onPressed: () {
-                  var list = addressController.split(', ');
-                  String formCountry =
-                      list.last; //countryController.text.toString();
-                  print(formCountry);
-                  list.removeLast(); //city
-                  list.removeLast(); //codigopostal
-                  list.removeLast(); //Catalunya
-
-                  String formCity = list.last; //cityController.text.toString();
-                  print(formCity);
-                  list.removeLast(); //Ciutat
                   String formStreet = streetController.text.toString();
                   String formNumber = numberController.text.toString();
                   String formSpot = spotController.text.toString();
@@ -250,10 +226,8 @@ class _MyStatefulWidgetState extends State<FormWidget> {
                   String formPrice = priceController.text.toString();
                   String formSize = dropdownSizeValue.toString();
                   String formDifficulty = difficultyController.text.toString();
-                  print(formDifficulty);
 
-                  if (formCountry.isNotEmpty &&
-                      formCity.isNotEmpty &&
+                  if (addressController.isNotEmpty &&
                       formStreet.isNotEmpty &&
                       formNumber.isNotEmpty &&
                       formSpot.isNotEmpty &&
@@ -261,6 +235,19 @@ class _MyStatefulWidgetState extends State<FormWidget> {
                       formPrice.isNotEmpty &&
                       formSize.isNotEmpty &&
                       formDifficulty.isNotEmpty) {
+                    var list = addressController.split(', ');
+                    String formCountry =
+                        list.last; //countryController.text.toString();
+                    print(formCountry);
+                    list.removeLast(); //city
+                    list.removeLast(); //codigopostal
+                    list.removeLast(); //Catalunya
+
+                    String formCity =
+                        list.last; //cityController.text.toString();
+                    print(formCity);
+                    list.removeLast(); //Ciutat
+
                     Parking p = Parking(
                         //user_id:  StorageAparcam().getId(),
                         score: 0,
@@ -275,8 +262,8 @@ class _MyStatefulWidgetState extends State<FormWidget> {
                         price: int.parse(formPrice),
                         size: formSize,
                         difficulty: int.parse(formDifficulty),
-                        longitude: double.parse(latitudeController.toString()),
-                        latitude: double.parse(longitudeController.toString()));
+                        longitude: longitudeController,
+                        latitude: latitudeController);
 
                     ParkingServices().createParking(p);
                     openDialog("Parking created.");
@@ -284,9 +271,21 @@ class _MyStatefulWidgetState extends State<FormWidget> {
                       Navigator.of(context).push(MaterialPageRoute(
                           builder: (context) => const ListParkings()));
                     });
-                  } else {
+                  } else if (formStreet.isEmpty ||
+                      formNumber.isEmpty ||
+                      formSpot.isEmpty ||
+                      formType.isEmpty ||
+                      formPrice.isEmpty ||
+                      formSize.isEmpty ||
+                      formDifficulty.isEmpty) {
                     openDialog(
                         "Please make sure all the flieds are filled before submit.");
+                  } else if (addressController.isEmpty) {
+                    openDialog(
+                        "Please select the localization of your parking and click 'set the current location' once it is correct");
+                  } else {
+                    openDialog(
+                        "Ops something went wrong check if it is something missing");
                   }
                   ElevatedButton.styleFrom(
                       backgroundColor: const Color.fromARGB(65, 143, 74, 163));
@@ -297,4 +296,17 @@ class _MyStatefulWidgetState extends State<FormWidget> {
       ),
     );
   }
+
+  Future openDialog(String text) => showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+          title: Text(text),
+          actions: [
+            TextButton(
+              onPressed: submit,
+              child: const Text('Ok'),
+            ),
+          ],
+        ),
+      );
 }
