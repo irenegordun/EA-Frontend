@@ -105,7 +105,8 @@ class _LoginFormState extends State<LoginForm> {
             ),
           ),
           const SizedBox(height: 10),
-          Form(
+          SingleChildScrollView(
+            scrollDirection: Axis.vertical,
             key: widget._formKey,
             child: Column(children: [
               TextFormField(
@@ -359,7 +360,8 @@ class CompactView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return LayoutBuilder(builder: (context, constraints) {
-      return Column(
+      return SingleChildScrollView(
+          child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           SizedBox(
@@ -368,7 +370,7 @@ class CompactView extends StatelessWidget {
           ),
           LoginForm(formKey: _formKey),
         ],
-      );
+      ));
     });
   }
 }
