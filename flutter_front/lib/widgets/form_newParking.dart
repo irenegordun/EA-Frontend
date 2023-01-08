@@ -20,23 +20,23 @@ const List<String> typeList = <String>['car', 'moto', 'van'];
 const List<String> sizeList = <String>['2x1', '5x2.5', '8x3.5'];
 String dropdownTypeValue = typeList.first;
 String dropdownSizeValue = sizeList.first;
-double sliderDif= 0.0;
+double sliderDif = 0.0;
 
 class _MyStatefulWidgetState extends State<FormWidget> {
   Widget getDateRangePicker() {
     return Container(
         height: 250,
         child: Card(
-          child: SfDateRangePicker(
-            view: DateRangePickerView.month,
-            selectionMode: DateRangePickerSelectionMode.range,
-            onSelectionChanged: _onSelectionChanged,
-            initialSelectedRange: PickerDateRange(
+            child: SfDateRangePicker(
+          view: DateRangePickerView.month,
+          selectionMode: DateRangePickerSelectionMode.range,
+          onSelectionChanged: _onSelectionChanged,
+          initialSelectedRange: PickerDateRange(
               DateTime.now().subtract(const Duration(days: 4)),
               DateTime.now().add(const Duration(days: 3))),
-          )));
+        )));
   }
-  
+
   String _selectedMenu = '';
 
   Future openDialog(String text) => showDialog(
@@ -250,56 +250,56 @@ class _MyStatefulWidgetState extends State<FormWidget> {
           const ListTile(
             leading: const Icon(Icons.balance),
             title: Text('Choose the difficulty',
-              style: TextStyle(fontWeight: FontWeight.w500)),
+                style: TextStyle(fontWeight: FontWeight.w500)),
           ),
           Slider(
-                value: sliderDif,
-                onChanged: (newScore) {
-                  setState(() {
-                    sliderDif = newScore;
-                  });
-                },
-                min: 0.0,
-                max: 10.0,
-                divisions: 10,
-                activeColor: Colors.blueGrey,
-                inactiveColor: Colors.blueGrey.shade100,
-                thumbColor: Colors.blueGrey,
-                label: "$sliderDif",
-              ),
+            value: sliderDif,
+            onChanged: (newScore) {
+              setState(() {
+                sliderDif = newScore;
+              });
+            },
+            min: 0.0,
+            max: 10.0,
+            divisions: 10,
+            activeColor: Colors.blueGrey,
+            inactiveColor: Colors.blueGrey.shade100,
+            thumbColor: Colors.blueGrey,
+            label: "$sliderDif",
+          ),
           const Divider(),
 
           ListTile(
             leading: Icon(Icons.calendar_month_outlined),
-            title: Text("Enter the availability  " + "SELECTED "+" "+_range,
-              style: TextStyle(color: Colors.grey)),
+            title: Text("Enter the availability  " + "SELECTED " + " " + _range,
+                style: TextStyle(color: Colors.grey)),
             trailing: IconButton(
               icon: Icon(Icons.calendar_month_outlined),
               tooltip: 'Select the availability',
-             onPressed: () {
-              showDialog(
-                  context: context,
-                  builder: (BuildContext context) {
-                    return AlertDialog(
-                        title: Text(''),
-                        content: Container(
-                          height: 350,
-                          child: Column(
-                            children: <Widget>[
-                              getDateRangePicker(),
-                              MaterialButton(
-                                child: Text("OK"),
-                                onPressed: () {
-                                  Navigator.pop(context);
-                                
-                                print(_range);
-                                },
-                              )
-                            ],
-                          ),
-                        ));
-                  });
-            }, 
+              onPressed: () {
+                showDialog(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return AlertDialog(
+                          title: Text(''),
+                          content: Container(
+                            height: 350,
+                            child: Column(
+                              children: <Widget>[
+                                getDateRangePicker(),
+                                MaterialButton(
+                                  child: Text("OK"),
+                                  onPressed: () {
+                                    Navigator.pop(context);
+
+                                    print(_range);
+                                  },
+                                )
+                              ],
+                            ),
+                          ));
+                    });
+              },
             ),
           ),
           Expanded(
@@ -326,34 +326,32 @@ class _MyStatefulWidgetState extends State<FormWidget> {
             padding: const EdgeInsets.symmetric(vertical: 30.0),
             child: ElevatedButton(
                 onPressed: () {
-                  var list = addressController.split(', ');
-                  String formCountry =
-                      list.last; //countryController.text.toString();
-                  print(formCountry);
-                  list.removeLast(); //city
-                  list.removeLast(); //codigopostal
-                  list.removeLast(); //Catalunya
-
-                  String formCity = list.last; //cityController.text.toString();
-                  print(formCity);
-                  list.removeLast(); //Ciutat
                   String formStreet = streetController.text.toString();
                   String formNumber = numberController.text.toString();
                   String formSpot = spotController.text.toString();
                   String formType = dropdownTypeValue.toString();
                   String formPrice = priceController.text.toString();
                   String formSize = dropdownSizeValue.toString();
-                  //String formDifficulty = difficultyController.text.toString();
-                  //print(formDifficulty);
 
-                  if (formCountry.isNotEmpty &&
-                      formCity.isNotEmpty &&
+                  if (addressController.isNotEmpty &&
                       formStreet.isNotEmpty &&
                       formNumber.isNotEmpty &&
                       formSpot.isNotEmpty &&
                       formType.isNotEmpty &&
                       formPrice.isNotEmpty &&
-                      formSize.isNotEmpty ) {
+                      formSize.isNotEmpty) {
+                    var list = addressController.split(', ');
+                    String formCountry =
+                        list.last; //countryController.text.toString();
+                    print(formCountry);
+                    list.removeLast(); //city
+                    list.removeLast(); //codigopostal
+                    list.removeLast(); //Catalunya
+
+                    String formCity =
+                        list.last; //cityController.text.toString();
+                    print(formCity);
+                    list.removeLast();
                     Parking p = Parking(
                         //user_id:  StorageAparcam().getId(),
                         score: 0,
@@ -368,10 +366,9 @@ class _MyStatefulWidgetState extends State<FormWidget> {
                         price: int.parse(formPrice),
                         size: formSize,
                         difficulty: double.parse(sliderDif.toString()),
-                        longitude: double.parse(latitudeController.toString()),
-                        latitude: double.parse(longitudeController.toString()),
-                        range: _range
-                        );
+                        longitude: longitudeController,
+                        latitude: latitudeController,
+                        range: _range);
 
                     ParkingServices().createParking(p);
                     openDialog("Parking created.");
@@ -379,9 +376,20 @@ class _MyStatefulWidgetState extends State<FormWidget> {
                       Navigator.of(context).push(MaterialPageRoute(
                           builder: (context) => const ListParkings()));
                     });
-                  } else {
+                  } else if (formStreet.isEmpty ||
+                      formNumber.isEmpty ||
+                      formSpot.isEmpty ||
+                      formType.isEmpty ||
+                      formPrice.isEmpty ||
+                      formSize.isEmpty) {
                     openDialog(
                         "Please make sure all the flieds are filled before submit.");
+                  } else if (addressController.isEmpty) {
+                    openDialog(
+                        "Please select the localization of your parking and click 'set the current location' once it is correct");
+                  } else {
+                    openDialog(
+                        "Ops something went wrong check if it is something missing");
                   }
                   ElevatedButton.styleFrom(
                       backgroundColor: const Color.fromARGB(65, 143, 74, 163));
@@ -393,5 +401,3 @@ class _MyStatefulWidgetState extends State<FormWidget> {
     );
   }
 }
-
-
