@@ -62,6 +62,7 @@ dependencies:
   password_strength_checker: ^1.2.1
   flutter_open_street_map: ^0.0.3
   syncfusion_flutter_datepicker: ^20.4.42
+  syncfusion_flutter_calendar: ^20.4.43
 dev_dependencies:
   flutter_test:
     sdk: flutter
