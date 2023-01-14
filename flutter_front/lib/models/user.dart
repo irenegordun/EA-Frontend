@@ -21,7 +21,7 @@ class User {
       required this.myParkings,
       required this.points,
       required this.deleted,
-      required this.myFavourites,
+      required this.myFavorites,
       required this.myBookings});
 
   String id;
@@ -33,7 +33,7 @@ class User {
   List<dynamic> myParkings;
   int points;
   bool deleted;
-  List<dynamic>? myFavourites;
+  List<dynamic> myFavorites;
   List<dynamic>? myBookings;
 
   void setemail(String email) {
@@ -56,7 +56,7 @@ class User {
         email: json["email"],
         myParkings: json["myParkings"],
         points: json["points"],
-        myFavourites: json["myFavourites"],
+        myFavorites: json["myFavorites"],
         myBookings: json["myBookings"],
         deleted: json["deleted"],
       );
@@ -68,7 +68,7 @@ class User {
         email: json["email"],
         myParkings: json["myParkings"],
         points: json["points"],
-        myFavourites: json["myFavourites"],
+        myFavorites: json["myFavorites"],
         myBookings: json["myBookings"],
         deleted: json["deleted"],
       );
@@ -81,7 +81,7 @@ class User {
         "email": email,
         "myParkings": myParkings,
         "points": points,
-        "myFavourites": myFavourites,
+        "myFavorites": myFavorites,
         "myBookings": myBookings,
         "deleted": deleted,
       };
