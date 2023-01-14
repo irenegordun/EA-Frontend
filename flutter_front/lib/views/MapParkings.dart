@@ -48,16 +48,16 @@ class _MapParkingsState extends State<MapParkings> {
   @override
   Widget build(BuildContext context) {
     ParkingServices _parkingprovider = Provider.of<ParkingServices>(context);
-    double longitude;
-    double latitude;
-    if (StorageAparcam().getLatitude() == 0 &&
-        StorageAparcam().getLongitude() == 0) {
-      longitude = 2.1596;
-      latitude = 41.3948;
-    } else {
-      longitude = StorageAparcam().getLongitude();
-      latitude = StorageAparcam().getLatitude();
-    }
+    double longitude = 2.1596;
+    double latitude = 41.3948;
+    // if (StorageAparcam().getLatitude().isNaN &&
+    //     StorageAparcam().getLongitude().isNaN) {
+    //   longitude = 2.1596;
+    //   latitude = 41.3948;
+    // } else {
+    //   longitude = StorageAparcam().getLongitude();
+    //   latitude = StorageAparcam().getLatitude();
+    // }
     return Scaffold(
       drawer: const DrawerScreen(),
       appBar: AppBar(

@@ -5,6 +5,7 @@ import 'package:flutter_front/views/UserInfo.dart';
 import 'package:flutter_front/views/myBookings.dart';
 
 import '../views/NewParking.dart';
+import '../views/report.dart';
 
 class DrawerScreen extends StatelessWidget {
   const DrawerScreen({Key? key}) : super(key: key);
@@ -86,6 +87,16 @@ class DrawerScreen extends StatelessWidget {
             onTap: () {
               Navigator.of(context).push(MaterialPageRoute(
                   builder: (context) => const NewParkingPage()));
+            },
+          ),
+          ListTile(
+            leading: const Icon(Icons.highlight_remove_sharp),
+            title: const Text(
+              'Report some issue',
+            ),
+            onTap: () {
+              Navigator.of(context).push(
+                  MaterialPageRoute(builder: (context) => const MyReports()));
             },
           ),
         ],
