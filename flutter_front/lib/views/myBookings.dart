@@ -4,6 +4,7 @@ import 'package:flutter_front/models/parking.dart';
 import 'package:flutter_front/models/user.dart';
 import 'package:flutter_front/services/bookingServices.dart';
 import 'package:flutter_front/services/parkingServices.dart';
+import 'package:flutter_front/views/MyAgenda.dart';
 import 'package:flutter_front/views/myBookingInfo.dart';
 import 'package:flutter_front/widgets/buttonAccessibility.dart';
 import 'package:provider/provider.dart';
@@ -126,6 +127,19 @@ class _myBookingsState extends State<myBookings> {
           child: Text("My Bookings"),
         ),
         backgroundColor: Colors.blueGrey,
+        actions: <Widget>[
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: IconButton(
+              icon: const Icon(Icons.calendar_today_outlined),
+              tooltip: 'View the bookings in the agenda view',
+                onPressed: () {
+                  Navigator.of(context).push(
+                  MaterialPageRoute(builder: (context) => const MyAgenda()));
+                },
+              )
+          ),
+        ],
       ),
       body: Column(
         children: <Widget>[

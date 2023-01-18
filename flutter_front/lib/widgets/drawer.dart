@@ -8,6 +8,7 @@ import 'package:flutter_front/views/login.dart';
 import 'package:flutter_front/views/MyFavourites.dart';
 import 'package:flutter_front/views/chatbot.dart';
 import '../views/NewParking.dart';
+import '../views/MyAgenda.dart';
 import '../views/report.dart';
 
 class DrawerScreen extends StatelessWidget {
@@ -72,6 +73,16 @@ class DrawerScreen extends StatelessWidget {
             onTap: () {
               Navigator.of(context).push(
                   MaterialPageRoute(builder: (context) => const myBookings()));
+            },
+          ),
+
+          //MyAgenda
+          ListTile(
+            leading: const Icon(Icons.calendar_today_outlined),
+            title: const Text('My agenda'),
+            onTap: () {
+              Navigator.of(context).push(
+                  MaterialPageRoute(builder: (context) => const MyAgenda()));
             },
           ),
 
