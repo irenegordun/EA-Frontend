@@ -43,7 +43,7 @@ class UserServices extends ChangeNotifier {
       password: "",
       email: "",
       myParkings: [],
-      myFavourites: [],
+      myFavorites: [],
       myBookings: [],
       deleted: false,
       points: 0,
@@ -202,6 +202,42 @@ class UserServices extends ChangeNotifier {
       return 2;
     } else {
       return 3;
+    }
+  }
+
+  Future<dynamic> AddToFav(Parking parking) async {
+    var client = http.Client();
+    var uri = Uri.parse('http://localhost:5432/api/users/addFav');
+    var parkingJS = json.encode(parking.toJson());
+    var response = await client.put(uri,
+        headers: {
+          'content-type': 'application/json',
+          'x-access-token': StorageAparcam().getToken()
+        },
+        body: parkingJS);
+    if (response.statusCode == 200) {
+      var json = response.body;
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  Future<dynamic> DelToFav(Parking parking) async {
+    var client = http.Client();
+    var uri = Uri.parse('http://localhost:5432/api/users/delFav');
+    var parkingJS = json.encode(parking.toJson());
+    var response = await client.put(uri,
+        headers: {
+          'content-type': 'application/json',
+          'x-access-token': StorageAparcam().getToken()
+        },
+        body: parkingJS);
+    if (response.statusCode == 200) {
+      var json = response.body;
+      return true;
+    } else {
+      return false;
     }
   }
 }

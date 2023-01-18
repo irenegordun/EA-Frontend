@@ -3,9 +3,13 @@ import 'package:flutter_front/views/ListParkings.dart';
 import 'package:flutter_front/views/MyParkings.dart';
 import 'package:flutter_front/views/UserInfo.dart';
 import 'package:flutter_front/views/myBookings.dart';
-
+import 'package:flutter_front/services/localStorage.dart';
+import 'package:flutter_front/views/login.dart';
+import 'package:flutter_front/views/MyFavourites.dart';
+import 'package:flutter_front/views/chatbot.dart';
 import '../views/NewParking.dart';
 import '../views/MyAgenda.dart';
+import '../views/report.dart';
 
 class DrawerScreen extends StatelessWidget {
   const DrawerScreen({Key? key}) : super(key: key);
@@ -88,6 +92,10 @@ class DrawerScreen extends StatelessWidget {
             title: const Text(
               'My favourites',
             ),
+            onTap: () {
+              Navigator.of(context).push(MaterialPageRoute(
+                  builder: (context) => const MyFavourites()));
+            },
           ),
           ListTile(
             leading: const Icon(Icons.car_rental_rounded),
@@ -97,6 +105,38 @@ class DrawerScreen extends StatelessWidget {
             onTap: () {
               Navigator.of(context).push(MaterialPageRoute(
                   builder: (context) => const NewParkingPage()));
+            },
+          ),
+          ListTile(
+            leading: const Icon(Icons.highlight_remove_sharp),
+            title: const Text(
+              'Report some issue',
+            ),
+            onTap: () {
+              Navigator.of(context).push(
+                  MaterialPageRoute(builder: (context) => const MyReports()));
+            },
+          ),
+          ListTile(
+            leading: const Icon(Icons.chat_bubble_outline_sharp),
+            title: const Text(
+              'ChatBot',
+            ),
+            onTap: () {
+              Navigator.of(context)
+                  .push(MaterialPageRoute(builder: (context) => ChatBot()));
+            },
+          ),
+          ListTile(
+            leading: const Icon(Icons.door_back_door),
+            title: const Text(
+              'Logout',
+            ),
+            onTap: () {
+              StorageAparcam().deleteToken();
+              StorageAparcam().deleteId();
+              Navigator.of(context)
+                  .push(MaterialPageRoute(builder: (context) => const Login()));
             },
           ),
         ],

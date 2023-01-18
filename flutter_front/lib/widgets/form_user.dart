@@ -99,7 +99,7 @@ class _MyStatefulWidgetState extends State<FormWidget> {
                       email: formEmail,
                       newpassword: "",
                       myParkings: [],
-                      myFavourites: [],
+                      myFavorites: [],
                       myBookings: [],
                       deleted: false,
                       points: 0);

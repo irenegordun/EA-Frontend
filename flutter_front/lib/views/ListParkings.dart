@@ -7,6 +7,7 @@ import 'package:flutter_front/widgets/buttonAccessibility.dart';
 import 'package:localstorage/localstorage.dart';
 import 'package:provider/provider.dart';
 import 'dart:convert';
+import 'package:flutter_front/services/favorite_provider.dart';
 
 import '../models/parking.dart';
 //import '../widgets/buttonAccessibility.dart';
@@ -65,7 +66,7 @@ class _ListParkingsState extends State<ListParkings> {
   @override
   Widget build(BuildContext context) {
     ParkingServices _parkingprovider = Provider.of<ParkingServices>(context);
-
+    final provider = Provider.of<FavoriteProvider>(context);
     return Scaffold(
       drawer: const DrawerScreen(),
       floatingActionButton: const AccessibilityButton(),
@@ -287,10 +288,16 @@ class _ListParkingsState extends State<ListParkings> {
                           children: <Widget>[
                             Expanded(
                               child: IconButton(
-                                icon:
-                                    const Icon(Icons.favorite_border_outlined),
-                                tooltip: 'Add to favourites',
-                                onPressed: () {},
+                                icon: provider.isExist(parkings![index])
+                                    ? const Icon(
+                                        Icons.favorite,
+                                        color: Colors.red,
+                                      )
+                                    : const Icon(Icons.favorite_border),
+                                tooltip: 'Favorite',
+                                onPressed: () {
+                                  provider.toggleFavorite(parkings![index]);
+                                },
                               ),
                             ),
                             Expanded(

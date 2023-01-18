@@ -24,8 +24,9 @@ double sliderDif = 0.0;
 
 class _MyStatefulWidgetState extends State<FormWidget> {
   Widget getDateRangePicker() {
-    return Container(
-        height: 250,
+    return SizedBox(
+        height: 500,
+        width: 500,
         child: Card(
             child: SfDateRangePicker(
           view: DateRangePickerView.month,
@@ -283,7 +284,8 @@ class _MyStatefulWidgetState extends State<FormWidget> {
                       return AlertDialog(
                           title: Text(''),
                           content: Container(
-                            height: 350,
+                            height: 600,
+                            width: 500,
                             child: Column(
                               children: <Widget>[
                                 getDateRangePicker(),

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_front/services/bookingServices.dart';
 import 'package:flutter_front/services/userServices.dart';
+import 'package:flutter_front/services/favorite_provider.dart';
 
 import 'package:flutter_front/services/parkingServices.dart';
 import 'package:flutter_front/views/ListParkings.dart';
@@ -28,6 +29,7 @@ void main() {
         ChangeNotifierProvider(create: (_) => UserServices()),
         ChangeNotifierProvider(create: (_) => ParkingServices()),
         ChangeNotifierProvider(create: (_) => BookingServices()),
+        ChangeNotifierProvider(create: (_) => FavoriteProvider()),
       ],
       child: const MyApp(),
     ),
