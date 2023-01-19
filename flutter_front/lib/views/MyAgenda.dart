@@ -1,6 +1,5 @@
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
-//calendari:
 import 'package:flutter/material.dart';
 import 'package:flutter_front/views/myBookings.dart';
 import 'package:syncfusion_flutter_calendar/calendar.dart';
@@ -74,7 +73,7 @@ class _MyAgendaState extends State<MyAgenda> {
                             ),
                             
                             MaterialButton(
-                              child: Text("CREATE"),
+                              child: Text("C R E A T E"),
                               onPressed: () {
                               setState(() async {
 

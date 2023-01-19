@@ -5,6 +5,8 @@ import 'package:flutter_front/models/language_constants.dart';
 import 'package:flutter_front/main.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
+import '../widgets/drawer.dart';
+
 class Accessibility extends StatefulWidget {
   const Accessibility({super.key});
   @override
@@ -20,6 +22,7 @@ class _AccessibilitytState extends State<Accessibility> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      drawer: const DrawerScreen(),
       appBar: AppBar(
         backgroundColor: Colors.blueGrey,
         title: Text(

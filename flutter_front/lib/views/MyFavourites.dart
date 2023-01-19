@@ -85,22 +85,6 @@ class _ListParkingsState extends State<MyFavourites> {
       body: Column(
         children: <Widget>[
           Expanded(
-              child: Row(children: <Widget>[
-            Expanded(
-                child: Container(
-                    height: 40,
-                    width: 50,
-                    child: ElevatedButton(
-                        onPressed: () {},
-                        child: const Text('List'),
-                        style: const ButtonStyle(
-                          backgroundColor:
-                              MaterialStatePropertyAll<Color>(Colors.blueGrey),
-                        )))),
-          ])),
-
-          //Row 2/2
-          Expanded(
             child: ListView.builder(
               itemCount: parkings.length,
               itemBuilder: (context, index) {

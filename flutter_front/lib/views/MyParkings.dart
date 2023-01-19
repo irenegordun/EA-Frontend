@@ -72,7 +72,6 @@ class _MyParkingsState extends State<MyParkings> {
       ),
       body: Column(
         children: <Widget>[
-          //Row 2/2
           Expanded(
             child: ListView.builder(
               itemCount: parkings.length,

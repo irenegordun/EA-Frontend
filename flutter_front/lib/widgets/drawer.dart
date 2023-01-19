@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_front/views/ListParkings.dart';
 import 'package:flutter_front/views/MyParkings.dart';
 import 'package:flutter_front/views/UserInfo.dart';
+import 'package:flutter_front/views/accessibility.dart';
 import 'package:flutter_front/views/myBookings.dart';
 import 'package:flutter_front/services/localStorage.dart';
 import 'package:flutter_front/views/login.dart';
