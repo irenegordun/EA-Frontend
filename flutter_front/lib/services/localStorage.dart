@@ -21,6 +21,11 @@ class StorageAparcam extends ChangeNotifier {
     storage.setItem('dimensions', dimensions);
   }
 
+  void setFilterDates(String firstdate, String lastdate) {
+    storage.setItem('firstdate', firstdate);
+    storage.setItem('lastdate', lastdate);
+  }
+
   void setFiltered(bool filtered) {
     storage.setItem('filtered', filtered);
   }
@@ -47,6 +52,14 @@ class StorageAparcam extends ChangeNotifier {
 
   void setminScore(int n) {
     storage.setItem('minscore', n);
+  }
+
+  String getFirstdate() {
+    return storage.getItem('firstdate');
+  }
+
+  String getLastdate() {
+    return storage.getItem('lastdate');
   }
 
   bool getFiltered() {

@@ -4,10 +4,13 @@ import 'package:flutter_front/services/localStorage.dart';
 import 'package:flutter_front/services/parkingServices.dart';
 import 'package:flutter_front/views/ParkingInfo.dart';
 import 'package:flutter_front/widgets/buttonAccessibility.dart';
+import 'package:flutter_open_street_map/flutter_open_street_map.dart';
+import 'package:intl/intl.dart';
 import 'package:localstorage/localstorage.dart';
 import 'package:provider/provider.dart';
 import 'dart:convert';
 import 'package:flutter_front/services/favorite_provider.dart';
+import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 
 import '../models/parking.dart';
 //import '../widgets/buttonAccessibility.dart';
@@ -25,6 +28,46 @@ class ListParkings extends StatefulWidget {
 class _ListParkingsState extends State<ListParkings> {
   List<Parking>? parkings = [];
   var isLoaded = false;
+  String firstdate = '';
+  String lastdate = '';
+  String _selectedDate = '';
+  String _dateCount = '';
+  String _range = '';
+  String _rangeCount = '';
+
+  Widget getDateRangePicker() {
+    return SizedBox(
+        height: 500,
+        width: 500,
+        child: Card(
+            child: SfDateRangePicker(
+          view: DateRangePickerView.month,
+          selectionMode: DateRangePickerSelectionMode.range,
+          onSelectionChanged: _onSelectionChanged,
+          initialSelectedRange: PickerDateRange(
+              DateTime.now().subtract(const Duration(days: 4)),
+              DateTime.now().add(const Duration(days: 3))),
+        )));
+  }
+
+  void _onSelectionChanged(DateRangePickerSelectionChangedArgs args) {
+    setState(() {
+      if (args.value is PickerDateRange) {
+        firstdate = DateFormat('dd/MM/yyyy').format(args.value.startDate);
+        lastdate = DateFormat('dd/MM/yyyy')
+            .format(args.value.endDate ?? args.value.startDate);
+        _range = '${DateFormat('dd/MM/yyyy').format(args.value.startDate)} -'
+            // ignore: lines_longer_than_80_chars
+            ' ${DateFormat('dd/MM/yyyy').format(args.value.endDate ?? args.value.startDate)}';
+      } else if (args.value is DateTime) {
+        _selectedDate = args.value.toString();
+      } else if (args.value is List<DateTime>) {
+        _dateCount = args.value.length.toString();
+      } else {
+        _rangeCount = args.value.length.toString();
+      }
+    });
+  }
 
   @override
   void initState() {
@@ -51,6 +94,8 @@ class _ListParkingsState extends State<ListParkings> {
       filters["smin"] = StorageAparcam().getminScore();
       filters["pmax"] = StorageAparcam().getmaxPrice();
       filters["pmin"] = StorageAparcam().getminPrice();
+      filters["firstdate"] = StorageAparcam().getFirstdate();
+      filters["lastdate"] = StorageAparcam().getLastdate();
       String body = json.encode(filters);
       parkings = await ParkingServices().getFilteredParkings(body);
     } else {
@@ -83,14 +128,34 @@ class _ListParkingsState extends State<ListParkings> {
             Expanded(
                 flex: 1,
                 child: GestureDetector(
-                  onTap: () async {
-                    FocusScope.of(context).requestFocus(FocusNode());
-                    await showDatePicker(
-                      context: context,
-                      initialDate: DateTime.now(),
-                      firstDate: DateTime(DateTime.now().year),
-                      lastDate: DateTime(DateTime.now().year + 20),
-                    );
+                  onTap: () {
+                    showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return AlertDialog(
+                              title: Text(''),
+                              content: Container(
+                                height: 600,
+                                width: 500,
+                                child: Column(
+                                  children: <Widget>[
+                                    getDateRangePicker(),
+                                    MaterialButton(
+                                      child: Text("OK"),
+                                      onPressed: () {
+                                        StorageAparcam().setFilterDates(
+                                            firstdate, lastdate);
+                                        StorageAparcam().setFiltered(true);
+                                        Navigator.of(context).push(
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                    const ListParkings()));
+                                      },
+                                    )
+                                  ],
+                                ),
+                              ));
+                        });
                   },
                   child: Container(
                       color: const Color.fromARGB(255, 227, 244, 248),

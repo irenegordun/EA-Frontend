@@ -223,8 +223,7 @@ class _MyParkingInfoState extends State<MyParkingInfo> {
                 subtitle: TextFormField(
                     controller: editingController4,
                     decoration: InputDecoration(
-                        // hintText: parking.streetNumber.toString()
-                        )),
+                        hintText: parking.streetNumber.toString())),
                 leading: Icon(
                   Icons.where_to_vote_outlined,
                   color: Colors.blue[500],

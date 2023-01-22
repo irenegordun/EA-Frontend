@@ -224,7 +224,6 @@ class _MyStatefulWidgetState extends State<FormWidget> {
             label: "$sliderDif",
           ),
           const Divider(),
-
           ListTile(
             leading: Icon(Icons.calendar_month_outlined),
             title: Text("Enter the availability  " + "SELECTED " + " " + _range,
@@ -248,8 +247,6 @@ class _MyStatefulWidgetState extends State<FormWidget> {
                                   child: Text("OK"),
                                   onPressed: () {
                                     Navigator.pop(context);
-
-                                    print(_range);
                                   },
                                 )
                               ],
