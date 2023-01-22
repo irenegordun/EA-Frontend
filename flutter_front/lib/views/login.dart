@@ -159,6 +159,7 @@ class _LoginFormState extends State<LoginForm> {
                 if (state == 1) {
                   StorageAparcam().addFiltersToLocalStorage(
                       false, 'none', 0, 0, 1000, 'any', 'any');
+                  StorageAparcam().setFilterDates('', '');
                   Navigator.of(context).push(MaterialPageRoute(
                       builder: (context) => const ListParkings()));
                 } else if (state == 2) {
@@ -227,6 +228,7 @@ class _LoginFormState extends State<LoginForm> {
                     if (googlestate == 1) {
                       StorageAparcam().addFiltersToLocalStorage(
                           false, 'none', 0, 0, 1000, 'any', 'any');
+                      StorageAparcam().setFilterDates('', '');
                       Navigator.of(context).push(MaterialPageRoute(
                           builder: (context) => const ListParkings()));
                     } else {

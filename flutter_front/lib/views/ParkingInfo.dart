@@ -60,7 +60,7 @@ class _ParkingInfoState extends State<ParkingInfo> {
                 title: const Text('Direction',
                     style: TextStyle(fontWeight: FontWeight.w500)),
                 subtitle: Text(
-                    '${parking.street} ${parking.streetNumber}, ${parking.city}, ${parking.country}'),
+                    '${parking.street} ${parking.streetNumber.toString()}, ${parking.city}, ${parking.country}'),
                 leading: const Icon(
                   Icons.where_to_vote_outlined,
                   color: Color.fromARGB(255, 39, 51, 58),
