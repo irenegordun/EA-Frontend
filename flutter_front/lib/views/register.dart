@@ -89,237 +89,239 @@ class _LoginFormState extends State<LoginForm> {
     RegExp regex = RegExp(
         r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~-]).{8,}$');
     return Padding(
-      padding: const EdgeInsets.all(24.0),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const Text(
-            "Let's create your new account",
-            style: TextStyle(
-              fontSize: 24,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-          const Text(
-            "Or if you already have an account login",
-            style: TextStyle(
-              fontSize: 14,
-            ),
-          ),
-          const SizedBox(height: 10),
-          Form(
-            key: widget._formKey,
-            child: Column(children: [
-              TextFormField(
-                decoration: const InputDecoration(
-                    border: OutlineInputBorder(),
-                    labelText: 'Name *',
-                    // ignore: unnecessary_const
-                    icon: const Padding(
-                      padding: EdgeInsets.only(top: 15.0),
-                      child: Icon(Icons.perm_identity),
-                    )),
-                controller: nameController,
-                validator: (String? value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please enter some text';
-                  }
-                  return null;
-                },
+        padding: const EdgeInsets.all(24.0),
+        child: SingleChildScrollView(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const Text(
+                "Let's create your new account",
+                style: TextStyle(
+                  fontSize: 24,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              const Text(
+                "Or if you already have an account login",
+                style: TextStyle(
+                  fontSize: 14,
+                ),
               ),
               const SizedBox(height: 10),
-              TextFormField(
-                decoration: const InputDecoration(
-                    //dependencies: email_validator: '^2.1.16'
-                    border: OutlineInputBorder(),
-                    labelText: 'Email *',
-                    // ignore: unnecessary_const
-                    icon: const Padding(
-                      padding: EdgeInsets.only(top: 15.0),
-                      child: Icon(Icons.email),
-                    )),
-                controller: emailController,
-                validator: (String? value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please enter some text';
-                  }
-                  return null;
-                },
-              ),
-              const SizedBox(height: 10),
-              TextFormField(
-                onChanged: (value) {
-                  passNotifier.value = PasswordStrength.calculate(text: value);
-                },
-                decoration: InputDecoration(
-                    border: OutlineInputBorder(),
-                    labelText: 'Password *',
-                    suffix: IconButton(
-                      onPressed: () {
-                        setState(() {
-                          if (_obscureText) {
-                            _obscureText = false;
-                          } else {
-                            _obscureText = true;
-                          }
-                        });
-                      },
-                      icon: Icon(_obscureText == true
-                          ? Icons.remove_red_eye
-                          : Icons.password),
-                    ),
-                    icon: const Padding(
-                      padding: EdgeInsets.only(top: 15.0),
-                      child: Icon(Icons.lock),
-                    )),
-                obscureText: _obscureText,
-                controller: passwordController,
+              Form(
+                key: widget._formKey,
+                child: Column(children: [
+                  TextFormField(
+                    decoration: const InputDecoration(
+                        border: OutlineInputBorder(),
+                        labelText: 'Name *',
+                        // ignore: unnecessary_const
+                        icon: const Padding(
+                          padding: EdgeInsets.only(top: 15.0),
+                          child: Icon(Icons.perm_identity),
+                        )),
+                    controller: nameController,
+                    validator: (String? value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Please enter some text';
+                      }
+                      return null;
+                    },
+                  ),
+                  const SizedBox(height: 10),
+                  TextFormField(
+                    decoration: const InputDecoration(
+                        //dependencies: email_validator: '^2.1.16'
+                        border: OutlineInputBorder(),
+                        labelText: 'Email *',
+                        // ignore: unnecessary_const
+                        icon: const Padding(
+                          padding: EdgeInsets.only(top: 15.0),
+                          child: Icon(Icons.email),
+                        )),
+                    controller: emailController,
+                    validator: (String? value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Please enter some text';
+                      }
+                      return null;
+                    },
+                  ),
+                  const SizedBox(height: 10),
+                  TextFormField(
+                    onChanged: (value) {
+                      passNotifier.value =
+                          PasswordStrength.calculate(text: value);
+                    },
+                    decoration: InputDecoration(
+                        border: OutlineInputBorder(),
+                        labelText: 'Password *',
+                        suffix: IconButton(
+                          onPressed: () {
+                            setState(() {
+                              if (_obscureText) {
+                                _obscureText = false;
+                              } else {
+                                _obscureText = true;
+                              }
+                            });
+                          },
+                          icon: Icon(_obscureText == true
+                              ? Icons.remove_red_eye
+                              : Icons.password),
+                        ),
+                        icon: const Padding(
+                          padding: EdgeInsets.only(top: 15.0),
+                          child: Icon(Icons.lock),
+                        )),
+                    obscureText: _obscureText,
+                    controller: passwordController,
+                  ),
+                  const SizedBox(height: 20),
+                  PasswordStrengthChecker(
+                    strength: passNotifier,
+                  ),
+                  const SizedBox(height: 10),
+                  TextFormField(
+                    decoration: InputDecoration(
+                        border: OutlineInputBorder(),
+                        labelText: 'Repeat your password *',
+                        suffix: IconButton(
+                          onPressed: () {
+                            setState(() {
+                              if (_obscureText) {
+                                _obscureText = false;
+                              } else {
+                                _obscureText = true;
+                              }
+                            });
+                          },
+                          icon: Icon(_obscureText == true
+                              ? Icons.remove_red_eye
+                              : Icons.password),
+                        ),
+                        icon: const Padding(
+                          padding: EdgeInsets.only(top: 15.0),
+                          child: Icon(Icons.lock),
+                        )),
+                    obscureText: _obscureText,
+                    controller: passwordController2,
+                  )
+                ]),
               ),
               const SizedBox(height: 20),
-              PasswordStrengthChecker(
-                strength: passNotifier,
-              ),
-              const SizedBox(height: 10),
-              TextFormField(
-                decoration: InputDecoration(
-                    border: OutlineInputBorder(),
-                    labelText: 'Repeat your password *',
-                    suffix: IconButton(
-                      onPressed: () {
-                        setState(() {
-                          if (_obscureText) {
-                            _obscureText = false;
-                          } else {
-                            _obscureText = true;
-                          }
-                        });
-                      },
-                      icon: Icon(_obscureText == true
-                          ? Icons.remove_red_eye
-                          : Icons.password),
-                    ),
-                    icon: const Padding(
-                      padding: EdgeInsets.only(top: 15.0),
-                      child: Icon(Icons.lock),
-                    )),
-                obscureText: _obscureText,
-                controller: passwordController2,
-              )
-            ]),
-          ),
-          const SizedBox(height: 20),
-          ElevatedButton(
-            onPressed: () async {
-              String formName = nameController.text.toString();
-              String formEmail = emailController.text.toString();
-              String formPassword = passwordController.text.toString();
-              String formPassword2 = passwordController2.text.toString();
+              ElevatedButton(
+                onPressed: () async {
+                  String formName = nameController.text.toString();
+                  String formEmail = emailController.text.toString();
+                  String formPassword = passwordController.text.toString();
+                  String formPassword2 = passwordController2.text.toString();
 
-              if (formPassword.isEmpty ||
-                  formPassword2.isEmpty ||
-                  formEmail.isEmpty ||
-                  formName.isEmpty) {
-                openDialog("Please fill the blanks");
-              } else if (!regex.hasMatch(formPassword)) {
-                openDialog(
-                    'Password too weak, check if you have: 1 uppercase, 1 lowercase, 1 number, 1 special char, at least 8 characters');
-              } else {
-                if (formPassword == formPassword2) {
+                  if (formPassword.isEmpty ||
+                      formPassword2.isEmpty ||
+                      formEmail.isEmpty ||
+                      formName.isEmpty) {
+                    openDialog("Please fill the blanks");
+                  } else if (!regex.hasMatch(formPassword)) {
+                    openDialog(
+                        'Password too weak, check if you have: 1 uppercase, 1 lowercase, 1 number, 1 special char, at least 8 characters');
+                  } else {
+                    if (formPassword == formPassword2) {
+                      var user = User(
+                        name: formName,
+                        id: "",
+                        password: formPassword,
+                        email: formEmail,
+                        newpassword: "",
+                        myParkings: [],
+                        myFavorites: [],
+                        myBookings: [],
+                        deleted: false,
+                        points: 0,
+                      );
+                      int state = await UserServices().checkemail(user);
+                      if (state == 1) {
+                        await UserServices().createUser(user);
+                        openDialog('User registered, Welcome!');
+                        Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context) => const Login()));
+                      } else {
+                        openDialog(
+                            "Can't use this email, belongs to another account!");
+                      }
+                    } else {
+                      openDialog("Passwords doesn't match");
+                    }
+                  }
+
+                  setState(() {
+                    //aquí dona error
+                  });
+                },
+                style: ElevatedButton.styleFrom(
+                  elevation: 0,
+                  minimumSize: const Size(1024, 60),
+                ),
+                child: const Text(
+                  'Register',
+                  style: TextStyle(fontSize: 16),
+                ),
+              ),
+              const SizedBox(height: 5),
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.of(context).push(
+                      MaterialPageRoute(builder: (context) => const Login()));
+                },
+                style: ElevatedButton.styleFrom(
+                  elevation: 0,
+                  minimumSize: const Size(1024, 50),
+                ),
+                child: const Text(
+                  'Login',
+                  style: TextStyle(fontSize: 16),
+                ),
+              ),
+              const SizedBox(height: 20),
+              Center(
+                  child: FloatingActionButton.extended(
+                onPressed: () async {
+                  await googlecontroller.login();
+                  var name = googlecontroller.googleAccount.value?.displayName;
+                  var email = googlecontroller.googleAccount.value!.email;
                   var user = User(
-                    name: formName,
-                    id: "",
-                    password: formPassword,
-                    email: formEmail,
-                    newpassword: "",
-                    myParkings: [],
-                    myFavorites: [],
-                    myBookings: [],
-                    deleted: false,
-                    points: 0,
-                  );
-                  int state = await UserServices().checkemail(user);
-                  if (state == 1) {
-                    await UserServices().createUser(user);
+                      name: name!,
+                      id: "",
+                      password: "",
+                      email: email,
+                      newpassword: "",
+                      myParkings: [],
+                      myFavorites: [],
+                      myBookings: [],
+                      deleted: false,
+                      points: 0);
+                  int googlestate = await UserServices().registerGoogle(user);
+                  if (googlestate == 1) {
                     openDialog('User registered, Welcome!');
                     Navigator.of(context).push(
                         MaterialPageRoute(builder: (context) => const Login()));
                   } else {
-                    openDialog(
-                        "Can't use this email, belongs to another account!");
+                    openDialog('Cannot register, maybe already in database?');
                   }
-                } else {
-                  openDialog("Passwords doesn't match");
-                }
-              }
-
-              setState(() {
-                //aquí dona error
-              });
-            },
-            style: ElevatedButton.styleFrom(
-              elevation: 0,
-              minimumSize: const Size(1024, 60),
-            ),
-            child: const Text(
-              'Register',
-              style: TextStyle(fontSize: 16),
-            ),
+                },
+                label: const Text('Sign up with Google'),
+                icon: Image.asset(
+                  'google_logo.png',
+                  height: 32,
+                  width: 32,
+                ),
+                backgroundColor: Colors.white,
+                foregroundColor: Colors.blueGrey,
+              ))
+            ],
           ),
-          const SizedBox(height: 5),
-          ElevatedButton(
-            onPressed: () {
-              Navigator.of(context)
-                  .push(MaterialPageRoute(builder: (context) => const Login()));
-            },
-            style: ElevatedButton.styleFrom(
-              elevation: 0,
-              minimumSize: const Size(1024, 50),
-            ),
-            child: const Text(
-              'Login',
-              style: TextStyle(fontSize: 16),
-            ),
-          ),
-          const SizedBox(height: 20),
-          Center(
-              child: FloatingActionButton.extended(
-            onPressed: () async {
-              await googlecontroller.login();
-              var name = googlecontroller.googleAccount.value?.displayName;
-              var email = googlecontroller.googleAccount.value!.email;
-              var user = User(
-                  name: name!,
-                  id: "",
-                  password: "",
-                  email: email,
-                  newpassword: "",
-                  myParkings: [],
-                  myFavorites: [],
-                  myBookings: [],
-                  deleted: false,
-                  points: 0);
-              int googlestate = await UserServices().registerGoogle(user);
-              if (googlestate == 1) {
-                openDialog('User registered, Welcome!');
-                Navigator.of(context).push(
-                    MaterialPageRoute(builder: (context) => const Login()));
-              } else {
-                openDialog('Cannot register, maybe already in database?');
-              }
-            },
-            label: const Text('Sign up with Google'),
-            icon: Image.asset(
-              'google_logo.png',
-              height: 32,
-              width: 32,
-            ),
-            backgroundColor: Colors.white,
-            foregroundColor: Colors.blueGrey,
-          ))
-        ],
-      ),
-    );
+        ));
   }
 }
 
@@ -402,7 +404,7 @@ class CompactView extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           SizedBox(
-            height: MediaQuery.of(context).size.height * 0.4,
+            height: MediaQuery.of(context).size.height * 0.2,
             child: HeroImage(welcomeImage: welcomeImage),
           ),
           LoginForm(formKey: _formKey),

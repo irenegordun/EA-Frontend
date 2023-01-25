@@ -70,186 +70,188 @@ class _LoginFormState extends State<LoginForm> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(24.0),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const Text(
-            "Welcome back to APARCA'M",
-            style: TextStyle(
-              fontSize: 24,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-          const Text(
-            "Or register if you don't have an account",
-            style: TextStyle(
-              fontSize: 14,
-            ),
-          ),
-          const SizedBox(height: 24),
-          Form(
-            key: widget._formKey,
-            child: Column(children: [
-              TextFormField(
-                decoration: const InputDecoration(
-                    //dependencies: email_validator: '^2.1.16'
-                    border: OutlineInputBorder(),
-                    labelText: 'Email *',
-                    // ignore: unnecessary_const
-                    icon: const Padding(
-                      padding: EdgeInsets.only(top: 15.0),
-                      child: Icon(Icons.email),
-                    )),
-                controller: emailController,
+        padding: const EdgeInsets.all(24.0),
+        child: SingleChildScrollView(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const Text(
+                "Welcome back to APARCA'M",
+                style: TextStyle(
+                  fontSize: 24,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
-              const SizedBox(height: 12),
-              TextFormField(
-                obscureText: _obscureText,
-                controller: passwordController,
-                decoration: InputDecoration(
-                    border: const OutlineInputBorder(),
-                    labelText: 'Password *',
-                    suffix: IconButton(
-                      onPressed: () {
-                        setState(() {
-                          if (_obscureText) {
-                            _obscureText = false;
-                          } else {
-                            _obscureText = true;
-                          }
-                        });
-                      },
-                      icon: Icon(_obscureText == true
-                          ? Icons.remove_red_eye
-                          : Icons.password),
-                    ),
-                    icon: const Padding(
-                      padding: EdgeInsets.only(top: 15.0),
-                      child: Icon(Icons.lock),
-                    )),
-              )
-            ]),
-          ),
-          const SizedBox(height: 24),
-          ElevatedButton(
-            onPressed: () async {
-              String formEmail = emailController.text.toString();
+              const Text(
+                "Or register if you don't have an account",
+                style: TextStyle(
+                  fontSize: 14,
+                ),
+              ),
+              const SizedBox(height: 24),
+              Form(
+                key: widget._formKey,
+                child: Column(children: [
+                  TextFormField(
+                    decoration: const InputDecoration(
+                        //dependencies: email_validator: '^2.1.16'
+                        border: OutlineInputBorder(),
+                        labelText: 'Email *',
+                        // ignore: unnecessary_const
+                        icon: const Padding(
+                          padding: EdgeInsets.only(top: 15.0),
+                          child: Icon(Icons.email),
+                        )),
+                    controller: emailController,
+                  ),
+                  const SizedBox(height: 12),
+                  TextFormField(
+                    obscureText: _obscureText,
+                    controller: passwordController,
+                    decoration: InputDecoration(
+                        border: const OutlineInputBorder(),
+                        labelText: 'Password *',
+                        suffix: IconButton(
+                          onPressed: () {
+                            setState(() {
+                              if (_obscureText) {
+                                _obscureText = false;
+                              } else {
+                                _obscureText = true;
+                              }
+                            });
+                          },
+                          icon: Icon(_obscureText == true
+                              ? Icons.remove_red_eye
+                              : Icons.password),
+                        ),
+                        icon: const Padding(
+                          padding: EdgeInsets.only(top: 15.0),
+                          child: Icon(Icons.lock),
+                        )),
+                  )
+                ]),
+              ),
+              const SizedBox(height: 24),
+              ElevatedButton(
+                onPressed: () async {
+                  String formEmail = emailController.text.toString();
 
-              String formPassword = passwordController.text.toString();
+                  String formPassword = passwordController.text.toString();
 
-              if (emailController.text.isEmpty) {
-                openDialog("Enter your email please");
-              } else if (passwordController.text.isEmpty) {
-                openDialog("Enter your password please");
-              } else {
-                var user = User(
-                    name: "",
-                    id: "",
-                    password: formPassword,
-                    email: formEmail,
-                    newpassword: "",
-                    myParkings: [],
-                    myFavorites: [],
-                    myBookings: [],
-                    deleted: false,
-                    points: 0);
-                int state = await UserServices().loginUser(user);
-                if (state == 1) {
-                  StorageAparcam().addFiltersToLocalStorage(
-                      false, 'none', 0, 0, 1000, 'any', 'any');
-                  StorageAparcam().setFilterDates('', '');
-                  Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) => const ListParkings()));
-                } else if (state == 2) {
-                  await activateUser();
-
-                  if (_activateBool == true) {
-                    await UserServices().activateUser(user);
+                  if (emailController.text.isEmpty) {
+                    openDialog("Enter your email please");
+                  } else if (passwordController.text.isEmpty) {
+                    openDialog("Enter your password please");
                   } else {
-                    openDialog(
-                        "You did not activate your user, please register another one or, if it was a mistake, press login again");
-                  }
-                } else {
-                  openDialog(
-                      'The user does not exist or maybe the password is wrong');
-                }
-              }
-              setState(() {});
-            },
-            style: ElevatedButton.styleFrom(
-              elevation: 0,
-              minimumSize: const Size(1024, 60),
-            ),
-            child: const Text(
-              'Login',
-              style: TextStyle(fontSize: 16),
-            ),
-          ),
-          const SizedBox(height: 5),
-          ElevatedButton(
-            onPressed: () {
-              Navigator.of(context).push(
-                  MaterialPageRoute(builder: (context) => const Register()));
-            },
-            style: ElevatedButton.styleFrom(
-              elevation: 0,
-              minimumSize: const Size(1024, 50),
-            ),
-            child: const Text(
-              'Register',
-              style: TextStyle(fontSize: 16),
-            ),
-          ),
-          const SizedBox(height: 20),
-          Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              mainAxisSize: MainAxisSize.max,
-              children: [
-                FloatingActionButton.extended(
-                  onPressed: () async {
-                    await googlecontroller.login();
-                    var name =
-                        googlecontroller.googleAccount.value?.displayName;
-                    var email = googlecontroller.googleAccount.value!.email;
                     var user = User(
-                        name: name!,
+                        name: "",
                         id: "",
-                        password: "",
-                        email: email,
+                        password: formPassword,
+                        email: formEmail,
                         newpassword: "",
                         myParkings: [],
                         myFavorites: [],
                         myBookings: [],
                         deleted: false,
                         points: 0);
-                    int googlestate = await UserServices().loginGoogle(user);
-                    if (googlestate == 1) {
+                    int state = await UserServices().loginUser(user);
+                    if (state == 1) {
                       StorageAparcam().addFiltersToLocalStorage(
                           false, 'none', 0, 0, 1000, 'any', 'any');
                       StorageAparcam().setFilterDates('', '');
                       Navigator.of(context).push(MaterialPageRoute(
                           builder: (context) => const ListParkings()));
+                    } else if (state == 2) {
+                      await activateUser();
+
+                      if (_activateBool == true) {
+                        await UserServices().activateUser(user);
+                      } else {
+                        openDialog(
+                            "You did not activate your user, please register another one or, if it was a mistake, press login again");
+                      }
                     } else {
                       openDialog(
-                          'Something went wrong, maybe you are no registered?');
+                          'The user does not exist or maybe the password is wrong');
                     }
-                  },
-                  label: const Text('Sign in with Google'),
-                  icon: Image.asset(
-                    'google_logo.png',
-                    height: 32,
-                    width: 32,
-                    fit: BoxFit.contain,
-                  ),
-                  backgroundColor: Colors.white,
-                  foregroundColor: Colors.blueGrey,
-                )
-              ])
-        ],
-      ),
-    );
+                  }
+                  setState(() {});
+                },
+                style: ElevatedButton.styleFrom(
+                  elevation: 0,
+                  minimumSize: const Size(1024, 60),
+                ),
+                child: const Text(
+                  'Login',
+                  style: TextStyle(fontSize: 16),
+                ),
+              ),
+              const SizedBox(height: 5),
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) => const Register()));
+                },
+                style: ElevatedButton.styleFrom(
+                  elevation: 0,
+                  minimumSize: const Size(1024, 50),
+                ),
+                child: const Text(
+                  'Register',
+                  style: TextStyle(fontSize: 16),
+                ),
+              ),
+              const SizedBox(height: 20),
+              Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  mainAxisSize: MainAxisSize.max,
+                  children: [
+                    FloatingActionButton.extended(
+                      onPressed: () async {
+                        await googlecontroller.login();
+                        var name =
+                            googlecontroller.googleAccount.value?.displayName;
+                        var email = googlecontroller.googleAccount.value!.email;
+                        var user = User(
+                            name: name!,
+                            id: "",
+                            password: "",
+                            email: email,
+                            newpassword: "",
+                            myParkings: [],
+                            myFavorites: [],
+                            myBookings: [],
+                            deleted: false,
+                            points: 0);
+                        int googlestate =
+                            await UserServices().loginGoogle(user);
+                        if (googlestate == 1) {
+                          StorageAparcam().addFiltersToLocalStorage(
+                              false, 'none', 0, 0, 1000, 'any', 'any');
+                          StorageAparcam().setFilterDates('', '');
+                          Navigator.of(context).push(MaterialPageRoute(
+                              builder: (context) => const ListParkings()));
+                        } else {
+                          openDialog(
+                              'Something went wrong, maybe you are no registered?');
+                        }
+                      },
+                      label: const Text('Sign in with Google'),
+                      icon: Image.asset(
+                        'google_logo.png',
+                        height: 32,
+                        width: 32,
+                        fit: BoxFit.contain,
+                      ),
+                      backgroundColor: Colors.white,
+                      foregroundColor: Colors.blueGrey,
+                    )
+                  ])
+            ],
+          ),
+        ));
   }
 
   Future openDialog(String text) => showDialog(
