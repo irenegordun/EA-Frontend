@@ -22,8 +22,6 @@ version: 1.0.0+1
 environment:
   sdk: '>=2.18.0-255.2.beta <3.0.0'
 
-latlong: ^0.6.1
-flutter_map: any
 intl: ^0.17.0
 
 
@@ -42,6 +40,10 @@ dependencies:
   intl: ^0.17.0
   draggable_fab: ^0.1.1
   platform_list_tile: ^0.0.1
+  latlong: ^0.6.1
+  flutter_map: any
+  flutter_map_marker_cluster: any
+  zoom_widget: ^2.0.0
 
 
   # The following adds the Cupertino Icons font to your application.

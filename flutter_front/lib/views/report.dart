@@ -173,8 +173,8 @@ class _MyReports extends State<MyReports> {
                   }
                   print(typeSel);
                   Report p = Report(
-                      //user_id:  StorageAparcam().getId(),
-                      id: '',
+                      id: StorageAparcam().getId(),
+                      //id: '',
                       user: '',
                       type: typeSel,
                       text: textW,
