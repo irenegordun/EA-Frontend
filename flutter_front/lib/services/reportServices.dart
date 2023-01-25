@@ -26,8 +26,9 @@ class ReportServices extends ChangeNotifier {
 
   Future<void> createReport(Report report) async {
     var client = http.Client();
-    var id = StorageAparcam().getId();
-    var uri = Uri.parse('http://localhost:5432/api/reports/$id');
+    var _id = StorageAparcam().getId();
+    print(_id);
+    var uri = Uri.parse('http://localhost:5432/api/reports/$_id');
     var reportJS = json.encode(report.toJson());
     var response = await client.post(uri,
         headers: {
@@ -35,6 +36,7 @@ class ReportServices extends ChangeNotifier {
           'x-access-token': StorageAparcam().getToken()
         },
         body: reportJS);
+    print(response.statusCode.toString());
     if (response.statusCode == 200) {
       return print("Report created");
     } else {
