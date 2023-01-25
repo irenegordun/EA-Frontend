@@ -8,6 +8,7 @@ import 'package:flutter_front/services/localStorage.dart';
 import 'package:flutter_front/views/login.dart';
 import 'package:flutter_front/views/MyFavourites.dart';
 import 'package:flutter_front/views/chatbot.dart';
+import 'package:flutter_front/widgets/expandable.dart';
 import '../views/NewParking.dart';
 import '../views/MyAgenda.dart';
 import '../views/report.dart';
@@ -108,6 +109,18 @@ class DrawerScreen extends StatelessWidget {
                   builder: (context) => const NewParkingPage()));
             },
           ),
+
+          ListTile(
+            leading: const Icon(Icons.car_rental_rounded),
+            title: const Text(
+              'Create parking spot',
+            ),
+            onTap: () {
+              Navigator.of(context).push(MaterialPageRoute(
+                  builder: (context) => const ExampleExpandableFab()));
+            },
+          ),
+
           ListTile(
             leading: const Icon(Icons.highlight_remove_sharp),
             title: const Text(

@@ -4,6 +4,7 @@ import 'package:flutter_front/services/localStorage.dart';
 import 'package:flutter_front/services/parkingServices.dart';
 import 'package:flutter_front/views/ParkingInfo.dart';
 import 'package:flutter_front/widgets/buttonAccessibility.dart';
+import 'package:flutter_front/widgets/expandable.dart';
 import 'package:flutter_open_street_map/flutter_open_street_map.dart';
 import 'package:intl/intl.dart';
 import 'package:localstorage/localstorage.dart';
@@ -114,7 +115,7 @@ class _ListParkingsState extends State<ListParkings> {
     final provider = Provider.of<FavoriteProvider>(context);
     return Scaffold(
       drawer: const DrawerScreen(),
-      floatingActionButton: const AccessibilityButton(),
+      floatingActionButton: ExampleExpandableFab(),
       appBar: AppBar(
         title: const Center(
           child: Text("A P A R C A ' M"),
