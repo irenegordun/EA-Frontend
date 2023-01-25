@@ -121,11 +121,11 @@ class _ListParkingsState extends State<MyFavourites> {
                             Expanded(
                               child: IconButton(
                                 icon: provider.isExist(parkings[index])
-                                    ? const Icon(Icons.favorite_border)
-                                    : const Icon(
+                                    ? const Icon(
                                         Icons.favorite,
                                         color: Colors.red,
-                                      ),
+                                      )
+                                    : const Icon(Icons.favorite_border),
                                 tooltip: 'Favorite',
                                 onPressed: () {
                                   provider.toggleFavorite(parkings[index]);

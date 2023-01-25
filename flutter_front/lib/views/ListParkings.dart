@@ -29,7 +29,9 @@ class _ListParkingsState extends State<ListParkings> {
   @override
   void initState() {
     super.initState();
+    Provider.of<FavoriteProvider>(context, listen: false).getFavorites();
     getData();
+
     // print(DateTime.now());
     // print(DateTime.now().toIso8601String());
     // print('${DateTime.now().toIso8601String()}Z');
@@ -67,6 +69,7 @@ class _ListParkingsState extends State<ListParkings> {
   Widget build(BuildContext context) {
     ParkingServices _parkingprovider = Provider.of<ParkingServices>(context);
     final provider = Provider.of<FavoriteProvider>(context);
+
     return Scaffold(
       drawer: const DrawerScreen(),
       floatingActionButton: const AccessibilityButton(),
@@ -289,11 +292,11 @@ class _ListParkingsState extends State<ListParkings> {
                             Expanded(
                               child: IconButton(
                                 icon: provider.isExist(parkings![index])
-                                    ? const Icon(
+                                    ? Icon(
                                         Icons.favorite,
                                         color: Colors.red,
                                       )
-                                    : const Icon(Icons.favorite_border),
+                                    : Icon(Icons.favorite_border),
                                 tooltip: 'Favorite',
                                 onPressed: () {
                                   provider.toggleFavorite(parkings![index]);

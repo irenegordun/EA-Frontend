@@ -6,7 +6,32 @@ import './userServices.dart';
 import './localStorage.dart';
 
 class FavoriteProvider extends ChangeNotifier {
-  List<Parking>? parkings = [];
+  List<Parking> parkings = <Parking>[];
+
+  var user1 = User(
+      id: StorageAparcam().getId(),
+      name: "",
+      password: "",
+      email: "",
+      myFavorites: [],
+      myParkings: [],
+      myBookings: [],
+      points: 0,
+      deleted: false,
+      newpassword: "");
+
+  Future<void> getFavorites() async {
+    final user = await UserServices().getOneUser(user1);
+    if (user != null) {
+      for (int i = 0; i < user.myFavorites.length; i++) {
+        Parking p = Parking.fromJson(user.myFavorites[i]);
+        if (p != null) {
+          parkings.add(p);
+        }
+      }
+    }
+    notifyListeners();
+  }
 
   DeltoF(Parking parking) async {
     UserServices().DelToFav(parking);
@@ -17,19 +42,19 @@ class FavoriteProvider extends ChangeNotifier {
   }
 
   void toggleFavorite(Parking parking) {
-    final isExist = parkings!.contains(parking);
+    final isExist = parkings.any((p) => p.id == parking.id);
     if (isExist) {
-      parkings!.remove(parking);
+      parkings.removeWhere((p) => p.id == parking.id);
       DeltoF(parking);
     } else {
-      parkings!.add(parking);
+      parkings.add(parking);
       AddtoF(parking);
     }
     notifyListeners();
   }
 
   bool isExist(Parking parking) {
-    final isExist = parkings!.contains(parking);
+    final isExist = parkings.any((p) => p.id == parking.id);
     return isExist;
   }
 
