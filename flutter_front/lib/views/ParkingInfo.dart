@@ -9,6 +9,7 @@ import 'package:flutter_open_street_map/flutter_open_street_map.dart';
 import 'package:provider/provider.dart';
 import '../models/parking.dart';
 import '../models/booking.dart';
+import 'package:intl/intl.dart';
 
 class ParkingInfo extends StatefulWidget {
   const ParkingInfo({super.key});
@@ -20,6 +21,9 @@ class ParkingInfo extends StatefulWidget {
 class _ParkingInfoState extends State<ParkingInfo> {
   var isLoaded = false;
   DateTime? firstdate;
+  DateTime? seconddate;
+  List<DateTime> availableDates1 = [];
+  final dateFormat = DateFormat("dd/MM/yyyy");
 
   BookingParking(Booking booking) async {
     BookingServices().createBooking(booking);
@@ -30,6 +34,10 @@ class _ParkingInfoState extends State<ParkingInfo> {
   @override
   Widget build(BuildContext context) {
     ParkingServices _parkingprovider = Provider.of<ParkingServices>(context);
+    availableDates1 = _parkingprovider.parkingData.range
+        .split(" - ")
+        .map((date) => dateFormat.parse(date))
+        .toList();
 
     return Scaffold(
       appBar: AppBar(
@@ -109,36 +117,28 @@ class _ParkingInfoState extends State<ParkingInfo> {
                 ),
                 onPressed: () async {
                   FocusScope.of(context).requestFocus(FocusNode());
-                  await showDatePicker(
-                          context: context,
-                          initialDate: DateTime.now(),
-                          firstDate: DateTime(DateTime.now().year),
-                          lastDate: DateTime(DateTime.now().year + 20))
-                      .then((PickedDate1) {
-                    if (PickedDate1 == null) {
-                      return;
-                    }
-                    firstdate = PickedDate1;
-                  });
-                  await showDatePicker(
-                          context: context,
-                          initialDate: DateTime.now(),
-                          firstDate: DateTime(DateTime.now().year),
-                          lastDate: DateTime(DateTime.now().year + 20))
-                      .then((PickedDate2) {
-                    if (PickedDate2 == null) {
-                      return;
-                    }
-                    Booking booking1 = Booking(
-                        arrival: firstdate.toString(),
-                        departure: PickedDate2.toString(),
-                        cost: parking.price,
-                        customer: StorageAparcam().getId(),
-                        parking: parking.id,
-                        id: "",
-                        owner: "");
-                    BookingParking(booking1);
-                  });
+                  firstdate = await showDatePicker(
+                    context: context,
+                    initialDate: DateTime.now(),
+                    firstDate: availableDates1[0],
+                    lastDate: availableDates1[1],
+                  );
+                  seconddate = await showDatePicker(
+                    context: context,
+                    initialDate: firstdate ?? DateTime.now(),
+                    firstDate: availableDates1[0],
+                    lastDate: availableDates1[1],
+                  );
+
+                  Booking booking1 = Booking(
+                      arrival: firstdate.toString(),
+                      departure: seconddate.toString(),
+                      cost: parking.price,
+                      customer: StorageAparcam().getId(),
+                      parking: parking.id,
+                      id: "",
+                      owner: "");
+                  BookingParking(booking1);
                 },
               )
             ],
