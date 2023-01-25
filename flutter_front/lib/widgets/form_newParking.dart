@@ -99,36 +99,6 @@ class _MyStatefulWidgetState extends State<FormWidget> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          // ListTile(
-          //   leading: const Icon(Icons.public),
-          //   title: TextFormField(
-          //     decoration: const InputDecoration(
-          //       hintText: 'Enter the country',
-          //     ),
-          //     controller: countryController,
-          //     validator: (String? value) {
-          //       if (value == null || value.isEmpty) {
-          //         return 'Please enter some text';
-          //       }
-          //       return null;
-          //     },
-          //   ),
-          // ),
-          // ListTile(
-          //   leading: const Icon(Icons.location_city),
-          //   title: TextFormField(
-          //     decoration: const InputDecoration(
-          //       hintText: 'Enter the city',
-          //     ),
-          //     controller: cityController,
-          //     validator: (String? value) {
-          //       if (value == null || value.isEmpty) {
-          //         return 'Please enter some  text';
-          //       }
-          //       return null;
-          //     },
-          //   ),
-          // ),
           ListTile(
             leading: const Icon(Icons.signpost),
             title: TextFormField(
@@ -233,21 +203,6 @@ class _MyStatefulWidgetState extends State<FormWidget> {
                   );
                 }).toList(),
               )),
-          /*ListTile(
-            leading: const Icon(Icons.balance),
-            title: TextFormField(
-              decoration: const InputDecoration(
-                hintText: 'Enter the difficulty',
-              ),
-              controller: difficultyController,
-              validator: (String? value) {
-                if (value == null || value.isEmpty) {
-                  return 'Please enter some text';
-                }
-                return null;
-              },
-            ),
-          ),*/
           const ListTile(
             leading: const Icon(Icons.balance),
             title: Text('Choose the difficulty',
@@ -269,7 +224,6 @@ class _MyStatefulWidgetState extends State<FormWidget> {
             label: "$sliderDif",
           ),
           const Divider(),
-
           ListTile(
             leading: Icon(Icons.calendar_month_outlined),
             title: Text("Enter the availability  " + "SELECTED " + " " + _range,
@@ -293,8 +247,6 @@ class _MyStatefulWidgetState extends State<FormWidget> {
                                   child: Text("OK"),
                                   onPressed: () {
                                     Navigator.pop(context);
-
-                                    print(_range);
                                   },
                                 )
                               ],
@@ -317,12 +269,6 @@ class _MyStatefulWidgetState extends State<FormWidget> {
                     addressController = pickedData.address.toString();
 
                     print(addressController);
-                    // var list = addressController.split(',');
-                    // print("city " + list.last);
-                    // list.removeLast();
-                    // print("codigo postal " + list.last);
-                    // list.removeLast();
-                    // print(list);
                   })),
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 30.0),
@@ -355,7 +301,6 @@ class _MyStatefulWidgetState extends State<FormWidget> {
                     print(formCity);
                     list.removeLast();
                     Parking p = Parking(
-                        //user_id:  StorageAparcam().getId(),
                         score: 0,
                         id: '',
                         user: '',

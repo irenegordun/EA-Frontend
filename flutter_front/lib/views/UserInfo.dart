@@ -1,12 +1,22 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_front/services/userServices.dart';
 import 'package:flutter_front/views/login.dart';
 import 'package:flutter_front/widgets/buttonAccessibility.dart';
 import 'package:password_strength_checker/password_strength_checker.dart';
 import 'package:provider/provider.dart';
+import '../main.dart';
 import '../models/user.dart';
 import '../widgets/drawer.dart';
 import 'package:flutter_front/services/localStorage.dart';
+import 'package:image_picker/image_picker.dart';
+
+import 'package:flutter_front/models/language.dart';
+import 'package:flutter_front/models/language_constants.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
 
 class UserInfo extends StatefulWidget {
   const UserInfo({super.key});
@@ -17,6 +27,9 @@ class UserInfo extends StatefulWidget {
 
 class _UserInfoState extends State<UserInfo> {
   User? user;
+  File? _image;
+  final _picker = ImagePicker();
+
   deleteU(User user) async {
     var response = await UserServices().deleteUsers(user);
   }
@@ -74,6 +87,29 @@ class _UserInfoState extends State<UserInfo> {
       ],
     ));
   }
+
+  Future<void> _pickImageFromGallery() async {
+    final pickedFile = await _picker.pickImage(source: ImageSource.gallery);
+    if (pickedFile != null) {
+      setState(() => this._image = File(pickedFile.path));
+      
+    }
+  }
+  /*Future _pickImage(ImageSource source) async {
+    try{
+    final image = await ImagePicker().pickImage(source: source);
+    if (image == null) return;
+    File? img = File(image.path);
+    setState((){
+      _image = img;
+      Navigator.of(context).pop;
+    });
+    } on PlatformException catch (e){
+      print(e);
+      Navigator.of(context).pop;
+    }
+
+  }*/
 
   var email = "";
   var newemail = "";
@@ -162,6 +198,42 @@ class _UserInfoState extends State<UserInfo> {
       appBar: AppBar(
         title: const Text('Profile'),
         backgroundColor: Colors.blueGrey,
+
+        actions: <Widget>[
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: DropdownButton<Language>(
+              underline: const SizedBox(),
+              icon: const Icon(
+                Icons.language,
+                color: Colors.white,
+              ),
+              onChanged: (Language? language) async {
+                if (language != null) {
+                  Locale _locale = await setLocale(language.languageCode);
+                  MyApp.setLocale(context, _locale);
+                }
+              },
+              items: Language.languageList()
+                  .map<DropdownMenuItem<Language>>(
+                    (e) => DropdownMenuItem<Language>(
+                      value: e,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: <Widget>[
+                          Text(
+                            e.flag,
+                            style: const TextStyle(fontSize: 30),
+                          ),
+                          Text(e.name)
+                        ],
+                      ),
+                    ),
+                  )
+                  .toList(),
+            ),
+          ),
+        ],
       ),
       body: Center(child: _buildCard(_userprovider.userData)),
     );
@@ -172,6 +244,35 @@ class _UserInfoState extends State<UserInfo> {
         child: Card(
           child: Column(
             children: [
+              ListTile(
+                trailing: IconButton(
+                icon: const Icon(Icons.photo),
+                onPressed: () async =>  _pickImageFromGallery(),
+                tooltip: 'Pick from gallery',
+               ),
+              ),
+              Container(
+                height: 200.0,
+                width: 200.0,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: Colors.grey.shade200,
+                ),
+                child: Center(
+                  child: _image == null
+                    ? const Text(
+                      'No image selected',
+                      style: TextStyle(fontSize: 15),
+                    )
+                    : CircleAvatar(
+                      backgroundImage: FileImage(_image!),
+                      radius: 200.0,
+                    )
+                ),
+                
+              ),
+              
+      
               ListTile(
                 title: const Text('email',
                     style: TextStyle(fontWeight: FontWeight.w500)),
@@ -221,7 +322,9 @@ class _UserInfoState extends State<UserInfo> {
                     }),
               ),
               ListTile(
-                title: const Text('Name'),
+                title: Text("Name"),
+                //title: Text(translation(context).name),
+                
                 subtitle: TextFormField(
                   controller: editingController2,
                   decoration: InputDecoration(hintText: name),

@@ -240,4 +240,34 @@ class UserServices extends ChangeNotifier {
       return false;
     }
   }
+
+  Future<int> registerGoogle(User user) async {
+    var client = http.Client();
+    var uri = Uri.parse('http://localhost:5432/api/users/registergoogle');
+    var userJS = json.encode(user.toJson());
+    var res = await client.post(uri,
+        headers: {'content-type': 'application/json'}, body: userJS);
+    if (res.statusCode == 200) {
+      return 1;
+    } else {
+      return 0;
+    }
+  }
+
+  Future<int> loginGoogle(User user) async {
+    var client = http.Client();
+    var uri = Uri.parse('http://localhost:5432/api/users/logingoogle');
+    var userJS = json.encode(user.GoogleLogintoJson());
+    var response = await client.post(uri,
+        headers: {'content-type': 'application/json'}, body: userJS);
+    if (response.statusCode == 200) {
+      DetailsModel parametres = new DetailsModel(token: "", id: "");
+      final Map<String, dynamic> map = json.decode(response.body);
+      DetailsModel det = detailsmodelfromJson(map);
+      StorageAparcam().addItemsToLocalStorage(det.token, det.id, user.password);
+      return 1;
+    } else {
+      return 0;
+    }
+  }
 }

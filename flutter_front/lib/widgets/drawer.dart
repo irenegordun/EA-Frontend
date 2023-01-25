@@ -2,12 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_front/views/ListParkings.dart';
 import 'package:flutter_front/views/MyParkings.dart';
 import 'package:flutter_front/views/UserInfo.dart';
+import 'package:flutter_front/views/accessibility.dart';
 import 'package:flutter_front/views/myBookings.dart';
 import 'package:flutter_front/services/localStorage.dart';
 import 'package:flutter_front/views/login.dart';
 import 'package:flutter_front/views/MyFavourites.dart';
 import 'package:flutter_front/views/chatbot.dart';
+import 'package:flutter_front/widgets/expandable.dart';
 import '../views/NewParking.dart';
+import '../views/MyAgenda.dart';
 import '../views/report.dart';
 
 class DrawerScreen extends StatelessWidget {
@@ -75,6 +78,16 @@ class DrawerScreen extends StatelessWidget {
             },
           ),
 
+          //MyAgenda
+          ListTile(
+            leading: const Icon(Icons.calendar_today_outlined),
+            title: const Text('My agenda'),
+            onTap: () {
+              Navigator.of(context).push(
+                  MaterialPageRoute(builder: (context) => const MyAgenda()));
+            },
+          ),
+
           //Els meus preferits
           ListTile(
             leading: const Icon(Icons.favorite_border),
@@ -96,6 +109,18 @@ class DrawerScreen extends StatelessWidget {
                   builder: (context) => const NewParkingPage()));
             },
           ),
+
+          ListTile(
+            leading: const Icon(Icons.car_rental_rounded),
+            title: const Text(
+              'Create parking spot',
+            ),
+            onTap: () {
+              Navigator.of(context).push(MaterialPageRoute(
+                  builder: (context) => const ExampleExpandableFab()));
+            },
+          ),
+
           ListTile(
             leading: const Icon(Icons.highlight_remove_sharp),
             title: const Text(

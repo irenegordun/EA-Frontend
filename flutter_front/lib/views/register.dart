@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_front/views/Login.dart';
+import 'package:flutter_front/views/google_controller.dart';
 import '../models/user.dart';
 import '../services/userServices.dart';
 import '../widgets/adaptive_scaffold.dart';
+import 'package:get/get.dart';
 import 'package:password_strength_checker/password_strength_checker.dart';
 
 void main() {
@@ -57,6 +59,7 @@ class LoginForm extends StatefulWidget {
 class _LoginFormState extends State<LoginForm> {
   final nameController = TextEditingController();
 
+  final googlecontroller = Get.put(LoginController());
   final emailController = TextEditingController();
 
   final passwordController = TextEditingController();
@@ -278,6 +281,42 @@ class _LoginFormState extends State<LoginForm> {
               style: TextStyle(fontSize: 16),
             ),
           ),
+          const SizedBox(height: 20),
+          Center(
+              child: FloatingActionButton.extended(
+            onPressed: () async {
+              await googlecontroller.login();
+              var name = googlecontroller.googleAccount.value?.displayName;
+              var email = googlecontroller.googleAccount.value!.email;
+              var user = User(
+                  name: name!,
+                  id: "",
+                  password: "",
+                  email: email,
+                  newpassword: "",
+                  myParkings: [],
+                  myFavorites: [],
+                  myBookings: [],
+                  deleted: false,
+                  points: 0);
+              int googlestate = await UserServices().registerGoogle(user);
+              if (googlestate == 1) {
+                openDialog('User registered, Welcome!');
+                Navigator.of(context).push(
+                    MaterialPageRoute(builder: (context) => const Login()));
+              } else {
+                openDialog('Cannot register, maybe already in database?');
+              }
+            },
+            label: const Text('Sign up with Google'),
+            icon: Image.asset(
+              'google_logo.png',
+              height: 32,
+              width: 32,
+            ),
+            backgroundColor: Colors.white,
+            foregroundColor: Colors.blueGrey,
+          ))
         ],
       ),
     );

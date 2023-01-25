@@ -10,13 +10,14 @@ import 'package:flutter_front/views/ParkingInfo.dart';
 import 'package:flutter_front/widgets/buttonAccessibility.dart';
 import 'package:flutter_open_street_map/flutter_open_street_map.dart';
 import 'package:flutter_front/services/localStorage.dart';
-//import 'package:flutter_osm_plugin/flutter_osm_plugin.dart';
 import 'package:provider/provider.dart';
-
+import 'package:flutter_map/flutter_map.dart';
+import 'package:latlong2/latlong.dart';
 import '../models/parking.dart';
 import '../widgets/drawer.dart';
 import 'Filters.dart';
 import 'ListParkings.dart';
+import 'package:zoom_widget/zoom_widget.dart';
 
 class MapParkings extends StatefulWidget {
   const MapParkings({super.key});
@@ -50,14 +51,28 @@ class _MapParkingsState extends State<MapParkings> {
     ParkingServices _parkingprovider = Provider.of<ParkingServices>(context);
     double longitude = 2.1596;
     double latitude = 41.3948;
-    // if (StorageAparcam().getLatitude().isNaN &&
-    //     StorageAparcam().getLongitude().isNaN) {
-    //   longitude = 2.1596;
-    //   latitude = 41.3948;
-    // } else {
-    //   longitude = StorageAparcam().getLongitude();
-    //   latitude = StorageAparcam().getLatitude();
-    // }
+    List<LatLng> latLngList = [];
+    int i = 0;
+    while (parkings?.length != i) {
+      latLngList.add(LatLng(
+          parkings![i].latitude.toDouble(), parkings![1].longitude.toDouble()));
+      i = i + 1;
+      //_latLngList.add;
+    }
+    print(latLngList);
+
+    List<Marker> _markers = latLngList
+        .map((point) => Marker(
+              point: point,
+              width: 60,
+              height: 60,
+              builder: (context) => Icon(
+                Icons.pin_drop,
+                size: 60,
+                color: Colors.blueAccent,
+              ),
+            ))
+        .toList();
     return Scaffold(
       drawer: const DrawerScreen(),
       appBar: AppBar(
@@ -125,29 +140,52 @@ class _MapParkingsState extends State<MapParkings> {
               flex: 9,
               child: Row(children: <Widget>[
                 Expanded(
-                    child: FlutterOpenStreetMap(
-                        center: LatLong((latitude), (longitude)),
-                        showZoomButtons: true,
-                        onPicked: (pickedData) {
-                          Geolocation;
-                          // GeoPoint(
-                          //     latitude: pickedData.latLong.latitude,
-                          //     longitude: pickedData.latLong.longitude);
-                          // GeoPoint p = showSimplePickerLocation(
-                          //   context: context,
-                          //   isDismissible: true,
-                          //   title: "Title dialog",
-                          //   textConfirmPicker: "pick",
-                          //   initCurrentUserPosition: true,
-                          //) as GeoPoint;
-                          // print(pickedData.latLong.latitude);
-                          // print(pickedData.latLong.longitude);
-                          // print(pickedData.address);
-                          const Point(41.3948, 2.1596);
-                        }))
+                    child: FlutterMap(
+                        options: MapOptions(
+                          center: LatLng(latitude, longitude),
+                          zoom: 10,
+                          interactiveFlags:
+                              InteractiveFlag.all - InteractiveFlag.rotate,
+                        ),
+                        layers: [
+                      TileLayerOptions(
+                        minZoom: 1,
+                        maxZoom: 20,
+                        backgroundColor: Colors.black,
+                        urlTemplate:
+                            'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+                        subdomains: ['a', 'b', 'c'],
+                      ),
+                      MarkerLayerOptions(markers: _markers)
+                    ])
+                    // child: FlutterOpenStreetMap(
+                    //     //Aqui es on he de posar FlutterMap a partir 98 no
+                    //     center: LatLong((latitude), (longitude)), //lib/maindart
+                    //     showZoomButtons: true,
+                    //     onPicked: (pickedData) {
+                    //       Geolocation;
+                    // GeoPoint(
+                    //     latitude: pickedData.latLong.latitude,
+                    //     longitude: pickedData.latLong.longitude);
+                    // GeoPoint p = showSimplePickerLocation(
+                    //   context: context,
+                    //   isDismissible: true,
+                    //   title: "Title dialog",
+                    //   textConfirmPicker: "pick",
+                    //   initCurrentUserPosition: true,
+                    //) as GeoPoint;
+                    // print(pickedData.latLong.latitude);
+                    // print(pickedData.latLong.longitude);
+                    // print(pickedData.address);
+                    //const Point(41.3948, 2.1596);
+
+                    )
               ]))
         ],
       ),
     );
   }
 }
+
+//https://techblog.geekyants.com/implementing-flutter-maps-with-osm
+//https://github.com/fleaflet/flutter_map/blob/master/example/lib/pages/many_markers.dart

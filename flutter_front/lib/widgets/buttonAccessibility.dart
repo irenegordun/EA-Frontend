@@ -20,9 +20,12 @@ class AccessibilityButton extends StatefulWidget {
       child: FloatingActionButton(
         onPressed: (){
           setState(() {
-          Navigator.of(context).push(MaterialPageRoute(
-          builder: (context) => const Accessibility()));
-          });
+            
+          }
+          /*setState(() {
+            Navigator.of(context).push(MaterialPageRoute(
+            builder: (context) => const Accessibility()));
+          }*/);
         },
         child: Icon(Icons.accessibility_new_outlined),
       ),

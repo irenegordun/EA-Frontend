@@ -90,4 +90,10 @@ class User {
         "password": password,
         "email": email,
       };
+
+  Map<String, dynamic> GoogleLogintoJson() => {
+        "name": name,
+        "email": email,
+        "password": password,
+      };
 }

@@ -4,8 +4,9 @@ import 'package:flutter_front/views/register.dart';
 import '../widgets/adaptive_scaffold.dart';
 import '../models/user.dart';
 import '../services/userServices.dart';
-
+import 'package:get/get.dart';
 import '../services/localStorage.dart';
+import 'package:flutter_front/views/google_controller.dart';
 
 void main() {
   runApp(const Login());
@@ -59,6 +60,7 @@ class LoginForm extends StatefulWidget {
 class _LoginFormState extends State<LoginForm> {
   final nameController = TextEditingController();
 
+  final googlecontroller = Get.put(LoginController());
   final emailController = TextEditingController();
 
   final passwordController = TextEditingController();
@@ -157,6 +159,7 @@ class _LoginFormState extends State<LoginForm> {
                 if (state == 1) {
                   StorageAparcam().addFiltersToLocalStorage(
                       false, 'none', 0, 0, 1000, 'any', 'any');
+                  StorageAparcam().setFilterDates('', '');
                   Navigator.of(context).push(MaterialPageRoute(
                       builder: (context) => const ListParkings()));
                 } else if (state == 2) {
@@ -199,6 +202,51 @@ class _LoginFormState extends State<LoginForm> {
               style: TextStyle(fontSize: 16),
             ),
           ),
+          const SizedBox(height: 20),
+          Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisSize: MainAxisSize.max,
+              children: [
+                FloatingActionButton.extended(
+                  onPressed: () async {
+                    await googlecontroller.login();
+                    var name =
+                        googlecontroller.googleAccount.value?.displayName;
+                    var email = googlecontroller.googleAccount.value!.email;
+                    var user = User(
+                        name: name!,
+                        id: "",
+                        password: "",
+                        email: email,
+                        newpassword: "",
+                        myParkings: [],
+                        myFavorites: [],
+                        myBookings: [],
+                        deleted: false,
+                        points: 0);
+                    int googlestate = await UserServices().loginGoogle(user);
+                    if (googlestate == 1) {
+                      StorageAparcam().addFiltersToLocalStorage(
+                          false, 'none', 0, 0, 1000, 'any', 'any');
+                      StorageAparcam().setFilterDates('', '');
+                      Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => const ListParkings()));
+                    } else {
+                      openDialog(
+                          'Something went wrong, maybe you are no registered?');
+                    }
+                  },
+                  label: const Text('Sign in with Google'),
+                  icon: Image.asset(
+                    'google_logo.png',
+                    height: 32,
+                    width: 32,
+                    fit: BoxFit.contain,
+                  ),
+                  backgroundColor: Colors.white,
+                  foregroundColor: Colors.blueGrey,
+                )
+              ])
         ],
       ),
     );

@@ -10,9 +10,6 @@ class FormWidget extends StatefulWidget {
 }
 
 class _MyStatefulWidgetState extends State<FormWidget> {
-  // String nameValue = '';
-  // String passwordValue = '';
-  // String emailValue = '';
 
   final nameController = TextEditingController();
   final emailController = TextEditingController();

@@ -13,7 +13,6 @@ import 'package:flutter_front/views/UserInfo.dart';
 
 import 'package:flutter_front/views/register.dart';
 import 'package:flutter_front/views/accessibility.dart';
-import 'package:flutter_front/widgets/calendar.dart';
 
 import 'package:provider/provider.dart';
 
