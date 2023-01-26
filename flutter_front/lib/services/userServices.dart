@@ -199,6 +199,7 @@ class UserServices extends ChangeNotifier {
       DetailsModel det = detailsmodelfromJson(map);
 
       StorageAparcam().addItemsToLocalStorage(det.token, det.id, user.password);
+      StorageAparcam().setMapLocation(0, 0);
 
       return 1;
     } else if (response.statusCode == 402) {
@@ -268,6 +269,7 @@ class UserServices extends ChangeNotifier {
       final Map<String, dynamic> map = json.decode(response.body);
       DetailsModel det = detailsmodelfromJson(map);
       StorageAparcam().addItemsToLocalStorage(det.token, det.id, user.password);
+      StorageAparcam().setMapLocation(0, 0);
       return 1;
     } else {
       return 0;

@@ -260,14 +260,13 @@ class _LoginFormState extends State<LoginForm> {
         context: context,
         builder: (context) => AlertDialog(
           backgroundColor: Color.fromARGB(255, 230, 241, 248),
-          shape: RoundedRectangleBorder(
-                borderRadius:
-                    BorderRadius.circular(20.0)),
-          title: Text (
-            "APARCA'M", 
-          style: TextStyle(fontSize: 17)),
-          content: Text(text, 
-          style: TextStyle(fontSize: 15),),
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)),
+          title: Text("APARCA'M", style: TextStyle(fontSize: 17)),
+          content: Text(
+            text,
+            style: TextStyle(fontSize: 15),
+          ),
           actions: [
             TextButton(
               child: const Text('OK'),

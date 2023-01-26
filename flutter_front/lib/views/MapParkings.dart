@@ -8,6 +8,7 @@ import 'package:flutter_front/services/parkingServices.dart';
 import 'package:flutter_front/views/MyParkings.dart';
 import 'package:flutter_front/views/ParkingInfo.dart';
 import 'package:flutter_front/widgets/buttonAccessibility.dart';
+import 'package:flutter_map_marker_cluster/flutter_map_marker_cluster.dart';
 import 'package:flutter_open_street_map/flutter_open_street_map.dart';
 import 'package:flutter_front/services/localStorage.dart';
 import 'package:provider/provider.dart';
@@ -49,15 +50,22 @@ class _MapParkingsState extends State<MapParkings> {
   @override
   Widget build(BuildContext context) {
     ParkingServices _parkingprovider = Provider.of<ParkingServices>(context);
-    double longitude = 2.1596;
-    double latitude = 41.3948;
     List<LatLng> latLngList = [];
     int i = 0;
     while (parkings?.length != i) {
       latLngList.add(LatLng(
           parkings![i].latitude.toDouble(), parkings![1].longitude.toDouble()));
       i = i + 1;
-      //_latLngList.add;
+    }
+    double longitude = 2.1596;
+    double latitude = 41.3948;
+    if (StorageAparcam().getLatitude() != 0 ||
+        StorageAparcam().getLongitude() != 0) {
+      latitude = StorageAparcam().getLatitude();
+      longitude = StorageAparcam().getLongitude();
+    } else {
+      longitude = 2.1596;
+      latitude = 41.3948;
     }
     print(latLngList);
 
@@ -143,7 +151,8 @@ class _MapParkingsState extends State<MapParkings> {
                     child: FlutterMap(
                         options: MapOptions(
                           center: LatLng(latitude, longitude),
-                          zoom: 10,
+                          zoom: 15,
+                          plugins: [MarkerClusterPlugin()],
                           interactiveFlags:
                               InteractiveFlag.all - InteractiveFlag.rotate,
                         ),
@@ -156,30 +165,28 @@ class _MapParkingsState extends State<MapParkings> {
                             'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
                         subdomains: ['a', 'b', 'c'],
                       ),
-                      MarkerLayerOptions(markers: _markers)
-                    ])
-                    // child: FlutterOpenStreetMap(
-                    //     //Aqui es on he de posar FlutterMap a partir 98 no
-                    //     center: LatLong((latitude), (longitude)), //lib/maindart
-                    //     showZoomButtons: true,
-                    //     onPicked: (pickedData) {
-                    //       Geolocation;
-                    // GeoPoint(
-                    //     latitude: pickedData.latLong.latitude,
-                    //     longitude: pickedData.latLong.longitude);
-                    // GeoPoint p = showSimplePickerLocation(
-                    //   context: context,
-                    //   isDismissible: true,
-                    //   title: "Title dialog",
-                    //   textConfirmPicker: "pick",
-                    //   initCurrentUserPosition: true,
-                    //) as GeoPoint;
-                    // print(pickedData.latLong.latitude);
-                    // print(pickedData.latLong.longitude);
-                    // print(pickedData.address);
-                    //const Point(41.3948, 2.1596);
-
-                    )
+                      MarkerClusterLayerOptions(
+                        maxClusterRadius: 190,
+                        disableClusteringAtZoom: 16,
+                        size: Size(50, 50),
+                        fitBoundsOptions: FitBoundsOptions(
+                          padding: EdgeInsets.all(50),
+                        ),
+                        markers: _markers,
+                        polygonOptions: PolygonOptions(
+                            borderColor: Colors.blueAccent,
+                            color: Colors.black12,
+                            borderStrokeWidth: 3),
+                        builder: (context, markers) {
+                          return Container(
+                            alignment: Alignment.center,
+                            decoration: BoxDecoration(
+                                color: Colors.orange, shape: BoxShape.circle),
+                            child: Text('${markers.length}'),
+                          );
+                        },
+                      ),
+                    ]))
               ]))
         ],
       ),
