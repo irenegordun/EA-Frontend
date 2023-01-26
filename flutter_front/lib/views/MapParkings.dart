@@ -7,10 +7,12 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_front/services/parkingServices.dart';
 import 'package:flutter_front/views/MyParkings.dart';
 import 'package:flutter_front/views/ParkingInfo.dart';
+import 'package:flutter_front/views/UserInfo.dart';
 import 'package:flutter_front/widgets/buttonAccessibility.dart';
 import 'package:flutter_map_marker_cluster/flutter_map_marker_cluster.dart';
 import 'package:flutter_open_street_map/flutter_open_street_map.dart';
 import 'package:flutter_front/services/localStorage.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong2/latlong.dart';
@@ -19,6 +21,7 @@ import '../widgets/drawer.dart';
 import 'Filters.dart';
 import 'ListParkings.dart';
 import 'package:zoom_widget/zoom_widget.dart';
+import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 
 class MapParkings extends StatefulWidget {
   const MapParkings({super.key});
@@ -28,9 +31,48 @@ class MapParkings extends StatefulWidget {
 }
 
 class _MapParkingsState extends State<MapParkings> {
+  Widget getDateRangePicker() {
+    return SizedBox(
+        height: 500,
+        width: 500,
+        child: Card(
+            child: SfDateRangePicker(
+          view: DateRangePickerView.month,
+          selectionMode: DateRangePickerSelectionMode.range,
+          onSelectionChanged: _onSelectionChanged,
+          initialSelectedRange: PickerDateRange(
+              DateTime.now().subtract(const Duration(days: 4)),
+              DateTime.now().add(const Duration(days: 3))),
+        )));
+  }
+  void _onSelectionChanged(DateRangePickerSelectionChangedArgs args) {
+    setState(() {
+      if (args.value is PickerDateRange) {
+        firstdate = DateFormat('dd/MM/yyyy').format(args.value.startDate);
+        lastdate = DateFormat('dd/MM/yyyy')
+            .format(args.value.endDate ?? args.value.startDate);
+        _range = '${DateFormat('dd/MM/yyyy').format(args.value.startDate)} -'
+            // ignore: lines_longer_than_80_chars
+            ' ${DateFormat('dd/MM/yyyy').format(args.value.endDate ?? args.value.startDate)}';
+      } else if (args.value is DateTime) {
+        _selectedDate = args.value.toString();
+      } else if (args.value is List<DateTime>) {
+        _dateCount = args.value.length.toString();
+      } else {
+        _rangeCount = args.value.length.toString();
+      }
+    });
+  }
   List<Parking>? parkings = [];
-
   var isLoaded = false;
+  String firstdate = '';
+  String lastdate = '';
+  String _selectedDate = '';
+  String _dateCount = '';
+  String _range = '';
+  String _rangeCount = '';
+
+
 
   @override
   void initState() {
@@ -88,32 +130,108 @@ class _MapParkingsState extends State<MapParkings> {
           child: new Text("A P A R C A ' M"),
         ),
         backgroundColor: Colors.blueGrey,
+        actions: <Widget>[
+          Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: IconButton(
+                icon: const Icon(Icons.account_circle_outlined),
+                tooltip: 'Account',
+                onPressed: () {
+                  Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) => const UserInfo()));
+                },
+              )),
+        ],
       ),
       body: Column(
         children: <Widget>[
           Expanded(
-              flex: 1,
-              child: Row(children: <Widget>[
-                Expanded(
-                    child: Container(
-                        color: Color.fromARGB(255, 227, 244, 248),
-                        child: const Center(
-                            child: Text("Calendar",
-                                style: TextStyle(fontSize: 20.0))))),
-                Expanded(
-                    child: GestureDetector(
+            child: Row(children: <Widget>[
+            Expanded(
+                flex: 7,
+                child: GestureDetector(
                   onTap: () {
-                    Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) => const Filters()));
+                    showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return AlertDialog(
+                              title: Text(''),
+                              content: Container(
+                                height: 600,
+                                width: 500,
+                                child: Column(
+                                  children: <Widget>[
+                                    getDateRangePicker(),
+                                    MaterialButton(
+                                      child: Text("OK"),
+                                      onPressed: () {
+                                        StorageAparcam().setFilterDates(
+                                            firstdate, lastdate);
+                                        StorageAparcam().setFiltered(true);
+                                        Navigator.of(context).push(
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                    const ListParkings()));
+                                      },
+                                    )
+                                  ],
+                                ),
+                              ));
+                        });
                   },
                   child: Container(
-                    color: Colors.blueGrey,
-                    child: const Center(
-                        child:
-                            Text("Filters", style: TextStyle(fontSize: 20.0))),
-                  ),
-                )),
-              ])),
+                    decoration: const BoxDecoration(
+                        color: Colors.blueGrey,
+                      ),
+                    child: Container(
+                      margin: new EdgeInsets.symmetric(horizontal: 5.0, vertical: 5.0),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(15),
+                        color: Color.fromARGB(255, 239, 242, 243),
+                      ),
+                      child: Row(
+                        children: <Widget>[
+                          Expanded(
+                            flex: 2,
+                            child: IconButton(
+                              icon: const Icon(Icons.calendar_month_outlined),
+                              onPressed: () {},
+                            ),
+                          ),
+                          const Expanded(
+                            flex: 6,
+                            child:
+                            Center( 
+                              child: Text("Calendar",
+                              style: TextStyle(fontSize: 18)),
+                            ), 
+                          ),
+                          Expanded(
+                            flex: 2,
+                            child: IconButton(
+                              icon: const Icon(Icons.arrow_drop_down_outlined),
+                              onPressed: () {},
+                            ),
+                          ),
+                        ]
+                      ),
+                    )
+                  ),)),
+            Expanded(
+              flex: 3,
+                child: GestureDetector(
+              onTap: () {
+                Navigator.of(context).push(
+                    MaterialPageRoute(builder: (context) => const Filters()));
+              },
+              child: Container(
+                color: Colors.blueGrey,
+                child: const Center(
+                    child: Text("Filters", 
+                    style: TextStyle(fontSize: 18.0, color: Color.fromARGB(255, 239, 242, 243)))),
+              ),
+            )),
+          ])),
           Expanded(
               flex: 1,
               child: Row(children: <Widget>[

@@ -27,7 +27,9 @@ class ListParkings extends StatefulWidget {
   State<ListParkings> createState() => _ListParkingsState();
 }
 
+
 class _ListParkingsState extends State<ListParkings> {
+  bool _isVisible = true;
   List<Parking>? parkings = [];
   var isLoaded = false;
   String firstdate = '';
@@ -36,6 +38,12 @@ class _ListParkingsState extends State<ListParkings> {
   String _dateCount = '';
   String _range = '';
   String _rangeCount = '';
+
+  void showToast() {
+    setState(() {
+      _isVisible = !_isVisible;
+    });
+  }
 
   Widget getDateRangePicker() {
     return SizedBox(
@@ -59,7 +67,6 @@ class _ListParkingsState extends State<ListParkings> {
         lastdate = DateFormat('dd/MM/yyyy')
             .format(args.value.endDate ?? args.value.startDate);
         _range = '${DateFormat('dd/MM/yyyy').format(args.value.startDate)} -'
-            // ignore: lines_longer_than_80_chars
             ' ${DateFormat('dd/MM/yyyy').format(args.value.endDate ?? args.value.startDate)}';
       } else if (args.value is DateTime) {
         _selectedDate = args.value.toString();
@@ -76,17 +83,6 @@ class _ListParkingsState extends State<ListParkings> {
     super.initState();
     Provider.of<FavoriteProvider>(context, listen: false).getFavorites();
     getData();
-
-    // print(DateTime.now());
-    // print(DateTime.now().toIso8601String());
-    // print('${DateTime.now().toIso8601String()}Z');
-    // const data = "2021-12-15T11:10:01.521Z";
-    // DateTime dateTime = toDateTimeDart(data);
-    // print('Date de mongo $data a datetime de DART $dateTime');
-    // // MIRAR SI CALENDARI TORNA LA Z O NO
-    // DateTime datetime2 = DateTime.parse('2021-12-15T11:10:01.521Z');
-    // String data1 = toDateMongo(datetime2);
-    // print('Datetime de dart $datetime2 a date de MONGO: $data1');
   }
 
   getData() async {
@@ -175,14 +171,14 @@ class _ListParkingsState extends State<ListParkings> {
                         });
                   },
                   child: Container(
-                    decoration: BoxDecoration(
-                        color: const Color.fromARGB(255, 144, 180, 199),
+                    decoration: const BoxDecoration(
+                        color: Colors.blueGrey,
                       ),
                     child: Container(
                       margin: new EdgeInsets.symmetric(horizontal: 5.0, vertical: 5.0),
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(15),
-                        color: Color.fromARGB(255, 239, 242, 243),
+                        color: const Color.fromARGB(255, 239, 242, 243),
                       ),
                       child: Row(
                         children: <Widget>[
@@ -193,10 +189,10 @@ class _ListParkingsState extends State<ListParkings> {
                               onPressed: () {},
                             ),
                           ),
-                          Expanded(
+                          const Expanded(
                             flex: 6,
                             child:
-                            const Center( 
+                            Center( 
                               child: Text("Calendar",
                               style: TextStyle(fontSize: 18)),
                             ), 
@@ -256,9 +252,11 @@ class _ListParkingsState extends State<ListParkings> {
                         ),
                         child: const Text('Map')))),
           ])),
+          //Filters
           Expanded(
-              child: Row(
+            child: Row(
             children: <Widget>[
+
               Expanded(
                   child: Container(
                       height: 35,
@@ -266,18 +264,21 @@ class _ListParkingsState extends State<ListParkings> {
                       child: ElevatedButton.icon(
                         onPressed: () {
                           StorageAparcam().setSortby('none');
-                          Navigator.of(context).push(MaterialPageRoute(
-                              builder: (context) => const ListParkings()));
+                          setState(() {;
+                          });
                         },
-                        icon: const Icon(Icons.cancel_sharp, size: 20.0),
-                        label: Text('Sort by: ${StorageAparcam().getSortby()}'),
+                        icon: const Icon(Icons.highlight_remove_sharp, size: 17.0),
+                        label: const Text('Sort',
+                        style: TextStyle(fontSize: 12)),
+                        //label: Text('Sort by: ${StorageAparcam().getSortby()}',style: const TextStyle(fontSize: 12)),
                         style: ElevatedButton.styleFrom(
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(20.0),
                             ),
-                            backgroundColor:
-                                const Color.fromARGB(255, 142, 162, 172)),
-                      ))),
+                            primary: StorageAparcam().getSortby() =='none' ? Color.fromARGB(255, 200, 203, 205) : Color.fromARGB(255, 142, 162, 172),)
+                      )),
+                  ),
+
               Expanded(
                   child: Container(
                       height: 35,
@@ -288,14 +289,17 @@ class _ListParkingsState extends State<ListParkings> {
                           Navigator.of(context).push(MaterialPageRoute(
                               builder: (context) => const ListParkings()));
                         },
-                        icon: const Icon(Icons.cancel_sharp, size: 20.0),
-                        label: Text('Type: ${StorageAparcam().getType()}'),
+                        icon: const Icon(Icons.highlight_remove_sharp, size: 17.0),
+                        label: const Text('Type',
+                        style: TextStyle(fontSize: 12)),
+                        //label: Text('Type: ${StorageAparcam().getType()}'),
                         style: ElevatedButton.styleFrom(
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(20.0),
                             ),
-                            backgroundColor:
-                                const Color.fromARGB(255, 142, 162, 172)),
+                           primary: StorageAparcam().getType() =='any' ? Color.fromARGB(255, 200, 203, 205) : Color.fromARGB(255, 142, 162, 172),
+
+                          ),
                       ))),
               Expanded(
                   child: Container(
@@ -307,15 +311,15 @@ class _ListParkingsState extends State<ListParkings> {
                           Navigator.of(context).push(MaterialPageRoute(
                               builder: (context) => const ListParkings()));
                         },
-                        icon: const Icon(Icons.cancel_sharp, size: 20.0),
-                        label:
-                            Text('Size: ${StorageAparcam().getDimensions()}'),
+                        icon: const Icon(Icons.highlight_remove_sharp, size: 17.0),
+                        label: const Text('Size',
+                        style: TextStyle(fontSize: 12)),
                         style: ElevatedButton.styleFrom(
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(20.0),
                             ),
-                            backgroundColor:
-                                const Color.fromARGB(255, 142, 162, 172)),
+                            primary: StorageAparcam().getDimensions() =='any' ? Color.fromARGB(255, 200, 203, 205) : Color.fromARGB(255, 142, 162, 172),
+                            ),
                       ))),
               Expanded(
                   child: Container(
@@ -327,15 +331,15 @@ class _ListParkingsState extends State<ListParkings> {
                           Navigator.of(context).push(MaterialPageRoute(
                               builder: (context) => const ListParkings()));
                         },
-                        icon: const Icon(Icons.cancel_sharp, size: 20.0),
-                        label: Text(
-                            'Min price: ${StorageAparcam().getminPrice().toString()}'),
+                        icon: const Icon(Icons.highlight_remove_sharp, size: 17.0),
+                        label: const Text('Min price',
+                        style: TextStyle(fontSize: 12)),
+                        //label: Text('Min price: ${StorageAparcam().getminPrice().toString()}'),
                         style: ElevatedButton.styleFrom(
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(20.0),
                             ),
-                            backgroundColor:
-                                const Color.fromARGB(255, 142, 162, 172)),
+                            primary: StorageAparcam().getminPrice() ==0 ? Color.fromARGB(255, 200, 203, 205) : Color.fromARGB(255, 142, 162, 172),),
                       ))),
               Expanded(
                   child: Container(
@@ -347,15 +351,15 @@ class _ListParkingsState extends State<ListParkings> {
                           Navigator.of(context).push(MaterialPageRoute(
                               builder: (context) => const ListParkings()));
                         },
-                        icon: const Icon(Icons.cancel_sharp, size: 20.0),
-                        label: Text(
-                            'Max price: ${StorageAparcam().getmaxPrice().toString()}'),
+                        icon: const Icon(Icons.highlight_remove_sharp, size: 17.0),
+                        label: const Text('Max price',
+                        style: TextStyle(fontSize: 12)),
+                        //label: Text('Max price: ${StorageAparcam().getmaxPrice().toString()}'),
                         style: ElevatedButton.styleFrom(
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(20.0),
                             ),
-                            backgroundColor:
-                                const Color.fromARGB(255, 142, 162, 172)),
+                           primary: StorageAparcam().getmaxPrice() == 1000 ? Color.fromARGB(255, 200, 203, 205) : Color.fromARGB(255, 142, 162, 172)),
                       ))),
               Expanded(
                   child: Container(
@@ -367,15 +371,15 @@ class _ListParkingsState extends State<ListParkings> {
                           Navigator.of(context).push(MaterialPageRoute(
                               builder: (context) => const ListParkings()));
                         },
-                        icon: const Icon(Icons.cancel_sharp, size: 20.0),
-                        label: Text(
-                            'Min score: ${StorageAparcam().getminScore().toString()}'),
+                        icon: const Icon(Icons.highlight_remove_sharp, size: 17.0),
+                        label: const Text('Min score',
+                        style: TextStyle(fontSize: 12)),
+                        //label: Text('Min score: ${StorageAparcam().getminScore().toString()}'),
                         style: ElevatedButton.styleFrom(
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(20.0),
                             ),
-                            backgroundColor:
-                                const Color.fromARGB(255, 142, 162, 172)),
+                            primary: StorageAparcam().getminScore() == 0 ? Color.fromARGB(255, 200, 203, 205) : Color.fromARGB(255, 142, 162, 172)),
                       ))),
             ],
           )),
@@ -397,7 +401,7 @@ class _ListParkingsState extends State<ListParkings> {
                     title: Text(
                         '${parkings![index].street}, ${parkings![index].city}'),
                     subtitle: Text(
-                        'Price: ${parkings![index].price}/day || User score: ${parkings![index].score}'),
+                        'Price: ${parkings![index].price} €/day'),
                     trailing: SizedBox(
                         width: 120,
                         child: Row(
