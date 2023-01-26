@@ -12,10 +12,10 @@ class NewParkingPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      scrollBehavior: const MaterialScrollBehavior()
+    .copyWith(scrollbars: false),
       home: Scaffold(
         drawer: const DrawerScreen(),
-        floatingActionButton :const AccessibilityButton(),
-
         appBar: AppBar(
           title: const Center(
             child: Text("A P A R C A ' M"),
