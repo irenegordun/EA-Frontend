@@ -27,7 +27,7 @@ class MapParkings extends StatefulWidget {
 }
 
 class _MapParkingsState extends State<MapParkings> {
-  List<Parking>? parkings;
+  List<Parking>? parkings = [];
 
   var isLoaded = false;
 
