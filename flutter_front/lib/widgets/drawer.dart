@@ -9,6 +9,7 @@ import 'package:flutter_front/views/login.dart';
 import 'package:flutter_front/views/MyFavourites.dart';
 import 'package:flutter_front/views/chatbot.dart';
 import 'package:flutter_front/widgets/expandable.dart';
+import 'package:flutter_front/views/MyChats.dart';
 import '../views/NewParking.dart';
 import '../views/MyAgenda.dart';
 import '../views/report.dart';
@@ -42,6 +43,16 @@ class DrawerScreen extends StatelessWidget {
             onTap: () {
               Navigator.of(context).push(
                   MaterialPageRoute(builder: (context) => const UserInfo()));
+            },
+          ),
+          ListTile(
+            leading: const Icon(Icons.car_rental),
+            title: const Text(
+              'Chats',
+            ),
+            onTap: () {
+              Navigator.of(context).push(
+                  MaterialPageRoute(builder: (context) => HomePageMobile()));
             },
           ),
           //Llistat parquings

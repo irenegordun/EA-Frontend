@@ -152,6 +152,7 @@ class _LoginFormState extends State<LoginForm> {
                         email: formEmail,
                         newpassword: "",
                         myParkings: [],
+                        chats: [],
                         myFavorites: [],
                         myBookings: [],
                         deleted: false,
@@ -222,6 +223,7 @@ class _LoginFormState extends State<LoginForm> {
                             newpassword: "",
                             myParkings: [],
                             myFavorites: [],
+                            chats: [],
                             myBookings: [],
                             deleted: false,
                             points: 0);

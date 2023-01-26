@@ -3,10 +3,12 @@ import 'dart:html';
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_front/models/message.dart';
 import 'package:flutter_front/services/localStorage.dart';
 import 'package:localstorage/localstorage.dart';
 
 import '../models/user.dart';
+import '../models/chat.dart';
 import '../models/parking.dart';
 import 'package:http/http.dart' as http;
 import 'package:jwt_decode/jwt_decode.dart';
@@ -45,6 +47,7 @@ class UserServices extends ChangeNotifier {
       myParkings: [],
       myFavorites: [],
       myBookings: [],
+      chats: [],
       deleted: false,
       points: 0,
       newpassword: "");
@@ -268,6 +271,50 @@ class UserServices extends ChangeNotifier {
       return 1;
     } else {
       return 0;
+    }
+  }
+
+  Future<List<Messsage>?> getChat(String message) async {
+    print(message);
+    var client = http.Client();
+    var uri = Uri.parse('http://localhost:5432/api/users/getchat');
+    var response = await client.put(uri,
+        headers: {
+          'content-type': 'application/json',
+          'x-access-token': StorageAparcam().getToken()
+        },
+        body: message);
+    print(response.body);
+    if (response.statusCode == 200) {
+      var json = response.body;
+      return messagesFromJson(json);
+    } else
+      return null;
+  }
+
+  Future<List<Chat>?> getchats(User user) async {
+    print("ENTRA A LA CRIDA");
+    var client = http.Client();
+    var uri = Uri.parse('http://localhost:5432/api/users/getchats');
+    var userJS = json.encode(user.toJson());
+    var response = await client.put(uri,
+        headers: {
+          'content-type': 'application/json',
+          'x-access-token': StorageAparcam().getToken()
+        },
+        body: userJS);
+    print("REP AIXO: " + response.statusCode.toString() + response.body);
+    if (response.statusCode == 200) {
+      if (response.body != null) {
+        String string1 = response.body.toString().substring(1);
+        String string2 = string1.substring(0, string1.length - 1);
+        print(string2);
+        return chatsFromJson(string2);
+      } else {
+        return [];
+      }
+    } else {
+      return [];
     }
   }
 }

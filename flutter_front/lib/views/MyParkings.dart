@@ -37,6 +37,7 @@ class _MyParkingsState extends State<MyParkings> {
       myFavorites: [],
       myParkings: [],
       myBookings: [],
+      chats: [],
       points: 0,
       deleted: false,
       newpassword: "");

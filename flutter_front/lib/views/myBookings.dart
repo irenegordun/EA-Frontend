@@ -78,6 +78,7 @@ class _myBookingsState extends State<myBookings> {
       password: "",
       email: "",
       myFavorites: [],
+      chats: [],
       myParkings: [],
       myBookings: [],
       points: 0,
@@ -96,6 +97,7 @@ class _myBookingsState extends State<myBookings> {
             password: "",
             email: "",
             myFavorites: [],
+            chats: [],
             myParkings: [],
             myBookings: [],
             points: 0,
@@ -129,16 +131,15 @@ class _myBookingsState extends State<myBookings> {
         backgroundColor: Colors.blueGrey,
         actions: <Widget>[
           Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: IconButton(
-              icon: const Icon(Icons.calendar_today_outlined),
-              tooltip: 'View the bookings in the agenda view',
+              padding: const EdgeInsets.all(8.0),
+              child: IconButton(
+                icon: const Icon(Icons.calendar_today_outlined),
+                tooltip: 'View the bookings in the agenda view',
                 onPressed: () {
-                  Navigator.of(context).push(
-                  MaterialPageRoute(builder: (context) => const MyAgenda()));
+                  Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) => const MyAgenda()));
                 },
-              )
-          ),
+              )),
         ],
       ),
       body: Column(

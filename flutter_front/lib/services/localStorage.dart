@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:localstorage/localstorage.dart';
+import 'package:flutter_front/models/message.dart';
+import 'package:flutter_front/models/chat.dart';
 
 class StorageAparcam extends ChangeNotifier {
   final LocalStorage storage = LocalStorage('user');
@@ -19,6 +21,48 @@ class StorageAparcam extends ChangeNotifier {
     storage.setItem('maxprice', maxprice);
     storage.setItem('type', type);
     storage.setItem('dimensions', dimensions);
+    List<Chat>? chats = [];
+    storage.setItem('chats', chats);
+    storage.setItem('chatname', "");
+    storage.setItem("chatkey", "");
+    List<Messsage>? messages;
+    storage.setItem('messages', messages);
+  }
+
+  void setmessages(List<Messsage> mes) {
+    storage.setItem('messages', mes);
+  }
+
+  void setchatkey(String key) {
+    storage.setItem('chatkey', key);
+  }
+
+  void setchats(List<Chat>? chts) {
+    storage.setItem('chats', chts);
+  }
+
+  void setchatname(String name) {
+    storage.setItem('chatname', name);
+  }
+
+  void addmessage(Messsage messsage) {
+    List<Chat>? chats = storage.getItem('chats');
+  }
+
+  List<Messsage> getmessages() {
+    return storage.getItem('messages');
+  }
+
+  String getchatkey() {
+    return storage.getItem('chatkey');
+  }
+
+  String getchatname() {
+    return storage.getItem('chatname');
+  }
+
+  List<Chat>? getchats() {
+    return storage.getItem('chats');
   }
 
   void setFilterDates(String firstdate, String lastdate) {

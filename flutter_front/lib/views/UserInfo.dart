@@ -17,7 +17,6 @@ import 'package:flutter_front/models/language.dart';
 import 'package:flutter_front/models/language_constants.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-
 class UserInfo extends StatefulWidget {
   const UserInfo({super.key});
 
@@ -57,6 +56,7 @@ class _UserInfoState extends State<UserInfo> {
                     newpassword: "",
                     points: 0,
                     myFavorites: [],
+                    chats: [],
                     myParkings: [],
                     myBookings: [],
                     deleted: false);
@@ -92,7 +92,6 @@ class _UserInfoState extends State<UserInfo> {
     final pickedFile = await _picker.pickImage(source: ImageSource.gallery);
     if (pickedFile != null) {
       setState(() => this._image = File(pickedFile.path));
-      
     }
   }
   /*Future _pickImage(ImageSource source) async {
@@ -128,6 +127,7 @@ class _UserInfoState extends State<UserInfo> {
       points: 0,
       myFavorites: [],
       myParkings: [],
+      chats: [],
       myBookings: [],
       deleted: false,
       newpassword: "");
@@ -198,7 +198,6 @@ class _UserInfoState extends State<UserInfo> {
       appBar: AppBar(
         title: const Text('Profile'),
         backgroundColor: Colors.blueGrey,
-
         actions: <Widget>[
           Padding(
             padding: const EdgeInsets.all(8.0),
@@ -246,10 +245,10 @@ class _UserInfoState extends State<UserInfo> {
             children: [
               ListTile(
                 trailing: IconButton(
-                icon: const Icon(Icons.photo),
-                onPressed: () async =>  _pickImageFromGallery(),
-                tooltip: 'Pick from gallery',
-               ),
+                  icon: const Icon(Icons.photo),
+                  onPressed: () async => _pickImageFromGallery(),
+                  tooltip: 'Pick from gallery',
+                ),
               ),
               Container(
                 height: 200.0,
@@ -259,20 +258,16 @@ class _UserInfoState extends State<UserInfo> {
                   color: Colors.grey.shade200,
                 ),
                 child: Center(
-                  child: _image == null
-                    ? const Text(
-                      'No image selected',
-                      style: TextStyle(fontSize: 15),
-                    )
-                    : CircleAvatar(
-                      backgroundImage: FileImage(_image!),
-                      radius: 200.0,
-                    )
-                ),
-                
+                    child: _image == null
+                        ? const Text(
+                            'No image selected',
+                            style: TextStyle(fontSize: 15),
+                          )
+                        : CircleAvatar(
+                            backgroundImage: FileImage(_image!),
+                            radius: 200.0,
+                          )),
               ),
-              
-      
               ListTile(
                 title: const Text('email',
                     style: TextStyle(fontWeight: FontWeight.w500)),
@@ -298,6 +293,7 @@ class _UserInfoState extends State<UserInfo> {
                           points: 0,
                           myFavorites: [],
                           myParkings: [],
+                          chats: [],
                           myBookings: [],
                           deleted: false);
                       if (newemail != "") {
@@ -324,7 +320,7 @@ class _UserInfoState extends State<UserInfo> {
               ListTile(
                 title: Text("Name"),
                 //title: Text(translation(context).name),
-                
+
                 subtitle: TextFormField(
                   controller: editingController2,
                   decoration: InputDecoration(hintText: name),
@@ -346,6 +342,7 @@ class _UserInfoState extends State<UserInfo> {
                           newpassword: "",
                           points: 0,
                           myFavorites: [],
+                          chats: [],
                           myParkings: [],
                           myBookings: [],
                           deleted: false);
@@ -394,6 +391,7 @@ class _UserInfoState extends State<UserInfo> {
                         myFavorites: [],
                         myParkings: [],
                         myBookings: [],
+                        chats: [],
                         deleted: false,
                       );
                       if (newpassword != "") {

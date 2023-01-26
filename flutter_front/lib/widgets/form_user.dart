@@ -10,7 +10,6 @@ class FormWidget extends StatefulWidget {
 }
 
 class _MyStatefulWidgetState extends State<FormWidget> {
-
   final nameController = TextEditingController();
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
@@ -97,6 +96,7 @@ class _MyStatefulWidgetState extends State<FormWidget> {
                       newpassword: "",
                       myParkings: [],
                       myFavorites: [],
+                      chats: [],
                       myBookings: [],
                       deleted: false,
                       points: 0);

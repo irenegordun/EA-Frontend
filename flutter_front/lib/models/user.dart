@@ -1,10 +1,14 @@
 import 'dart:convert';
 import '../models/parking.dart';
+import '../models/chat.dart';
 
 List<User> listuserFromJson(String str) =>
     List<User>.from(json.decode(str).map((x) => User.fromJson(x)));
 
 User userFromJson(Map<String, dynamic> str) => User.fromJson(str);
+
+List<User> usersFromJson(String str) =>
+    List<User>.from(json.decode(str).map((x) => User.fromJson(x)));
 
 String userToJson(List<User> data) =>
     json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
@@ -22,6 +26,7 @@ class User {
       required this.points,
       required this.deleted,
       required this.myFavorites,
+      required List<Chat> chats,
       required this.myBookings});
 
   String id;
@@ -35,6 +40,7 @@ class User {
   bool deleted;
   List<dynamic> myFavorites;
   List<dynamic>? myBookings;
+  List<Chat>? chats;
 
   void setemail(String email) {
     this.email = email;
@@ -56,6 +62,7 @@ class User {
         email: json["email"],
         myParkings: json["myParkings"],
         points: json["points"],
+        chats: [],
         myFavorites: json["myFavorites"],
         myBookings: json["myBookings"],
         deleted: json["deleted"],
@@ -71,6 +78,7 @@ class User {
         myFavorites: json["myFavorites"],
         myBookings: json["myBookings"],
         deleted: json["deleted"],
+        chats: [],
       );
 
   Map<String, dynamic> toJson() => {
@@ -81,6 +89,7 @@ class User {
         "email": email,
         "myParkings": myParkings,
         "points": points,
+        "chats": chats,
         "myFavorites": myFavorites,
         "myBookings": myBookings,
         "deleted": deleted,

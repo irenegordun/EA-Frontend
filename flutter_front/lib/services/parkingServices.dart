@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:flutter_front/services/localStorage.dart';
 import 'package:flutter/material.dart';
 import '../models/parking.dart';
+import '../models/user.dart';
 import 'package:http/http.dart' as http;
 
 DetailsModel detailsmodelfromJson(Map<String, dynamic> prm) =>
@@ -162,6 +163,25 @@ class ParkingServices extends ChangeNotifier {
       final Map<String, dynamic> map = json.decode(response.body);
       Parking parking = parkingFromJson(map);
       return parking;
+    }
+    return null;
+  }
+
+  Future<User?> getOwner(Parking parking) async {
+    var client = http.Client();
+    var uri = Uri.parse('http://localhost:5432/api/parkings/owner');
+    var parkingJS = jsonEncode(parking.toJson());
+    var response = await client.put(uri,
+        headers: {
+          'content-type': 'application/json',
+          'x-access-token': StorageAparcam().getToken()
+        },
+        body: parkingJS);
+    print(response.body);
+    if (response.statusCode == 200) {
+      final Map<String, dynamic> map = json.decode(response.body);
+      User user = userFromJson(map);
+      return user;
     }
     return null;
   }

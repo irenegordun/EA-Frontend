@@ -6,8 +6,7 @@ import 'dart:math' as math;
 import '../views/NewParking.dart';
 import '../views/myBookings.dart';
 
-import 'package:draggable_fab/draggable_fab.dart'; 
-
+import 'package:draggable_fab/draggable_fab.dart';
 
 class ExampleExpandableFab extends StatelessWidget {
   static const _actionTitles = ['Create Post', 'Upload Photo', 'Upload Video'];
@@ -33,13 +32,12 @@ class ExampleExpandableFab extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DraggableFab(
-           
       child: ExpandableFab(
         distance: 112.0,
         children: [
           ActionButton(
-            onPressed: () => Navigator.of(context).push(
-              MaterialPageRoute(builder: (context) => const NewParkingPage())),
+            onPressed: () => Navigator.of(context).push(MaterialPageRoute(
+                builder: (context) => const NewParkingPage())),
             icon: const Icon(Icons.car_rental_rounded),
           ),
           ActionButton(
@@ -48,7 +46,7 @@ class ExampleExpandableFab extends StatelessWidget {
           ),
           ActionButton(
             onPressed: () => Navigator.of(context).push(
-                  MaterialPageRoute(builder: (context) => const myBookings())),
+                MaterialPageRoute(builder: (context) => const myBookings())),
             icon: const Icon(Icons.bookmark_outline),
           ),
         ],

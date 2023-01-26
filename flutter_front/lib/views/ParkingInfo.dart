@@ -5,9 +5,14 @@ import 'package:flutter_front/services/localStorage.dart';
 import 'package:flutter_front/services/parkingServices.dart';
 import 'package:flutter_front/services/bookingServices.dart';
 import 'package:flutter_front/views/ListParkings.dart';
+import 'package:flutter_front/models/user.dart';
 import 'package:flutter_open_street_map/flutter_open_street_map.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_front/models/chat.dart';
+import 'package:flutter_front/services/userServices.dart';
+import 'package:flutter_front/models/message.dart';
 import '../models/parking.dart';
+import '../views/Chat.dart';
 import '../models/booking.dart';
 import 'package:intl/intl.dart';
 
@@ -20,6 +25,7 @@ class ParkingInfo extends StatefulWidget {
 
 class _ParkingInfoState extends State<ParkingInfo> {
   var isLoaded = false;
+  User? owner;
   DateTime? firstdate;
   DateTime? seconddate;
   List<DateTime> availableDates1 = [];
@@ -57,6 +63,23 @@ class _ParkingInfoState extends State<ParkingInfo> {
       ),
       body: Center(child: _buildCard(_parkingprovider.parkingData)),
     );
+  }
+
+  Future openDialog(String text) => showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+          title: Text(text),
+          actions: [
+            TextButton(
+              child: Text('Ok'),
+              onPressed: submit,
+            ),
+          ],
+        ),
+      );
+
+  void submit() {
+    Navigator.of(context, rootNavigator: true).pop();
   }
 
   Widget _buildCard(Parking parking) => SizedBox(
@@ -140,7 +163,60 @@ class _ParkingInfoState extends State<ParkingInfo> {
                       owner: "");
                   BookingParking(booking1);
                 },
-              )
+              ),
+              ListTile(
+                contentPadding: EdgeInsets.zero,
+                title: ElevatedButton(
+                  onPressed: () async {
+                    print("00000000000000000000000000000000000000000000");
+                    owner = await ParkingServices().getOwner(parking);
+                    if (owner!.id != StorageAparcam().getId()) {
+                      List<Messsage>? messages = [];
+                      Chat chat = Chat(
+                          id: "",
+                          wsclient1: "",
+                          wsclient2: "",
+                          client2: owner!.name,
+                          client1: StorageAparcam().getId(),
+                          messages: messages);
+                      User user1 = User(
+                          name: "",
+                          id: StorageAparcam().getId(),
+                          password: "",
+                          email: "",
+                          points: 0,
+                          myFavorites: [],
+                          myParkings: [],
+                          chats: [],
+                          myBookings: [],
+                          deleted: false,
+                          newpassword: "");
+                      print("111111111111111111111");
+                      List<Chat>? chats = [];
+                      try {
+                        chats = await UserServices().getchats(user1);
+                      } catch (err) {
+                        print("NO CHATS RETURNED");
+                      }
+                      print("222222222222222222222222222222222");
+                      print(chats.toString());
+                      chats!.add(chat);
+                      StorageAparcam().setchats(chats);
+                      print(owner!.name);
+                      StorageAparcam().setchatname(owner!.name);
+                      Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => ChatPageMobile()));
+                    } else {
+                      openDialog("This parking alredy belongs to you");
+                    }
+                  },
+                  child: const Text('Chat'),
+                  style: ButtonStyle(
+                    backgroundColor:
+                        MaterialStatePropertyAll<Color>(Colors.blueGrey),
+                  ),
+                ),
+              ),
             ],
           ),
         ),

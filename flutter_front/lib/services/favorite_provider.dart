@@ -14,6 +14,7 @@ class FavoriteProvider extends ChangeNotifier {
       password: "",
       email: "",
       myFavorites: [],
+      chats: [],
       myParkings: [],
       myBookings: [],
       points: 0,
