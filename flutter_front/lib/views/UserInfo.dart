@@ -280,7 +280,7 @@ class _UserInfoState extends State<UserInfo> {
                 ),
                 leading: Icon(
                   Icons.email_outlined,
-                  color: Colors.blue[500],
+                  color: Colors.blueGrey,
                 ),
                 trailing: TextButton(
                     child: const Text("Editar"),
@@ -330,7 +330,7 @@ class _UserInfoState extends State<UserInfo> {
                 ),
                 leading: Icon(
                   Icons.verified_user,
-                  color: Colors.blue[500],
+                  color: Colors.blueGrey,
                 ),
                 trailing: TextButton(
                     child: const Text("Editar"),
@@ -377,7 +377,7 @@ class _UserInfoState extends State<UserInfo> {
                 ),
                 leading: Icon(
                   Icons.password,
-                  color: Colors.blue[500],
+                  color: Colors.blueGrey,
                 ),
                 trailing: TextButton(
                     child: const Text("Editar"),

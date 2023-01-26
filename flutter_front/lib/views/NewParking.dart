@@ -13,7 +13,7 @@ class NewParkingPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       scrollBehavior: const MaterialScrollBehavior()
-    .copyWith(scrollbars: false),
+      .copyWith(scrollbars: false),
       home: Scaffold(
         drawer: const DrawerScreen(),
         appBar: AppBar(

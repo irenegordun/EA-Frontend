@@ -4,6 +4,7 @@ import 'package:flutter_front/services/userServices.dart';
 import 'package:flutter_front/views/MyParkingInfo.dart';
 import 'package:flutter_front/views/UserInfo.dart';
 import 'package:flutter_front/widgets/buttonAccessibility.dart';
+import 'package:flutter_front/widgets/expandable.dart';
 import 'package:provider/provider.dart';
 import '../models/user.dart';
 import '../models/parking.dart';
@@ -65,7 +66,7 @@ class _MyParkingsState extends State<MyParkings> {
     ParkingServices _parkingprovider = Provider.of<ParkingServices>(context);
     return Scaffold(
       drawer: const DrawerScreen(),
-      floatingActionButton: const AccessibilityButton(),
+      floatingActionButton: const ExampleExpandableFab(),
       appBar: AppBar(
         title: const Center(
           child: Text("A P A R C A ' M"),

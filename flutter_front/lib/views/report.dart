@@ -7,6 +7,7 @@ import 'package:flutter_front/models/report.dart';
 import 'package:flutter_front/services/reportServices.dart';
 import 'package:flutter_front/views/ListParkings.dart';
 import 'package:flutter_front/views/UserInfo.dart';
+import 'package:flutter_front/widgets/expandable.dart';
 
 import '../services/localStorage.dart';
 import '../widgets/buttonAccessibility.dart';
@@ -97,7 +98,7 @@ class _MyReports extends State<MyReports> {
     return MaterialApp(
         home: Scaffold(
       drawer: const DrawerScreen(),
-      floatingActionButton: const AccessibilityButton(),
+      floatingActionButton: const ExampleExpandableFab(),
       appBar: AppBar(
         title: const Center(
           child: Text("A P A R C A ' M"),

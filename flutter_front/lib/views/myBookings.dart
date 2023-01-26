@@ -8,6 +8,7 @@ import 'package:flutter_front/views/MyAgenda.dart';
 import 'package:flutter_front/views/UserInfo.dart';
 import 'package:flutter_front/views/myBookingInfo.dart';
 import 'package:flutter_front/widgets/buttonAccessibility.dart';
+import 'package:flutter_front/widgets/expandable.dart';
 import 'package:provider/provider.dart';
 
 import '../services/localStorage.dart';
@@ -124,23 +125,14 @@ class _myBookingsState extends State<myBookings> {
     BookingServices _bookingprovider = Provider.of<BookingServices>(context);
     return Scaffold(
       drawer: const DrawerScreen(),
-      floatingActionButton: const AccessibilityButton(),
+      floatingActionButton: const ExampleExpandableFab(),
       appBar: AppBar(
         title: const Center(
           child: Text("A P A R C A ' M"),
         ),
         backgroundColor: Colors.blueGrey,
         actions: <Widget>[
-          Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: IconButton(
-                icon: const Icon(Icons.account_circle_outlined),
-                tooltip: 'Account',
-                onPressed: () {
-                  Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) => const UserInfo()));
-                },
-              )),
+          
           Padding(
               padding: const EdgeInsets.all(8.0),            
               child: IconButton(
@@ -149,6 +141,16 @@ class _myBookingsState extends State<myBookings> {
                 onPressed: () {
                   Navigator.of(context).push(MaterialPageRoute(
                       builder: (context) => const MyAgenda()));
+                },
+              )),
+          Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: IconButton(
+                icon: const Icon(Icons.account_circle_outlined),
+                tooltip: 'Account',
+                onPressed: () {
+                  Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) => const UserInfo()));
                 },
               )),
         ],

@@ -8,6 +8,7 @@ import 'package:flutter_front/views/ParkingInfo.dart';
 import 'package:flutter_front/widgets/buttonAccessibility.dart';
 
 import 'package:flutter_front/views/UserInfo.dart';
+import 'package:flutter_front/widgets/expandable.dart';
 
 import 'package:provider/provider.dart';
 import '../models/user.dart';
@@ -76,7 +77,7 @@ class _ListParkingsState extends State<MyFavourites> {
     final provider = Provider.of<FavoriteProvider>(context);
     return Scaffold(
       drawer: const DrawerScreen(),
-      floatingActionButton: const AccessibilityButton(),
+      floatingActionButton: const ExampleExpandableFab(),
       appBar: AppBar(
         title: const Center(
           child: Text("A P A R C A ' M"),

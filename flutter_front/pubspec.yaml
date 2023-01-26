@@ -72,6 +72,7 @@ dependencies:
   google_sign_in: ^5.4.3
   get: ^4.6.5
   web_socket_channel: ^2.3.0
+  dropdown_button2: ^1.9.2
 dev_dependencies:
   flutter_test:
     sdk: flutter

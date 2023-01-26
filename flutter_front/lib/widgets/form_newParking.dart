@@ -9,6 +9,8 @@ import 'package:flutter_front/models/parking.dart';
 import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 import 'package:intl/intl.dart';
 
+import 'package:dropdown_button2/dropdown_button2.dart';
+
 class FormWidget extends StatefulWidget {
   const FormWidget({super.key});
 
@@ -16,14 +18,17 @@ class FormWidget extends StatefulWidget {
   State<FormWidget> createState() => _MyStatefulWidgetState();
 }
 
-const List<String> typeList = <String>['car', 'moto', 'van'];
-const List<String> sizeList = <String>['2x1', '5x2.5', '8x3.5'];
+final List<String> typeList = <String>['car', 'moto', 'van'];
+final List<String> sizeList = <String>['2x1', '5x2.5', '8x3.5'];
+
 String dropdownTypeValue = typeList.first;
 String dropdownSizeValue = sizeList.first;
+String? selectedValue;
 double sliderDif = 0.0;
 
 class _MyStatefulWidgetState extends State<FormWidget> {
-  final ScrollController controller = ScrollController();
+  final ScrollController controller = ScrollController(initialScrollOffset: 50.0);
+  
   Widget getDateRangePicker() {
     return SizedBox(
         height: 500,
@@ -97,58 +102,68 @@ class _MyStatefulWidgetState extends State<FormWidget> {
   Widget build(BuildContext context) {
     return LayoutBuilder(
       builder: (BuildContext context, BoxConstraints constraints){
-        return Form(
-      key: _formKey,
-      child:Scrollbar(
-        child:Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          ListTile(
-            leading: const Icon(Icons.signpost),
-            title: TextFormField(
-              decoration: const InputDecoration(
-                hintText: 'Enter the street name',
+      return SizedBox(
+        width: constraints.maxWidth,
+      child: Scrollbar(
+        
+        thickness: 20.0,
+        thumbVisibility: true,
+        controller: controller,
+        child:Form(
+          
+          key: _formKey,
+          child:Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            ListTile(
+              leading: const Icon(Icons.signpost),
+              title: TextFormField(
+                decoration: const InputDecoration(
+                  hintText: 'Enter the street name',
+                  hintStyle: TextStyle(color: Color.fromARGB(255, 126, 126, 126)),
+                ),
+                controller: streetController,
+                validator: (String? value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Please enter some text';
+                  }
+                  return null;
+                },
               ),
-              controller: streetController,
-              validator: (String? value) {
-                if (value == null || value.isEmpty) {
-                  return 'Please enter some text';
-                }
-                return null;
-              },
             ),
-          ),
-          ListTile(
-            leading: const Icon(Icons.numbers_outlined),
-            title: TextFormField(
-              decoration: const InputDecoration(
-                hintText: 'Enter the street number',
+            ListTile(
+              leading: const Icon(Icons.numbers_outlined),
+              title: TextFormField(
+                decoration: const InputDecoration(
+                  hintText: 'Enter the street number',
+                  hintStyle: TextStyle(color: Color.fromARGB(255, 126, 126, 126)),
+                ),
+                controller: numberController,
+                validator: (String? value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Please enter some text';
+                  }
+                  return null;
+                },
               ),
-              controller: numberController,
-              validator: (String? value) {
-                if (value == null || value.isEmpty) {
-                  return 'Please enter some text';
-                }
-                return null;
-              },
             ),
-          ),
-          ListTile(
-            leading: const Icon(Icons.numbers),
-            title: TextFormField(
-              decoration: const InputDecoration(
-                hintText: 'Enter the parking spot number',
+            ListTile(
+              leading: const Icon(Icons.numbers),
+              title: TextFormField(
+                decoration: const InputDecoration(
+                  hintText: 'Enter the parking spot number',
+                  hintStyle: TextStyle(color: Color.fromARGB(255, 126, 126, 126)),
+                ),
+                controller: spotController,
+                validator: (String? value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Please enter some text';
+                  }
+                  return null;
+                },
               ),
-              controller: spotController,
-              validator: (String? value) {
-                if (value == null || value.isEmpty) {
-                  return 'Please enter some text';
-                }
-                return null;
-              },
             ),
-          ),
-          ListTile(
+            ListTile(
               leading: const Icon(Icons.car_rental_sharp),
               title: const Text("Select the vehicle type",
                   style: TextStyle(color: Colors.grey)),
@@ -170,22 +185,99 @@ class _MyStatefulWidgetState extends State<FormWidget> {
                   );
                 }).toList(),
               )),
-          ListTile(
-            leading: const Icon(Icons.price_change),
-            title: TextFormField(
-              decoration: const InputDecoration(
-                hintText: 'Enter the price',
+            /*ListTile(
+                leading: const Icon(Icons.car_rental_sharp),
+                title: const Text("Select the vehicle type",
+                    style: TextStyle(color: Color.fromARGB(255, 126, 126, 126))),
+                trailing: DropdownButtonHideUnderline(
+                child: DropdownButton2(
+                  isExpanded: true,
+                  hint: Row(
+                    children: const [
+                      SizedBox(
+                        width: 3,
+                      ),
+                      Expanded(
+                        child: Text(
+                          'Select Type',
+                          style: TextStyle(
+                            fontSize: 14,
+                            color: Color.fromARGB(255, 0, 0, 0),
+                          ),
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                      ),
+                    ],
+                  ),
+                  items: typeList
+                      .map((item) => DropdownMenuItem<String>(
+                            value: item,
+                            child: Text(
+                              item,
+                              style: const TextStyle(
+                                fontSize: 14,
+                                color: Color.fromARGB(255, 0, 0, 0),
+                              ),
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                          ))
+                      .toList(),
+                  value: selectedValue,
+                  onChanged: (value) {
+                    setState(() {
+                      selectedValue = value as String;
+                    });
+                  },
+                  icon: const Icon(
+                    Icons.arrow_forward_ios_outlined,
+                  ),
+                  iconSize: 14,
+                  iconEnabledColor: Colors.blueGrey,
+                  iconDisabledColor: Color.fromARGB(255, 255, 255, 255),
+                  buttonHeight: 50,
+                  buttonWidth: 160,
+                  buttonPadding: const EdgeInsets.only(left: 14, right: 14),
+                  buttonDecoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(14),
+                    border: Border.all(
+                      color: Colors.blueGrey,
+                    ),
+                    color: Color.fromARGB(255, 231, 234, 236),
+                  ),
+                  buttonElevation: 2,
+                  itemHeight: 40,
+                  itemPadding: const EdgeInsets.only(left: 14, right: 14),
+                  dropdownMaxHeight: 200,
+                  dropdownWidth: 200,
+                  dropdownPadding: null,
+                  dropdownDecoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(14),
+                    color: Color.fromARGB(255, 231, 234, 236),
+                  ),
+                  dropdownElevation: 8,
+                  scrollbarRadius: const Radius.circular(40),
+                  scrollbarThickness: 6,
+                  scrollbarAlwaysShow: true,
+                  offset: const Offset(-20, 0),
+                )),
+                ),*/
+            ListTile(
+              leading: const Icon(Icons.price_change),
+              title: TextFormField(
+                decoration: const InputDecoration(
+                  hintText: 'Enter the price',
+                  hintStyle: TextStyle(color: Color.fromARGB(255, 126, 126, 126)),
+                ),
+                controller: priceController,
+                validator: (String? value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Please enter some text';
+                  }
+                  return null;
+                },
               ),
-              controller: priceController,
-              validator: (String? value) {
-                if (value == null || value.isEmpty) {
-                  return 'Please enter some text';
-                }
-                return null;
-              },
             ),
-          ),
-          ListTile(
+            ListTile(
               leading: const Icon(Icons.aspect_ratio),
               title: const Text("Select the dimensions of the parking spot",
                   style: TextStyle(color: Colors.grey)),
@@ -207,151 +299,232 @@ class _MyStatefulWidgetState extends State<FormWidget> {
                   );
                 }).toList(),
               )),
-          const ListTile(
-            leading: const Icon(Icons.balance),
-            title: Text('Choose the difficulty',
-                style: TextStyle(fontWeight: FontWeight.w500)),
-          ),
-          Slider(
-            value: sliderDif,
-            onChanged: (newScore) {
-              setState(() {
-                sliderDif = newScore;
-              });
-            },
-            min: 0.0,
-            max: 10.0,
-            divisions: 10,
-            activeColor: Colors.blueGrey,
-            inactiveColor: Colors.blueGrey.shade100,
-            thumbColor: Colors.blueGrey,
-            label: "$sliderDif",
-          ),
-          const Divider(),
-          ListTile(
-            leading: Icon(Icons.calendar_month_outlined),
-            title: Text("Enter the availability  " + "SELECTED " + " " + _range,
-                style: TextStyle(color: Colors.grey)),
-            trailing: IconButton(
-              icon: Icon(Icons.calendar_month_outlined),
-              tooltip: 'Select the availability',
-              onPressed: () {
-                showDialog(
-                    context: context,
-                    builder: (BuildContext context) {
-                      return AlertDialog(
-                          title: Text(''),
-                          content: Container(
-                            height: 600,
-                            width: 500,
-                            child: Column(
-                              children: <Widget>[
-                                getDateRangePicker(),
-                                MaterialButton(
-                                  child: Text("OK"),
-                                  onPressed: () {
-                                    Navigator.pop(context);
-                                  },
-                                )
-                              ],
+          
+            /*ListTile(
+                leading: const Icon(Icons.aspect_ratio),
+                title: const Text("Select the dimensions of the parking spot",
+                    style: TextStyle(color: Color.fromARGB(255, 126, 126, 126))),
+                trailing: DropdownButtonHideUnderline(
+                child: DropdownButton2(
+                  isExpanded: true,
+                  hint: Row(
+                    children: const [
+                      SizedBox(
+                        width: 4,
+                      ),
+                      Expanded(
+                        child: Text(
+                          'Select Dimensions',
+                          style: TextStyle(
+                            fontSize: 14,
+                            color: Color.fromARGB(255, 0, 0, 0),
+                          ),
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                      ),
+                    ],
+                  ),
+                  items: sizeList
+                      .map((item) => DropdownMenuItem<String>(
+                            value: item,
+                            child: Text(
+                              item,
+                              style: const TextStyle(
+                                fontSize: 14,
+                                color: Color.fromARGB(255, 0, 0, 0),
+                              ),
+                              overflow: TextOverflow.ellipsis,
                             ),
-                          ));
-                    });
-              },
-            ),
-          ),
-          Expanded(
-              child: FlutterOpenStreetMap(
-                  center: LatLong((41.3948), (2.1596)),
-                  showZoomButtons: true,
-                  onPicked: (pickedData) {
-                    latitudeController = pickedData.latLong.latitude.toDouble();
-                    print(latitudeController);
-                    longitudeController =
-                        pickedData.latLong.longitude.toDouble();
-                    print(longitudeController);
-                    addressController = pickedData.address.toString();
-
-                    print(addressController);
-                  })),
-          Padding(
-            padding: const EdgeInsets.symmetric(vertical: 30.0),
-            child: ElevatedButton(
-                onPressed: () {
-                  String formStreet = streetController.text.toString();
-                  String formNumber = numberController.text.toString();
-                  String formSpot = spotController.text.toString();
-                  String formType = dropdownTypeValue.toString();
-                  String formPrice = priceController.text.toString();
-                  String formSize = dropdownSizeValue.toString();
-
-                  if (addressController.isNotEmpty &&
-                      formStreet.isNotEmpty &&
-                      formNumber.isNotEmpty &&
-                      formSpot.isNotEmpty &&
-                      formType.isNotEmpty &&
-                      formPrice.isNotEmpty &&
-                      formSize.isNotEmpty) {
-                    var list = addressController.split(', ');
-                    String formCountry =
-                        list.last; //countryController.text.toString();
-                    print(formCountry);
-                    list.removeLast(); //city
-                    list.removeLast(); //codigopostal
-                    list.removeLast(); //Catalunya
-
-                    String formCity =
-                        list.last; //cityController.text.toString();
-                    print(formCity);
-                    list.removeLast();
-                    Parking p = Parking(
-                        score: 0,
-                        id: '',
-                        user: '',
-                        country: formCountry,
-                        city: formCity,
-                        street: formStreet,
-                        streetNumber: int.parse(formNumber),
-                        spotNumber: int.parse(formSpot),
-                        type: formType,
-                        price: int.parse(formPrice),
-                        size: formSize,
-                        difficulty: double.parse(sliderDif.toString()),
-                        longitude: longitudeController,
-                        latitude: latitudeController,
-                        range: _range);
-
-                    ParkingServices().createParking(p);
-                    openDialog("Parking created.");
+                          ))
+                      .toList(),
+                  value: selectedValue,
+                  onChanged: (value) {
                     setState(() {
-                      Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => const ListParkings()));
+                      selectedValue = value as String;
                     });
-                  } else if (formStreet.isEmpty ||
-                      formNumber.isEmpty ||
-                      formSpot.isEmpty ||
-                      formType.isEmpty ||
-                      formPrice.isEmpty ||
-                      formSize.isEmpty) {
-                    openDialog(
-                        "Please make sure all the flieds are filled before submit.");
-                  } else if (addressController.isEmpty) {
-                    openDialog(
-                        "Please select the localization of your parking and click 'set the current location' once it is correct");
-                  } else {
-                    openDialog(
-                        "Ops something went wrong check if it is something missing");
-                  }
-                  ElevatedButton.styleFrom(
-                      backgroundColor: const Color.fromARGB(65, 143, 74, 163));
+                  },
+                  icon: const Icon(
+                    Icons.arrow_forward_ios_outlined,
+                  ),
+                  iconSize: 14,
+                  iconEnabledColor: Colors.blueGrey,
+                  iconDisabledColor: Color.fromARGB(255, 255, 255, 255),
+                  buttonHeight: 50,
+                  buttonWidth: 160,
+                  buttonPadding: const EdgeInsets.only(left: 14, right: 14),
+                  buttonDecoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(14),
+                    border: Border.all(
+                      color: Colors.blueGrey,
+                    ),
+                    color: Color.fromARGB(255, 231, 234, 236),
+                  ),
+                  buttonElevation: 2,
+                  itemHeight: 40,
+                  itemPadding: const EdgeInsets.only(left: 14, right: 14),
+                  dropdownMaxHeight: 200,
+                  dropdownWidth: 200,
+                  dropdownPadding: null,
+                  dropdownDecoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(14),
+                    color: Color.fromARGB(255, 231, 234, 236),
+                  ),
+                  dropdownElevation: 8,
+                  scrollbarRadius: const Radius.circular(40),
+                  scrollbarThickness: 6,
+                  scrollbarAlwaysShow: true,
+                  offset: const Offset(-20, 0),
+                )),
+                ),*/
+
+            const ListTile(
+              leading: const Icon(Icons.balance),
+              title: Text('Choose the difficulty',
+                  style: TextStyle(fontWeight: FontWeight.w500, color: Color.fromARGB(255, 126, 126, 126))),
+            ),
+            Slider(
+              value: sliderDif,
+              onChanged: (newScore) {
+                setState(() {
+                  sliderDif = newScore;
+                });
+              },
+              min: 0.0,
+              max: 10.0,
+              divisions: 10,
+              activeColor: Colors.blueGrey,
+              inactiveColor: Colors.blueGrey.shade100,
+              thumbColor: Colors.blueGrey,
+              label: "$sliderDif",
+            ),
+            const Divider(),
+            ListTile(
+              leading: Icon(Icons.calendar_month_outlined),
+              title: Text("Enter the availability",
+                  style: TextStyle(color: Color.fromARGB(255, 126, 126, 126))),
+              trailing: IconButton(
+                icon: Icon(Icons.calendar_month_outlined),
+                tooltip: 'Select the availability',
+                onPressed: () {
+                  showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return AlertDialog(
+                            title: Text(''),
+                            content: Container(
+                              height: 600,
+                              width: 500,
+                              child: Column(
+                                children: <Widget>[
+                                  getDateRangePicker(),
+                                  MaterialButton(
+                                    child: Text("OK"),
+                                    onPressed: () {
+                                      Navigator.pop(context);
+                                    },
+                                  )
+                                ],
+                              ),
+                            ));
+                      });
                 },
-                child: const Text('Submit')),
-          )
-        ],
-      ),
-      ),
-       
-    );
+              ),
+            ),
+            Expanded(
+                child: FlutterOpenStreetMap(
+                    center: LatLong((41.3948), (2.1596)),
+                    showZoomButtons: true,
+                    onPicked: (pickedData) {
+                      latitudeController = pickedData.latLong.latitude.toDouble();
+                      print(latitudeController);
+                      longitudeController =
+                          pickedData.latLong.longitude.toDouble();
+                      print(longitudeController);
+                      addressController = pickedData.address.toString();
+
+                      print(addressController);
+                    })),
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 30.0),
+              child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    primary: Colors.blueGrey,
+                  ),
+                  onPressed: () {
+                    String formStreet = streetController.text.toString();
+                    String formNumber = numberController.text.toString();
+                    String formSpot = spotController.text.toString();
+                    String formType = dropdownTypeValue.toString();
+                    String formPrice = priceController.text.toString();
+                    String formSize = dropdownSizeValue.toString();
+
+                    if (addressController.isNotEmpty &&
+                        formStreet.isNotEmpty &&
+                        formNumber.isNotEmpty &&
+                        formSpot.isNotEmpty &&
+                        formType.isNotEmpty &&
+                        formPrice.isNotEmpty &&
+                        formSize.isNotEmpty) {
+                      var list = addressController.split(', ');
+                      String formCountry =
+                          list.last; //countryController.text.toString();
+                      print(formCountry);
+                      list.removeLast(); //city
+                      list.removeLast(); //codigopostal
+                      list.removeLast(); //Catalunya
+
+                      String formCity =
+                          list.last; //cityController.text.toString();
+                      print(formCity);
+                      list.removeLast();
+                      Parking p = Parking(
+                          score: 0,
+                          id: '',
+                          user: '',
+                          country: formCountry,
+                          city: formCity,
+                          street: formStreet,
+                          streetNumber: int.parse(formNumber),
+                          spotNumber: int.parse(formSpot),
+                          type: formType,
+                          price: int.parse(formPrice),
+                          size: formSize,
+                          difficulty: double.parse(sliderDif.toString()),
+                          longitude: longitudeController,
+                          latitude: latitudeController,
+                          range: _range);
+
+                      ParkingServices().createParking(p);
+                      openDialog("Parking created.");
+                      setState(() {
+                        Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context) => const ListParkings()));
+                      });
+                    } else if (formStreet.isEmpty ||
+                        formNumber.isEmpty ||
+                        formSpot.isEmpty ||
+                        formType.isEmpty ||
+                        formPrice.isEmpty ||
+                        formSize.isEmpty) {
+                      openDialog(
+                          "Please make sure all the flieds are filled before submit.");
+                    } else if (addressController.isEmpty) {
+                      openDialog(
+                          "Please select the localization of your parking and click 'set the current location' once it is correct");
+                    } else {
+                      openDialog(
+                          "Ops something went wrong check if it is something missing");
+                    }
+                    ElevatedButton.styleFrom(
+                        backgroundColor: const Color.fromARGB(65, 143, 74, 163));
+                  },
+                  child: const Text('Submit')),
+            )
+          ],
+        ),
+        ),
+        
+    ));
 
       });
   }
