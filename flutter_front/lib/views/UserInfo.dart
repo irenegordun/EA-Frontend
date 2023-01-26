@@ -80,7 +80,7 @@ class _UserInfoState extends State<UserInfo> {
                   ),
                 ),
                 backgroundColor:
-                    const MaterialStatePropertyAll<Color>(Colors.blueGrey),
+                    const MaterialStatePropertyAll<Color>(Color.fromARGB(255, 242, 151, 123)),
               ),
               child: const Text('Delete account'),
             )),
@@ -196,7 +196,9 @@ class _UserInfoState extends State<UserInfo> {
       drawer: const DrawerScreen(),
       floatingActionButton: const AccessibilityButton(),
       appBar: AppBar(
-        title: const Text('Profile'),
+        title: const Center(
+          child: Text("A P A R C A ' M"),
+        ),
         backgroundColor: Colors.blueGrey,
         actions: <Widget>[
           Padding(

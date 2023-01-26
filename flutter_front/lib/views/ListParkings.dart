@@ -3,6 +3,7 @@ import 'package:flutter_front/dates/toDateTime.dart';
 import 'package:flutter_front/services/localStorage.dart';
 import 'package:flutter_front/services/parkingServices.dart';
 import 'package:flutter_front/views/ParkingInfo.dart';
+import 'package:flutter_front/views/UserInfo.dart';
 import 'package:flutter_front/widgets/buttonAccessibility.dart';
 import 'package:flutter_front/widgets/expandable.dart';
 import 'package:flutter_open_street_map/flutter_open_street_map.dart';
@@ -124,6 +125,18 @@ class _ListParkingsState extends State<ListParkings> {
           child: Text("A P A R C A ' M"),
         ),
         backgroundColor: Colors.blueGrey,
+        actions: <Widget>[
+          Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: IconButton(
+                icon: const Icon(Icons.account_circle_outlined),
+                tooltip: 'Account',
+                onPressed: () {
+                  Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) => const UserInfo()));
+                },
+              )),
+        ],
       ),
       body: Column(
         children: <Widget>[

@@ -5,6 +5,7 @@ import 'package:flutter_front/models/user.dart';
 import 'package:flutter_front/services/bookingServices.dart';
 import 'package:flutter_front/services/parkingServices.dart';
 import 'package:flutter_front/views/MyAgenda.dart';
+import 'package:flutter_front/views/UserInfo.dart';
 import 'package:flutter_front/views/myBookingInfo.dart';
 import 'package:flutter_front/widgets/buttonAccessibility.dart';
 import 'package:provider/provider.dart';
@@ -126,12 +127,22 @@ class _myBookingsState extends State<myBookings> {
       floatingActionButton: const AccessibilityButton(),
       appBar: AppBar(
         title: const Center(
-          child: Text("My Bookings"),
+          child: Text("A P A R C A ' M"),
         ),
         backgroundColor: Colors.blueGrey,
         actions: <Widget>[
           Padding(
               padding: const EdgeInsets.all(8.0),
+              child: IconButton(
+                icon: const Icon(Icons.account_circle_outlined),
+                tooltip: 'Account',
+                onPressed: () {
+                  Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) => const UserInfo()));
+                },
+              )),
+          Padding(
+              padding: const EdgeInsets.all(8.0),            
               child: IconButton(
                 icon: const Icon(Icons.calendar_today_outlined),
                 tooltip: 'View the bookings in the agenda view',

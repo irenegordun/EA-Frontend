@@ -78,10 +78,22 @@ class _ListParkingsState extends State<MyFavourites> {
       drawer: const DrawerScreen(),
       floatingActionButton: const AccessibilityButton(),
       appBar: AppBar(
-        title: new Center(
-          child: new Text("My Favourites"),
+        title: const Center(
+          child: Text("A P A R C A ' M"),
         ),
         backgroundColor: Colors.blueGrey,
+        actions: <Widget>[
+          Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: IconButton(
+                icon: const Icon(Icons.account_circle_outlined),
+                tooltip: 'Account',
+                onPressed: () {
+                  Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) => const UserInfo()));
+                },
+              )),
+        ],
       ),
       body: Column(
         children: <Widget>[

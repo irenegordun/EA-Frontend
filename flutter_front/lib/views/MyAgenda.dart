@@ -23,7 +23,7 @@ class _MyAgendaState extends State<MyAgenda> {
     return Scaffold(
     appBar: AppBar(
         title: const Center(
-          child: Text("My Agenda"),
+          child: Text("A P A R C A ' M"),
         ),
         backgroundColor: Colors.blueGrey,
         actions: <Widget>[

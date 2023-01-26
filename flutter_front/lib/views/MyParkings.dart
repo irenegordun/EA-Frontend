@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_front/services/parkingServices.dart';
 import 'package:flutter_front/services/userServices.dart';
 import 'package:flutter_front/views/MyParkingInfo.dart';
+import 'package:flutter_front/views/UserInfo.dart';
 import 'package:flutter_front/widgets/buttonAccessibility.dart';
 import 'package:provider/provider.dart';
 import '../models/user.dart';
@@ -66,10 +67,22 @@ class _MyParkingsState extends State<MyParkings> {
       drawer: const DrawerScreen(),
       floatingActionButton: const AccessibilityButton(),
       appBar: AppBar(
-        title: new Center(
-          child: new Text("My Parkings"),
+        title: const Center(
+          child: Text("A P A R C A ' M"),
         ),
         backgroundColor: Colors.blueGrey,
+        actions: <Widget>[
+          Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: IconButton(
+                icon: const Icon(Icons.account_circle_outlined),
+                tooltip: 'Account',
+                onPressed: () {
+                  Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) => const UserInfo()));
+                },
+              )),
+        ],
       ),
       body: Column(
         children: <Widget>[

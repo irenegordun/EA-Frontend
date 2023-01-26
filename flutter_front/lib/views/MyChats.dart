@@ -10,13 +10,18 @@ import '../services/localStorage.dart';
 import 'package:flutter_front/widgets/user_image_widget.dart';
 import 'package:flutter/material.dart';
 
+import '../widgets/drawer.dart';
+
 class HomePageMobile extends StatelessWidget {
   List<Chat>? chats;
   List<Messsage>? messages = [];
   @override
   Widget build(BuildContext context) => Scaffold(
+      drawer: const DrawerScreen(),
         appBar: AppBar(
-          title: Text('Chats'),
+          title: const Center(
+            child: Text("A P A R C A ' M"),
+          ),
           centerTitle: true,
           leading: UserImageWidget(),
           actions: [

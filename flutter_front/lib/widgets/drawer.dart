@@ -34,7 +34,7 @@ class DrawerScreen extends StatelessWidget {
               ),
             ),
           ),
-          //Les meves dades
+          //MyAccount
           ListTile(
             leading: const Icon(Icons.account_circle_outlined),
             title: const Text(
@@ -45,17 +45,7 @@ class DrawerScreen extends StatelessWidget {
                   MaterialPageRoute(builder: (context) => const UserInfo()));
             },
           ),
-          ListTile(
-            leading: const Icon(Icons.car_rental),
-            title: const Text(
-              'Chats',
-            ),
-            onTap: () {
-              Navigator.of(context).push(
-                  MaterialPageRoute(builder: (context) => HomePageMobile()));
-            },
-          ),
-          //Llistat parquings
+          //List parkings
           ListTile(
             leading: const Icon(Icons.abc_sharp),
             title: const Text(
@@ -67,7 +57,7 @@ class DrawerScreen extends StatelessWidget {
             },
           ),
 
-          //Els meus parquings
+          //MyParkings
           ListTile(
             leading: const Icon(Icons.car_rental),
             title: const Text(
@@ -79,7 +69,7 @@ class DrawerScreen extends StatelessWidget {
             },
           ),
 
-          //Les meves reserves
+          //MyBookings
           ListTile(
             leading: const Icon(Icons.bookmark_outline),
             title: const Text('My bookings'),
@@ -89,17 +79,7 @@ class DrawerScreen extends StatelessWidget {
             },
           ),
 
-          //MyAgenda
-          ListTile(
-            leading: const Icon(Icons.calendar_today_outlined),
-            title: const Text('My agenda'),
-            onTap: () {
-              Navigator.of(context).push(
-                  MaterialPageRoute(builder: (context) => const MyAgenda()));
-            },
-          ),
-
-          //Els meus preferits
+          //MyFavourites
           ListTile(
             leading: const Icon(Icons.favorite_border),
             title: const Text(
@@ -110,6 +90,7 @@ class DrawerScreen extends StatelessWidget {
                   builder: (context) => const MyFavourites()));
             },
           ),
+          //Create patking spot
           ListTile(
             leading: const Icon(Icons.car_rental_rounded),
             title: const Text(
@@ -120,30 +101,31 @@ class DrawerScreen extends StatelessWidget {
                   builder: (context) => const NewParkingPage()));
             },
           ),
-
+          //Chats
           ListTile(
-            leading: const Icon(Icons.car_rental_rounded),
+            leading: const Icon(Icons.chat_bubble_outline),
             title: const Text(
-              'Create parking spot',
+              'Chats',
             ),
             onTap: () {
-              Navigator.of(context).push(MaterialPageRoute(
-                  builder: (context) => const ExampleExpandableFab()));
+              Navigator.of(context).push(
+                  MaterialPageRoute(builder: (context) => HomePageMobile()));
             },
           ),
-
+          //Report
           ListTile(
             leading: const Icon(Icons.highlight_remove_sharp),
             title: const Text(
-              'Report some issue',
+              'Report',
             ),
             onTap: () {
               Navigator.of(context).push(
                   MaterialPageRoute(builder: (context) => const MyReports()));
             },
           ),
+          //ChatBot
           ListTile(
-            leading: const Icon(Icons.chat_bubble_outline_sharp),
+            leading: const Icon(Icons.room_service_outlined),
             title: const Text(
               'ChatBot',
             ),
@@ -152,10 +134,16 @@ class DrawerScreen extends StatelessWidget {
                   .push(MaterialPageRoute(builder: (context) => ChatBot()));
             },
           ),
+          Divider(),
+          //Logout
           ListTile(
-            leading: const Icon(Icons.door_back_door),
+            leading: const Icon(
+              Icons.door_back_door,
+              color: Colors.black,
+            ),
             title: const Text(
               'Logout',
+              style: TextStyle(fontWeight: FontWeight.bold),
             ),
             onTap: () {
               StorageAparcam().deleteToken();

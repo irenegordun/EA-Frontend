@@ -6,6 +6,7 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_front/models/report.dart';
 import 'package:flutter_front/services/reportServices.dart';
 import 'package:flutter_front/views/ListParkings.dart';
+import 'package:flutter_front/views/UserInfo.dart';
 
 import '../services/localStorage.dart';
 import '../widgets/buttonAccessibility.dart';
@@ -98,8 +99,22 @@ class _MyReports extends State<MyReports> {
       drawer: const DrawerScreen(),
       floatingActionButton: const AccessibilityButton(),
       appBar: AppBar(
-        title: const Text("Aparca'm"),
+        title: const Center(
+          child: Text("A P A R C A ' M"),
+        ),
         backgroundColor: Colors.blueGrey,
+        actions: <Widget>[
+          Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: IconButton(
+                icon: const Icon(Icons.account_circle_outlined),
+                tooltip: 'Account',
+                onPressed: () {
+                  Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) => const UserInfo()));
+                },
+              )),
+        ],
       ),
       body: SingleChildScrollView(
           child:

@@ -1,6 +1,7 @@
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_front/views/Chatbot.dart';
 import 'dart:math' as math;
 
 import '../views/NewParking.dart';
@@ -41,8 +42,10 @@ class ExampleExpandableFab extends StatelessWidget {
             icon: const Icon(Icons.car_rental_rounded),
           ),
           ActionButton(
-            onPressed: () => _showAction(context, 1),
-            icon: const Icon(Icons.format_size),
+            //onPressed: () => _showAction(context, 1),
+            onPressed: () => Navigator.of(context).push(MaterialPageRoute(
+                builder: (context) => ChatBot())),
+            icon: const Icon(Icons.room_service_outlined),
           ),
           ActionButton(
             onPressed: () => Navigator.of(context).push(

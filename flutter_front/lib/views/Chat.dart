@@ -6,6 +6,7 @@ import 'package:flutter_front/services/localStorage.dart';
 import 'package:flutter_front/services/parkingServices.dart';
 import 'package:flutter_front/services/userServices.dart';
 import 'package:flutter_front/widgets/message.dart';
+import '../widgets/drawer.dart';
 import '../widgets/message.dart';
 //import 'package:stream_chat_flutter/stream_chat_flutter.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
@@ -127,6 +128,7 @@ class _ChatPageMobileState extends State<ChatPageMobile> {
           visualDensity: VisualDensity.adaptivePlatformDensity,
         ),
         home: Scaffold(
+          drawer: const DrawerScreen(),
           appBar: buildAppBar(),
           body: Column(
             children: [
