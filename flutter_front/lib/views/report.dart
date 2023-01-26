@@ -41,6 +41,14 @@ class MyReports extends StatefulWidget {
 final textController = TextEditingController();
 
 class _MyReports extends State<MyReports> {
+  bool _isVisible = true;
+
+  void showToast() {
+    setState(() {
+      _isVisible = !_isVisible;
+    });
+  }
+
   double sliderDif = 0.0;
   static List<Issue> _issueType = [
     Issue(id: 1, name: "Car"),
@@ -55,16 +63,6 @@ class _MyReports extends State<MyReports> {
   void initState() {
     super.initState();
     getData();
-    // print(DateTime.now());
-    // print(DateTime.now().toIso8601String());
-    // print('${DateTime.now().toIso8601String()}Z');
-    // const data = "2021-12-15T11:10:01.521Z";
-    // DateTime dateTime = toDateTimeDart(data);
-    // print('Date de mongo $data a datetime de DART $dateTime');
-    // // MIRAR SI CALENDARI TORNA LA Z O NO
-    // DateTime datetime2 = DateTime.parse('2021-12-15T11:10:01.521Z');
-    // String data1 = toDateMongo(datetime2);
-    // print('Datetime de dart $datetime2 a date de MONGO: $data1');
   }
 
   getData() async {
@@ -123,122 +121,121 @@ class _MyReports extends State<MyReports> {
         ],
       ),
       body: SingleChildScrollView(
-          child:
-              Column(crossAxisAlignment: CrossAxisAlignment.start, children: <
-                  Widget>[
-        const ListTile(
-          leading: const Icon(Icons.highlight_remove_sharp),
-          title: Text(
-              'Welcome to the report zone, here you can contact with the Service client to inform or report an issue',
-              style: TextStyle(fontWeight: FontWeight.w900)),
-        ),
-        MultiSelectDialogField(
-          items: _issueType.map((e) => MultiSelectItem(e, e.name)).toList(),
-          listType: MultiSelectListType.CHIP,
-          onConfirm: (values) {
-            _selected = values;
-          },
-        ),
-        ListTile(
-          leading: const Icon(Icons.access_alarms_rounded),
-          title: TextFormField(
-            decoration: const InputDecoration(
-              hintText: 'Please write your issue',
-              border: OutlineInputBorder(),
-              contentPadding: EdgeInsets.symmetric(vertical: 40),
-            ),
-            controller: textController,
-            validator: (String? value) {
-              if (value == null || value.isEmpty) {
-                return 'Please enter some text';
-              }
-              return null;
+        child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: <
+        Widget>[
+
+          Visibility(
+            visible: _isVisible,
+            child: ListTile(
+              trailing: IconButton(
+                icon: const Icon(Icons.highlight_remove_sharp),
+                tooltip: 'Close',
+                onPressed: () {
+                  setState(() {
+                    _isVisible = !_isVisible;
+                  });
+                },
+              ),
+              tileColor: Color.fromARGB(255, 196, 202, 205),
+              minVerticalPadding: 10.0,
+              minLeadingWidth: 10.0,
+              title: const Text(
+                  'Welcome to the report zone, here you can contact with the Service client to inform or report an issue',
+                  style: TextStyle(fontSize: 16)),
+          ),),
+          Divider(),
+          MultiSelectDialogField(
+            items: _issueType.map((e) => MultiSelectItem(e, e.name)).toList(),
+            listType: MultiSelectListType.CHIP,
+            onConfirm: (values) {
+              _selected = values;
             },
           ),
-        ),
-        const ListTile(
-          leading: const Icon(Icons.balance),
-          title: Text(
-              'Select the gravity of the issue, where 3 is a big issue and 0 is a low issue',
-              style: TextStyle(fontWeight: FontWeight.w500)),
-        ),
-        Slider(
-          value: sliderDif,
-          onChanged: (newScore) {
-            setState(() {
-              sliderDif = newScore;
-            });
-          },
-          min: 0.0,
-          max: 3.0,
-          divisions: 3,
-          activeColor: Colors.blueGrey,
-          inactiveColor: Colors.blueGrey.shade100,
-          thumbColor: Colors.blueGrey,
-          label: "$sliderDif",
-        ),
-        const Divider(),
-        Padding(
-          padding: const EdgeInsets.symmetric(vertical: 30.0),
-          child: ElevatedButton(
-              onPressed: () {
-                if (textController.text.isNotEmpty && _selected.isNotEmpty) {
-                  String textW = textController.text.toString();
-                  int difficulty = int.parse(sliderDif.toString());
-                  String now = new DateTime.now().toString();
-                  print(now);
-                  String typeSel = "";
-                  while (_selected.isNotEmpty) {
-                    typeSel = typeSel + "/" + _selected.last.name.toString();
-                    _selected.removeLast();
-                  }
-                  print(typeSel);
-                  Report p = Report(
-                      id: StorageAparcam().getId(),
-                      //id: '',
-                      user: '',
-                      type: typeSel,
-                      text: textW,
-                      level: difficulty);
-
-                  ReportServices().createReport(p);
-                  //openDialog("Parking created.");
-                  setState(() {
-                    Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) => const ListParkings()));
-                  });
-
-                  //String formatter =
-                  //DateFormat('yMd').format(now); // 28/03/2020
-                } else {
-                  openDialog("Please make sure that all fields are complete");
+          ListTile(
+            title: TextFormField(
+              maxLength: 20,
+              decoration: const InputDecoration(
+                contentPadding: EdgeInsets.all(20.0),
+                hintText: 'Please write your issue',
+                border: OutlineInputBorder(
+                  borderRadius: const BorderRadius.all(const Radius.circular(10.0)),
+                ),
+//                contentPadding: EdgeInsets.symmetric(vertical: 40),
+                
+              ),
+              controller: textController,
+              validator: (String? value) {
+                if (value == null || value.isEmpty) {
+                  return 'Please enter some text';
                 }
-
-                ElevatedButton.styleFrom(
-                    backgroundColor: const Color.fromARGB(65, 143, 74, 163));
+                return null;
               },
-              child: const Text('Submit')),
-        ),
-        // ListView.builder(
-        //   itemCount: reports?.length,
-        //   itemBuilder: (context, index) {
-        //     return Card(
-        //       color: const Color.fromARGB(255, 144, 180, 199),
-        //       child: ListTile(
-        //         leading: Container(
-        //           width: 100,
-        //           height: 100,
-        //           //child: Image.asset('parking1.jpg'),
-        //         ),
-        //         title: Text('${reports![index].type}'),
-        //         subtitle: Text(
-        //             'Level: ${reports![index].level}'), //|| Issue: ${reports![index].text}'),
-        //       ),
-        //     );
-        //   },
-        // )
+            ),
+          ),
+          const ListTile(
+            leading: const Icon(Icons.balance),
+            title: Text(
+                'Select the gravity of the issue, where 3 is a big issue and 0 is a low issue',
+                style: TextStyle(fontWeight: FontWeight.w500)),
+          ),
+          Slider(
+            value: sliderDif,
+            onChanged: (newScore) {
+              setState(() {
+                sliderDif = newScore;
+              });
+            },
+            min: 0.0,
+            max: 3.0,
+            divisions: 3,
+            activeColor: Colors.blueGrey,
+            inactiveColor: Colors.blueGrey.shade100,
+            thumbColor: Colors.blueGrey,
+            label: "$sliderDif",
+          ),
+          const Divider(),
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 30.0),
+            child: ElevatedButton(
+              style: ElevatedButton.styleFrom(primary: Colors.blueGrey),
+                onPressed: () {
+                  if (textController.text.isNotEmpty && _selected.isNotEmpty) {
+                    String textW = textController.text.toString();
+                    int difficulty = int.parse(sliderDif.toString());
+                    String now = new DateTime.now().toString();
+                    print(now);
+                    String typeSel = "";
+                    while (_selected.isNotEmpty) {
+                      typeSel = typeSel + "/" + _selected.last.name.toString();
+                      _selected.removeLast();
+                    }
+                    print(typeSel);
+                    Report p = Report(
+                        id: StorageAparcam().getId(),
+                        //id: '',
+                        user: '',
+                        type: typeSel,
+                        text: textW,
+                        level: difficulty);
+
+                    ReportServices().createReport(p);
+                    setState(() {
+                      Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => const ListParkings()));
+                    });
+
+
+                  } else {
+                    openDialog("Please make sure that all fields are complete");
+                  }
+
+                  ElevatedButton.styleFrom(
+                      backgroundColor: const Color.fromARGB(65, 143, 74, 163));
+                },
+                child: const Text('Submit', )),
+          ),
+
       ])),
     ));
   }
 }
-//difficulty: double.parse(sliderDif.toString()),
