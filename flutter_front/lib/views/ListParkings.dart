@@ -141,9 +141,9 @@ class _ListParkingsState extends State<ListParkings> {
       body: Column(
         children: <Widget>[
           Expanded(
-              child: Row(children: <Widget>[
+            child: Row(children: <Widget>[
             Expanded(
-                flex: 1,
+                flex: 7,
                 child: GestureDetector(
                   onTap: () {
                     showDialog(
@@ -175,12 +175,45 @@ class _ListParkingsState extends State<ListParkings> {
                         });
                   },
                   child: Container(
-                      color: const Color.fromARGB(255, 227, 244, 248),
-                      child: const Center(
-                          child: Text("Calendar",
-                              style: TextStyle(fontSize: 20.0)))),
-                )),
+                    decoration: BoxDecoration(
+                        color: const Color.fromARGB(255, 144, 180, 199),
+                      ),
+                    child: Container(
+                      margin: new EdgeInsets.symmetric(horizontal: 5.0, vertical: 5.0),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(15),
+                        color: Color.fromARGB(255, 239, 242, 243),
+                      ),
+                      child: Row(
+                        children: <Widget>[
+                          Expanded(
+                            flex: 2,
+                            child: IconButton(
+                              icon: const Icon(Icons.calendar_month_outlined),
+                              onPressed: () {},
+                            ),
+                          ),
+                          Expanded(
+                            flex: 6,
+                            child:
+                            const Center( 
+                              child: Text("Calendar",
+                              style: TextStyle(fontSize: 18)),
+                            ), 
+                          ),
+                          Expanded(
+                            flex: 2,
+                            child: IconButton(
+                              icon: const Icon(Icons.arrow_drop_down_outlined),
+                              onPressed: () {},
+                            ),
+                          ),
+                        ]
+                      ),
+                    )
+                  ),)),
             Expanded(
+              flex: 3,
                 child: GestureDetector(
               onTap: () {
                 Navigator.of(context).push(
@@ -189,7 +222,8 @@ class _ListParkingsState extends State<ListParkings> {
               child: Container(
                 color: Colors.blueGrey,
                 child: const Center(
-                    child: Text("Filters", style: TextStyle(fontSize: 20.0))),
+                    child: Text("Filters", 
+                    style: TextStyle(fontSize: 18.0, color: Color.fromARGB(255, 239, 242, 243)))),
               ),
             )),
           ])),
