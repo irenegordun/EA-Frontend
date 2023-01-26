@@ -13,7 +13,7 @@ import 'package:flutter/material.dart';
 import '../widgets/drawer.dart';
 
 class HomePageMobile extends StatelessWidget {
-  List<Chat>? chats;
+  List<Chat>? chats = [];
   List<Messsage>? messages = [];
   @override
   Widget build(BuildContext context) => Scaffold(
