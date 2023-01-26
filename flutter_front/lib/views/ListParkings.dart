@@ -376,7 +376,7 @@ class _ListParkingsState extends State<ListParkings> {
                                         color: Colors.red,
                                       )
                                     : Icon(Icons.favorite_border),
-                                tooltip: 'Favorite',
+                                tooltip: 'Favourite',
                                 onPressed: () {
                                   provider.toggleFavorite(parkings![index]);
                                 },

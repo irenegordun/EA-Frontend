@@ -39,7 +39,7 @@ class ExampleExpandableFab extends StatelessWidget {
           ActionButton(
             onPressed: () => Navigator.of(context).push(MaterialPageRoute(
                 builder: (context) => const NewParkingPage())),
-            icon: const Icon(Icons.car_rental_rounded),
+            icon: const Icon(Icons.add_circle_outline_outlined),
           ),
           ActionButton(
             //onPressed: () => _showAction(context, 1),

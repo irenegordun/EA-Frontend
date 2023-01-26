@@ -141,9 +141,9 @@ class _LoginFormState extends State<LoginForm> {
                   String formPassword = passwordController.text.toString();
 
                   if (emailController.text.isEmpty) {
-                    openDialog("Enter your email please");
+                    openDialog("Enter your email");
                   } else if (passwordController.text.isEmpty) {
-                    openDialog("Enter your password please");
+                    openDialog("Enter your password");
                   } else {
                     var user = User(
                         name: "",
@@ -171,7 +171,7 @@ class _LoginFormState extends State<LoginForm> {
                         await UserServices().activateUser(user);
                       } else {
                         openDialog(
-                            "You did not activate your user, please register another one or, if it was a mistake, press login again");
+                            "You did not activate your user. Register another one or, if it was a mistake, press login again");
                       }
                     } else {
                       openDialog(
@@ -259,10 +259,18 @@ class _LoginFormState extends State<LoginForm> {
   Future openDialog(String text) => showDialog(
         context: context,
         builder: (context) => AlertDialog(
-          title: Text(text),
+          backgroundColor: Color.fromARGB(255, 230, 241, 248),
+          shape: RoundedRectangleBorder(
+                borderRadius:
+                    BorderRadius.circular(20.0)),
+          title: Text (
+            "APARCA'M", 
+          style: TextStyle(fontSize: 17)),
+          content: Text(text, 
+          style: TextStyle(fontSize: 15),),
           actions: [
             TextButton(
-              child: const Text('Ok'),
+              child: const Text('OK'),
               onPressed: submit,
             ),
           ],

@@ -68,10 +68,15 @@ class _ParkingInfoState extends State<ParkingInfo> {
   Future openDialog(String text) => showDialog(
         context: context,
         builder: (context) => AlertDialog(
-          title: Text(text),
+          backgroundColor: Color.fromARGB(255, 230, 241, 248),
+          shape: RoundedRectangleBorder(
+                borderRadius:
+                    BorderRadius.circular(20.0)),
+          title: Text ("APARCA'M", style: TextStyle(fontSize: 17)),
+          content: Text(text, style: TextStyle(fontSize: 15)),
           actions: [
             TextButton(
-              child: Text('Ok'),
+              child: Text('OK'),
               onPressed: submit,
             ),
           ],

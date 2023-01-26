@@ -92,7 +92,7 @@ class DrawerScreen extends StatelessWidget {
           ),
           //Create patking spot
           ListTile(
-            leading: const Icon(Icons.car_rental_rounded),
+            leading: const Icon(Icons.add_circle_outline_outlined),
             title: const Text(
               'Create parking spot',
             ),
