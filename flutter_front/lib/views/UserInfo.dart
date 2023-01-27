@@ -166,8 +166,12 @@ class _UserInfoState extends State<UserInfo> {
 
   Future yousure() => showDialog(
         context: context,
-        builder: (context) => AlertDialog(
-          title: const Text("Are you sure you want to delete your account"),
+        builder: (context) => AlertDialog(backgroundColor: Color.fromARGB(255, 230, 241, 248),
+            shape: RoundedRectangleBorder(
+                  borderRadius:
+                      BorderRadius.circular(20.0)),
+            title: Text ("APARCA'M", style: TextStyle(fontSize: 17)),
+            content: const Text("Are you sure you want to delete your account"),
           actions: [
             TextButton(
               onPressed: sure,

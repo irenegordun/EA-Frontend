@@ -1,6 +1,7 @@
 import 'package:dialogflow_flutter/googleAuth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_front/views/UserInfo.dart';
+import 'package:flutter_front/widgets/drawer.dart';
 import '../widgets/message.dart';
 import 'package:dialogflow_flutter/dialogflowflutter.dart';
 
@@ -81,6 +82,7 @@ class _ChatBotState extends State<ChatBot> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      drawer: const DrawerScreen(),
       appBar: AppBar(
         centerTitle: true,
         title: const Center(

@@ -23,11 +23,11 @@ class HomePageMobile extends StatelessWidget {
             child: Text("A P A R C A ' M"),
           ),
           centerTitle: true,
-          leading: UserImageWidget(),
+          /*leading: UserImageWidget(),
           actions: [
             IconButton(icon: Icon(Icons.edit), onPressed: () => {}),
             SizedBox(width: 8),
-          ],
+          ],*/
         ),
         body: buildListView(context),
       );

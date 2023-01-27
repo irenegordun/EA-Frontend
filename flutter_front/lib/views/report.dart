@@ -176,7 +176,7 @@ class _MyReports extends State<MyReports> {
             leading: const Icon(Icons.balance),
             title: Text(
                 'Select the gravity of the issue, where 3 is a big issue and 0 is a low issue',
-                style: TextStyle(fontWeight: FontWeight.w500)),
+                ),
           ),
           Slider(
             value: sliderDif,
