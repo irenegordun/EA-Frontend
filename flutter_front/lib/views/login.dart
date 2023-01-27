@@ -66,13 +66,23 @@ class _LoginFormState extends State<LoginForm> {
   final passwordController = TextEditingController();
   bool _obscureText = true;
   bool _activateBool = false;
+  
+  final ScrollController controller = ScrollController(initialScrollOffset: 50.0);
+  
+  
 
   @override
   Widget build(BuildContext context) {
     return Padding(
         padding: const EdgeInsets.all(24.0),
-        child: SingleChildScrollView(
-          child: Column(
+        child: Scrollbar(
+
+          controller: controller,
+          isAlwaysShown: true,
+          child: SingleChildScrollView(
+            scrollDirection: Axis.vertical,
+            controller: controller,
+            child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -253,7 +263,11 @@ class _LoginFormState extends State<LoginForm> {
                   ])
             ],
           ),
-        ));
+          )
+        ),
+        
+          
+        );
   }
 
   Future openDialog(String text) => showDialog(

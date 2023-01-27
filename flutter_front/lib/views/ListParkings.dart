@@ -150,7 +150,8 @@ class _ListParkingsState extends State<ListParkings> {
                               content: Container(
                                 height: 600,
                                 width: 500,
-                                child: Column(
+                                child:SingleChildScrollView(
+                                 child: Column(
                                   children: <Widget>[
                                     getDateRangePicker(),
                                     MaterialButton(
@@ -166,7 +167,7 @@ class _ListParkingsState extends State<ListParkings> {
                                       },
                                     )
                                   ],
-                                ),
+                                )),
                               ));
                         });
                   },

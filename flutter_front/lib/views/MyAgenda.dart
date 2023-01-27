@@ -1,7 +1,10 @@
+import 'dart:convert';
+
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_front/views/myBookings.dart';
+import 'package:intl/intl.dart';
 import 'package:syncfusion_flutter_calendar/calendar.dart';
 
 
@@ -14,13 +17,108 @@ class MyAgenda extends StatefulWidget {
 
 class _MyAgendaState extends State<MyAgenda> {
   
-  final eventNameController = TextEditingController();
-  final fromController = TextEditingController();
-  final toController = TextEditingController();
+  //final eventNameController = TextEditingController();
+  //final fromController = TextEditingController();
+  //final toController = TextEditingController();
+
+
+  DateTime? _selectedDate;
+  
+  Map<String, List> mySelectedEvents = {};
+
+  final titleController = TextEditingController();
+  final descpController = TextEditingController();
+
+  _showAddEventDialog() async {
+    await showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text(
+          'Add New Event',
+          textAlign: TextAlign.center,
+        ),
+        content: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            TextField(
+              controller: titleController,
+              textCapitalization: TextCapitalization.words,
+              decoration: const InputDecoration(
+                labelText: 'Title',
+              ),
+            ),
+            TextField(
+              controller: descpController,
+              textCapitalization: TextCapitalization.words,
+              decoration: const InputDecoration(labelText: 'Description'),
+            ),
+          ],
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: const Text('Cancel'),
+          ),
+          TextButton(
+            child: const Text('Add Event'),
+            onPressed: () {
+              if (titleController.text.isEmpty &&
+                  descpController.text.isEmpty) {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(
+                    content: Text('Required title and description'),
+                    duration: Duration(seconds: 2),
+                  ),
+                );
+                //Navigator.pop(context);
+                return;
+              } else {
+                print(titleController.text);
+                print(descpController.text);
+
+                setState(() {
+                  if (mySelectedEvents[
+                          DateFormat('yyyy-MM-dd').format(_selectedDate!)] !=
+                      null) {
+                    mySelectedEvents[
+                            DateFormat('yyyy-MM-dd').format(_selectedDate!)]
+                        ?.add({
+                      "eventTitle": titleController.text,
+                      "eventDescp": descpController.text,
+                    });
+                  } else {
+                    mySelectedEvents[
+                        DateFormat('yyyy-MM-dd').format(_selectedDate!)] = [
+                      {
+                        "eventTitle": titleController.text,
+                        "eventDescp": descpController.text,
+                      }
+                    ];
+                  }
+                });
+
+                print(
+                    "New Event for backend developer ${json.encode(mySelectedEvents)}");
+                titleController.clear();
+                descpController.clear();
+                Navigator.pop(context);
+                return;
+              }
+            },
+          )
+        ],
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+    floatingActionButton: FloatingActionButton.extended(
+        onPressed: () => _showAddEventDialog(),
+        label: const Text('Add Event'),
+      ),
     appBar: AppBar(
         title: const Center(
           child: Text("A P A R C A ' M"),
@@ -48,7 +146,7 @@ class _MyAgendaState extends State<MyAgenda> {
                                 decoration: const InputDecoration(
                                   hintText: 'Enter a name for the event',
                                 ),
-                                controller: eventNameController,
+                                //controller: eventNameController,
                   
                               ),
                               onTap: () {},
@@ -58,7 +156,7 @@ class _MyAgendaState extends State<MyAgenda> {
                                 decoration: const InputDecoration(
                                   hintText: 'Enter the start day',
                                 ),
-                                controller: fromController,
+                                //controller: fromController,
                               ),
                               onTap: () {},
                             ),
@@ -67,7 +165,7 @@ class _MyAgendaState extends State<MyAgenda> {
                                 decoration: const InputDecoration(
                                   hintText: 'Enter the end day',
                                 ),
-                                controller: toController,
+                                //controller: toController,
                               ),
                               onTap: () {},
                             ),
@@ -77,9 +175,9 @@ class _MyAgendaState extends State<MyAgenda> {
                               onPressed: () {
                               setState(() async {
 
-                                String formName = eventNameController.text.toString();
-                                String formFrom = fromController.text.toString();
-                                String formTo = toController.text.toString();
+                                //String formName = eventNameController.text.toString();
+                                //String formFrom = fromController.text.toString();
+                                //String formTo = toController.text.toString();
                                 /*var meeting = Meeting(
                                   eventName: formName,
                                   from: formFrom,
@@ -101,6 +199,15 @@ class _MyAgendaState extends State<MyAgenda> {
                 },
               )
           ),
+          Padding(
+              padding: const EdgeInsets.all(8.0),            
+              child: IconButton(
+                icon: const Icon(Icons.add_outlined),
+                tooltip: 'Create new',
+                onPressed: () {
+                  
+                },
+              )),
         ],
       ),
     body: SfCalendar(

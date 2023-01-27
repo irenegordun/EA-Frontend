@@ -15,6 +15,7 @@ import '../models/parking.dart';
 import '../views/Chat.dart';
 import '../models/booking.dart';
 import 'package:intl/intl.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 
 class ParkingInfo extends StatefulWidget {
   const ParkingInfo({super.key});
@@ -24,6 +25,7 @@ class ParkingInfo extends StatefulWidget {
 }
 
 class _ParkingInfoState extends State<ParkingInfo> {
+  double rating = 0;   
   var isLoaded = false;
   User? owner;
   DateTime? firstdate;
@@ -31,12 +33,23 @@ class _ParkingInfoState extends State<ParkingInfo> {
   List<DateTime> availableDates1 = [];
   final dateFormat = DateFormat("dd/MM/yyyy");
 
+  bool _isVisible1 = true;
+  bool _isVisible2 = true;
+
+  void showToast() {
+    setState(() {
+      _isVisible1 = !_isVisible1;
+      _isVisible2 = !_isVisible2;
+
+    });
+  }
+
   BookingParking(Booking booking) async {
     BookingServices().createBooking(booking);
     Navigator.of(context)
         .push(MaterialPageRoute(builder: (context) => const ListParkings()));
   }
-
+  
   @override
   Widget build(BuildContext context) {
     ParkingServices _parkingprovider = Provider.of<ParkingServices>(context);
@@ -105,7 +118,7 @@ class _ParkingInfoState extends State<ParkingInfo> {
               const Divider(),
               ListTile(
                 title: const Text('Price'),
-                subtitle: Text('${parking.price}/day'),
+                subtitle: Text('${parking.price}€/day'),
                 leading: const Icon(
                   Icons.attach_money_outlined,
                   color: Color.fromARGB(255, 39, 51, 58),
@@ -139,7 +152,7 @@ class _ParkingInfoState extends State<ParkingInfo> {
                 child: Text("Book"),
                 style: TextButton.styleFrom(
                   foregroundColor: Color.fromARGB(255, 255, 255, 255),
-                  backgroundColor: Color.fromARGB(255, 39, 51, 58),
+                  backgroundColor: Color.fromARGB(255, 55, 71, 80),
                   padding: const EdgeInsets.all(16.0),
                   textStyle: const TextStyle(fontSize: 20),
                 ),
@@ -216,12 +229,115 @@ class _ParkingInfoState extends State<ParkingInfo> {
                     }
                   },
                   child: const Text('Chat'),
-                  style: ButtonStyle(
+                  style: const ButtonStyle(
                     backgroundColor:
                         MaterialStatePropertyAll<Color>(Colors.blueGrey),
                   ),
                 ),
               ),
+              Row(
+                 children: <Widget>[
+                Expanded(
+                  flex: 6,
+                  child: Visibility(
+                    visible: _isVisible1,
+                    child: Column(
+                      
+                      children: [
+                        Row(
+                          children: <Widget>[ 
+                          Expanded(
+                            flex: 8,
+                            
+                            child: Container(
+                              height: 130,
+                              child:  Center(
+                               child: Text("Select the score",style: const TextStyle(fontSize: 15))),
+                              
+                              decoration: const BoxDecoration(
+                                color: Color.fromARGB(255, 196, 202, 205),
+                                
+                              ),
+                            ),
+
+                          ),
+                          Expanded(
+                            
+                            flex: 2,
+
+                            child: Container(
+                              height: 130,
+                              decoration: const BoxDecoration(
+                                color: Color.fromARGB(255, 196, 202, 205),
+                                
+                              ),
+                              child: IconButton(
+                              icon: const Icon(Icons.highlight_remove_sharp, size: 20, color: Color.fromARGB(255, 101, 101, 101)),
+                              tooltip: 'Close',
+                              onPressed: () {
+                                setState(() {
+                                  _isVisible1 = !_isVisible1;
+                                });
+                              },
+                            ),    
+                            )
+                          ),
+                          ]
+                        )
+                      ],
+                      
+
+                  ),
+                  ),
+                ),
+                Expanded(
+                  flex: 4,
+                  child: Visibility(
+                  visible: _isVisible2,
+                  child: Column(
+                    
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      'Rating: $rating',
+                      style: const TextStyle(fontSize: 15),
+                    ),
+                    const SizedBox(
+                      width: 25,
+                      height: 25,
+                    ),
+                    RatingBar.builder(
+                      minRating: 1,
+                      maxRating: 5,
+                      initialRating: 0,
+                      itemBuilder: (context, _) => const Icon(
+                        Icons.star_border_outlined, size:7.0,
+                        color: Color.fromARGB(255, 230, 211, 65),
+                      ),
+                      onRatingUpdate: (rating) => setState(() {
+                        this.rating = rating;
+                      }),
+                      updateOnDrag: true,
+                    ),
+                      SizedBox(
+                      width: 40,
+                      height: 40,
+                      child:TextButton(
+                        child: const Text('OK'),
+                        onPressed: () {
+                          parking.score = rating.toInt();
+                          setState(() {
+                            _isVisible2 = !_isVisible2;
+                          });
+                        },
+                      ),
+                    ),
+                  ],
+                )),
+                )
+
+
+            ]),
             ],
           ),
         ),

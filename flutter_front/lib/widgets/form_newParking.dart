@@ -404,11 +404,11 @@ class _MyStatefulWidgetState extends State<FormWidget> {
             ),
             const Divider(),
             ListTile(
-              leading: Icon(Icons.calendar_month_outlined),
-              title: Text("Enter the availability",
+              leading: const Icon(Icons.calendar_month_outlined),
+              title: const Text("Enter the availability",
                   style: TextStyle(color: Color.fromARGB(255, 126, 126, 126))),
               trailing: IconButton(
-                icon: Icon(Icons.calendar_month_outlined),
+                icon: const Icon(Icons.calendar_month_outlined),
                 tooltip: 'Select the availability',
                 onPressed: () {
                   showDialog(
