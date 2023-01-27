@@ -107,12 +107,7 @@ class _LoginFormState extends State<LoginForm> {
                   fontWeight: FontWeight.bold,
                 ),
               ),
-              const Text(
-                "Or if you already have an account login",
-                style: TextStyle(
-                  fontSize: 14,
-                ),
-              ),
+              
               const SizedBox(height: 10),
               Form(
                 key: widget._formKey,
@@ -121,7 +116,6 @@ class _LoginFormState extends State<LoginForm> {
                     decoration: const InputDecoration(
                         border: OutlineInputBorder(),
                         labelText: 'Name *',
-                        // ignore: unnecessary_const
                         icon: const Padding(
                           padding: EdgeInsets.only(top: 15.0),
                           child: Icon(Icons.perm_identity),
@@ -137,10 +131,8 @@ class _LoginFormState extends State<LoginForm> {
                   const SizedBox(height: 10),
                   TextFormField(
                     decoration: const InputDecoration(
-                        //dependencies: email_validator: '^2.1.16'
                         border: OutlineInputBorder(),
                         labelText: 'Email *',
-                        // ignore: unnecessary_const
                         icon: const Padding(
                           padding: EdgeInsets.only(top: 15.0),
                           child: Icon(Icons.email),
@@ -262,7 +254,6 @@ class _LoginFormState extends State<LoginForm> {
                   }
 
                   setState(() {
-                    //aquí dona error
                   });
                 },
                 style: ElevatedButton.styleFrom(
@@ -318,11 +309,8 @@ class _LoginFormState extends State<LoginForm> {
                   }
                 },
                 label: const Text('Sign up with Google'),
-                icon: Image.asset(
-                  'google_logo.png',
-                  height: 32,
-                  width: 32,
-                ),
+                icon: const Icon(Icons.g_mobiledata_outlined),
+                
                 backgroundColor: Colors.white,
                 foregroundColor: Colors.blueGrey,
               ))

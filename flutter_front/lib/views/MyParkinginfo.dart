@@ -238,8 +238,6 @@ class _MyParkingInfoState extends State<MyParkingInfo> {
                     child: Text("Editar"),
                     onPressed: () {
                       if (editingController4.text != "") {
-                        // parking.streetNumber =
-                        //     int.parse(editingController4.text);
                         parking = Parking(
                           country: parking.country,
                           city: parking.city,

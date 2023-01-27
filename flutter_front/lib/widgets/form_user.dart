@@ -38,9 +38,7 @@ class _MyStatefulWidgetState extends State<FormWidget> {
                 }
                 return null;
               },
-              // onSaved: (value) {
-              //   nameValue = value!;
-              // },
+   
             ),
           ),
           ListTile(
@@ -66,7 +64,6 @@ class _MyStatefulWidgetState extends State<FormWidget> {
               ),
               controller: passwordController,
               validator: (String? value) {
-                // should contain: upepercase, lowercase, digit, spec char, 8 chars
                 RegExp regex = RegExp(
                     r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{8,}$');
                 if (value == null || value.isEmpty) {
@@ -84,7 +81,6 @@ class _MyStatefulWidgetState extends State<FormWidget> {
           TextButton(
               onPressed: () {
                 setState(() async {
-                  //aquí dona problemes
                   String formName = nameController.text.toString();
                   String formEmail = emailController.text.toString();
                   String formPassword = passwordController.text.toString();

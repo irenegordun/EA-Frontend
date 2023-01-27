@@ -45,15 +45,12 @@ class _ChatPageMobileState extends State<ChatPageMobile> {
   List<Chat>? chats = [];
 
   _ChatPageMobileState() {
-    print("3333333333333333333333333333333");
     channel.stream.listen((data) {
       setState(() async {
         var len = messages!.length;
-        print("LEN = " + len.toString());
         if (len == 0) {
           StorageAparcam().setchatkey(data);
           messages = await UserServices().getChat('{ "id":"' + data + '" }');
-          print(messages);
           if (messages!.isEmpty) {
             exist = false;
           } else {
@@ -61,10 +58,6 @@ class _ChatPageMobileState extends State<ChatPageMobile> {
             MessageListView(messages!);
           }
         } else {
-          //List<String> a = data.split('/');
-          print(data.toString());
-          //String a = data.toString().substring(1);
-          //print(a);
           Messsage message = Messsage(
               chat: "",
               text: data,
@@ -85,9 +78,7 @@ class _ChatPageMobileState extends State<ChatPageMobile> {
   }
 
   getData() async {
-    print("444444444444444444444444444");
     chats = StorageAparcam().getchats();
-    print("55555555555555555555555555555555555555555");
     if (chats != null) {
       setState(() {
         isLoaded = true;
@@ -100,14 +91,12 @@ class _ChatPageMobileState extends State<ChatPageMobile> {
     chats = StorageAparcam().getchats();
     if (exist == false) {
       int a = 0;
-      print(chats!.length);
       for (int i = 0; i < chats!.length; i++) {
         if ((chats![i].client1 == name) && (chats![i].client2 == name)) {
           a = i;
           break;
         }
       }
-      print(a);
       if (chats == null || chats!.isEmpty) {
         return Center(child: Text("No chats available"));
       } else {

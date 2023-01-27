@@ -146,7 +146,6 @@ class _MyAgendaState extends State<MyAgenda> {
                                 decoration: const InputDecoration(
                                   hintText: 'Enter a name for the event',
                                 ),
-                                //controller: eventNameController,
                   
                               ),
                               onTap: () {},
@@ -156,7 +155,6 @@ class _MyAgendaState extends State<MyAgenda> {
                                 decoration: const InputDecoration(
                                   hintText: 'Enter the start day',
                                 ),
-                                //controller: fromController,
                               ),
                               onTap: () {},
                             ),
@@ -165,7 +163,6 @@ class _MyAgendaState extends State<MyAgenda> {
                                 decoration: const InputDecoration(
                                   hintText: 'Enter the end day',
                                 ),
-                                //controller: toController,
                               ),
                               onTap: () {},
                             ),
@@ -173,21 +170,7 @@ class _MyAgendaState extends State<MyAgenda> {
                             MaterialButton(
                               child: Text("C R E A T E"),
                               onPressed: () {
-                              setState(() async {
-
-                                //String formName = eventNameController.text.toString();
-                                //String formFrom = fromController.text.toString();
-                                //String formTo = toController.text.toString();
-                                /*var meeting = Meeting(
-                                  eventName: formName,
-                                  from: formFrom,
-                                  to: formTo,
-                                  background: Colors.blueGrey,
-                                  isAllDay : true,
-                                );*/
-                                //  meetings.add(this.eventName(this.from, this.form, this.to, const Color(0xFF0F8644), this.isAllDay,));
-                                //await UserServices().createUser(user);
-                              });
+                              setState(() async {});
                               Navigator.pop(context);
                               },
                             ),

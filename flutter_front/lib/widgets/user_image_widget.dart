@@ -8,9 +8,9 @@ class UserImageWidget extends StatelessWidget {
       child: Container(
         padding: const EdgeInsets.all(12),
         child: CircleAvatar(
-            //   backgroundImage: NetworkImage(
-            //       'https://icon-library.com/images/no-user-image-icon/no-user-image-icon-0.jpg'),
-            ),
+          backgroundImage: ExactAssetImage('avatar.png'),
+          radius: 200.0,
+        ),
       ),
     );
   }

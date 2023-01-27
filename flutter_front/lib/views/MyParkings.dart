@@ -9,7 +9,6 @@ import 'package:provider/provider.dart';
 import '../models/user.dart';
 import '../models/parking.dart';
 import 'package:flutter_front/services/localStorage.dart';
-//import '../widgets/buttonAccessibility.dart';
 import '../widgets/drawer.dart';
 
 class MyParkings extends StatefulWidget {
@@ -97,6 +96,7 @@ class _MyParkingsState extends State<MyParkings> {
                     leading: Container(
                       width: 80,
                       height: 80,
+                      child: Image.asset('parking1.jpg'),
                     ),
                     title: Text(parkings[index].street),
                     subtitle: Text(parkings[index].city),

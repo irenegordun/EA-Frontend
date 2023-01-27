@@ -186,7 +186,6 @@ class _ParkingInfoState extends State<ParkingInfo> {
                 contentPadding: EdgeInsets.zero,
                 title: ElevatedButton(
                   onPressed: () async {
-                    print("00000000000000000000000000000000000000000000");
                     owner = await ParkingServices().getOwner(parking);
                     if (owner!.id != StorageAparcam().getId()) {
                       List<Messsage>? messages = [];
@@ -209,18 +208,14 @@ class _ParkingInfoState extends State<ParkingInfo> {
                           myBookings: [],
                           deleted: false,
                           newpassword: "");
-                      print("111111111111111111111");
                       List<Chat>? chats = [];
                       try {
                         chats = await UserServices().getchats(user1);
                       } catch (err) {
                         print("NO CHATS RETURNED");
                       }
-                      print("222222222222222222222222222222222");
-                      print(chats.toString());
                       chats!.add(chat);
                       StorageAparcam().setchats(chats);
-                      print(owner!.name);
                       StorageAparcam().setchatname(owner!.name);
                       Navigator.of(context).push(MaterialPageRoute(
                           builder: (context) => ChatPageMobile()));

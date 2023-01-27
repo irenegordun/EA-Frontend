@@ -38,14 +38,22 @@ class MyReports extends StatefulWidget {
   State<MyReports> createState() => _MyReports();
 }
 
+double sliderFont = 0.0;
+
+
 final textController = TextEditingController();
 
 class _MyReports extends State<MyReports> {
-  bool _isVisible = true;
+  bool _isVisible = false;
+  bool _isVisible2 = false;
+  bool _isVisible3 = true;
 
   void showToast() {
     setState(() {
       _isVisible = !_isVisible;
+      _isVisible2 = !_isVisible2;
+      _isVisible3 = !_isVisible3;
+
     });
   }
 
@@ -99,7 +107,7 @@ class _MyReports extends State<MyReports> {
         );
 
     return MaterialApp(
-        home: Scaffold(
+      home: Scaffold(
       drawer: const DrawerScreen(),
       floatingActionButton: const ExampleExpandableFab(),
       appBar: AppBar(
@@ -123,16 +131,86 @@ class _MyReports extends State<MyReports> {
       body: SingleChildScrollView(
         child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: <
         Widget>[
-
+          ListTile(
+            trailing: IconButton(
+                icon: const Icon(Icons.arrow_forward_ios),
+                tooltip: 'Close',
+                onPressed: () {
+                  setState(() { _isVisible2 = !_isVisible2;});
+                },
+              ),
+              tileColor: Color.fromARGB(255, 196, 202, 205),
+              minVerticalPadding: 10.0,
+              minLeadingWidth: 10.0,
+              title: Text(
+                  'Report',
+                  style: TextStyle(fontSize: MediaQuery.of(context).size.width * sliderFont/2)),
+          ),
+          ListTile(
+            trailing: IconButton(
+              icon: _isVisible == !_isVisible? Icon(Icons.abc_sharp) : Icon(Icons.arrow_forward_ios),
+                tooltip: 'Close',
+                onPressed: () {
+                  setState(() {
+                    _isVisible = !_isVisible;
+                   });
+                },
+              ),
+              tileColor: Color.fromARGB(255, 196, 202, 205),
+              minVerticalPadding: 10.0,
+              minLeadingWidth: 10.0,
+              title: Text(
+                  'Font size',
+                  style: TextStyle( fontSize: MediaQuery.of(context).size.width * sliderFont/2,
+          )),
+          ),
+          Visibility(
+            visible: _isVisible2,
+            child: Divider(),
+          ),
           Visibility(
             visible: _isVisible,
+            child: ListTile(
+              title: Text("Size",
+                style: TextStyle (
+                  fontSize: MediaQuery.of(context).size.width * sliderFont/2,
+                ),
+              ),
+
+            )),
+          Visibility(
+            visible: _isVisible,
+            child: Slider(
+              
+                value: sliderFont,
+                onChanged: (newFont) {
+                  setState(() {
+                    sliderFont = newFont;
+                  });
+                },
+                min: 0.0,
+                max: 0.5,
+                divisions: 2,
+                activeColor: Colors.blueGrey,
+                inactiveColor: Colors.blueGrey.shade100,
+                thumbColor: Colors.blueGrey,
+                label: "$sliderFont",
+              )),
+
+
+
+
+
+
+          Visibility(
+            visible: _isVisible2,
             child: ListTile(
               trailing: IconButton(
                 icon: const Icon(Icons.highlight_remove_sharp),
                 tooltip: 'Close',
                 onPressed: () {
                   setState(() {
-                    _isVisible = !_isVisible;
+                    _isVisible3 = !_isVisible3;
                   });
                 },
               ),
@@ -143,15 +221,25 @@ class _MyReports extends State<MyReports> {
                   'Welcome to the report zone, here you can contact with the Service client to inform or report an issue',
                   style: TextStyle(fontSize: 16)),
           ),),
-          Divider(),
-          MultiSelectDialogField(
+          Visibility(
+            visible: _isVisible2,
+            child: Divider(),
+          ),
+          
+          Visibility(
+          visible: _isVisible2,
+          child: MultiSelectDialogField(
             items: _issueType.map((e) => MultiSelectItem(e, e.name)).toList(),
             listType: MultiSelectListType.CHIP,
             onConfirm: (values) {
               _selected = values;
             },
           ),
-          ListTile(
+          ),
+
+          Visibility(
+            visible: _isVisible2,
+            child: ListTile(
             title: TextFormField(
               maxLength: 20,
               decoration: const InputDecoration(
@@ -160,7 +248,6 @@ class _MyReports extends State<MyReports> {
                 border: OutlineInputBorder(
                   borderRadius: const BorderRadius.all(const Radius.circular(10.0)),
                 ),
-//                contentPadding: EdgeInsets.symmetric(vertical: 40),
                 
               ),
               controller: textController,
@@ -172,13 +259,19 @@ class _MyReports extends State<MyReports> {
               },
             ),
           ),
-          const ListTile(
-            leading: const Icon(Icons.balance),
+          ),
+          Visibility(
+            visible: _isVisible2,
+            child: ListTile(
+            leading: Icon(Icons.balance),
             title: Text(
                 'Select the gravity of the issue, where 3 is a big issue and 0 is a low issue',
                 ),
-          ),
-          Slider(
+          ),),
+          
+          Visibility(
+            visible: _isVisible2,
+            child: Slider(
             value: sliderDif,
             onChanged: (newScore) {
               setState(() {
@@ -192,9 +285,14 @@ class _MyReports extends State<MyReports> {
             inactiveColor: Colors.blueGrey.shade100,
             thumbColor: Colors.blueGrey,
             label: "$sliderDif",
+          )),
+          Visibility(
+            visible: _isVisible2,
+            child: Divider(),
           ),
-          const Divider(),
-          Padding(
+          Visibility(
+            visible: _isVisible2,
+            child: Padding(
             padding: const EdgeInsets.symmetric(vertical: 30.0),
             child: ElevatedButton(
               style: ElevatedButton.styleFrom(primary: Colors.blueGrey),
@@ -212,7 +310,6 @@ class _MyReports extends State<MyReports> {
                     print(typeSel);
                     Report p = Report(
                         id: StorageAparcam().getId(),
-                        //id: '',
                         user: '',
                         type: typeSel,
                         text: textW,
@@ -233,7 +330,8 @@ class _MyReports extends State<MyReports> {
                       backgroundColor: const Color.fromARGB(65, 143, 74, 163));
                 },
                 child: const Text('Submit', )),
-          ),
+          ),),
+          
 
       ])),
     ));

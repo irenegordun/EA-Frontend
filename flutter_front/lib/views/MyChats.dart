@@ -23,11 +23,7 @@ class HomePageMobile extends StatelessWidget {
             child: Text("A P A R C A ' M"),
           ),
           centerTitle: true,
-          /*leading: UserImageWidget(),
-          actions: [
-            IconButton(icon: Icon(Icons.edit), onPressed: () => {}),
-            SizedBox(width: 8),
-          ],*/
+
         ),
         body: buildListView(context),
       );
@@ -59,8 +55,7 @@ class HomePageMobile extends StatelessWidget {
                                 height: 80,
                               ),
                               title: Text(snapshot.data!),
-//subtitle: Text(
-//chats![index].messages?.last?.toString() ?? ''),
+
                             )),
                         onTap: () =>
                             {openchat(chats!, snapshot.data!, context)},

@@ -109,7 +109,6 @@ class _MapParkingsState extends State<MapParkings> {
       longitude = 2.1596;
       latitude = 41.3948;
     }
-    print(latLngList);
 
     List<Marker> _markers = latLngList
         .map((point) => Marker(
@@ -311,6 +310,3 @@ class _MapParkingsState extends State<MapParkings> {
     );
   }
 }
-
-//https://techblog.geekyants.com/implementing-flutter-maps-with-osm
-//https://github.com/fleaflet/flutter_map/blob/master/example/lib/pages/many_markers.dart

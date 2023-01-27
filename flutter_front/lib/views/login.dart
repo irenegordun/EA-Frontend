@@ -105,10 +105,8 @@ class _LoginFormState extends State<LoginForm> {
                 child: Column(children: [
                   TextFormField(
                     decoration: const InputDecoration(
-                        //dependencies: email_validator: '^2.1.16'
                         border: OutlineInputBorder(),
                         labelText: 'Email *',
-                        // ignore: unnecessary_const
                         icon: const Padding(
                           padding: EdgeInsets.only(top: 15.0),
                           child: Icon(Icons.email),
@@ -251,12 +249,8 @@ class _LoginFormState extends State<LoginForm> {
                         }
                       },
                       label: const Text('Sign in with Google'),
-                      icon: Image.asset(
-                        'google_logo.png',
-                        height: 32,
-                        width: 32,
-                        fit: BoxFit.contain,
-                      ),
+                      icon: const Icon(Icons.g_mobiledata_outlined),
+                     
                       backgroundColor: Colors.white,
                       foregroundColor: Colors.blueGrey,
                     )

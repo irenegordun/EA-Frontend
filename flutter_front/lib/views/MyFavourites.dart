@@ -15,10 +15,8 @@ import '../models/user.dart';
 import '../models/parking.dart';
 import 'package:localstorage/localstorage.dart';
 import 'package:flutter_front/services/localStorage.dart';
-//import '../widgets/buttonAccessibility.dart';
 import '../widgets/drawer.dart';
 
-//millorar visualment
 
 class MyFavourites extends StatefulWidget {
   const MyFavourites({super.key});

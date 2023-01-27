@@ -190,82 +190,7 @@ class _MyStatefulWidgetState extends State<FormWidget> {
                   );
                 }).toList(),
               )),
-            /*ListTile(
-                leading: const Icon(Icons.car_rental_sharp),
-                title: const Text("Select the vehicle type",
-                    style: TextStyle(color: Color.fromARGB(255, 126, 126, 126))),
-                trailing: DropdownButtonHideUnderline(
-                child: DropdownButton2(
-                  isExpanded: true,
-                  hint: Row(
-                    children: const [
-                      SizedBox(
-                        width: 3,
-                      ),
-                      Expanded(
-                        child: Text(
-                          'Select Type',
-                          style: TextStyle(
-                            fontSize: 14,
-                            color: Color.fromARGB(255, 0, 0, 0),
-                          ),
-                          overflow: TextOverflow.ellipsis,
-                        ),
-                      ),
-                    ],
-                  ),
-                  items: typeList
-                      .map((item) => DropdownMenuItem<String>(
-                            value: item,
-                            child: Text(
-                              item,
-                              style: const TextStyle(
-                                fontSize: 14,
-                                color: Color.fromARGB(255, 0, 0, 0),
-                              ),
-                              overflow: TextOverflow.ellipsis,
-                            ),
-                          ))
-                      .toList(),
-                  value: selectedValue,
-                  onChanged: (value) {
-                    setState(() {
-                      selectedValue = value as String;
-                    });
-                  },
-                  icon: const Icon(
-                    Icons.arrow_forward_ios_outlined,
-                  ),
-                  iconSize: 14,
-                  iconEnabledColor: Colors.blueGrey,
-                  iconDisabledColor: Color.fromARGB(255, 255, 255, 255),
-                  buttonHeight: 50,
-                  buttonWidth: 160,
-                  buttonPadding: const EdgeInsets.only(left: 14, right: 14),
-                  buttonDecoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(14),
-                    border: Border.all(
-                      color: Colors.blueGrey,
-                    ),
-                    color: Color.fromARGB(255, 231, 234, 236),
-                  ),
-                  buttonElevation: 2,
-                  itemHeight: 40,
-                  itemPadding: const EdgeInsets.only(left: 14, right: 14),
-                  dropdownMaxHeight: 200,
-                  dropdownWidth: 200,
-                  dropdownPadding: null,
-                  dropdownDecoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(14),
-                    color: Color.fromARGB(255, 231, 234, 236),
-                  ),
-                  dropdownElevation: 8,
-                  scrollbarRadius: const Radius.circular(40),
-                  scrollbarThickness: 6,
-                  scrollbarAlwaysShow: true,
-                  offset: const Offset(-20, 0),
-                )),
-                ),*/
+           
             ListTile(
               leading: const Icon(Icons.price_change),
               title: TextFormField(
@@ -305,82 +230,6 @@ class _MyStatefulWidgetState extends State<FormWidget> {
                 }).toList(),
               )),
           
-            /*ListTile(
-                leading: const Icon(Icons.aspect_ratio),
-                title: const Text("Select the dimensions of the parking spot",
-                    style: TextStyle(color: Color.fromARGB(255, 126, 126, 126))),
-                trailing: DropdownButtonHideUnderline(
-                child: DropdownButton2(
-                  isExpanded: true,
-                  hint: Row(
-                    children: const [
-                      SizedBox(
-                        width: 4,
-                      ),
-                      Expanded(
-                        child: Text(
-                          'Select Dimensions',
-                          style: TextStyle(
-                            fontSize: 14,
-                            color: Color.fromARGB(255, 0, 0, 0),
-                          ),
-                          overflow: TextOverflow.ellipsis,
-                        ),
-                      ),
-                    ],
-                  ),
-                  items: sizeList
-                      .map((item) => DropdownMenuItem<String>(
-                            value: item,
-                            child: Text(
-                              item,
-                              style: const TextStyle(
-                                fontSize: 14,
-                                color: Color.fromARGB(255, 0, 0, 0),
-                              ),
-                              overflow: TextOverflow.ellipsis,
-                            ),
-                          ))
-                      .toList(),
-                  value: selectedValue,
-                  onChanged: (value) {
-                    setState(() {
-                      selectedValue = value as String;
-                    });
-                  },
-                  icon: const Icon(
-                    Icons.arrow_forward_ios_outlined,
-                  ),
-                  iconSize: 14,
-                  iconEnabledColor: Colors.blueGrey,
-                  iconDisabledColor: Color.fromARGB(255, 255, 255, 255),
-                  buttonHeight: 50,
-                  buttonWidth: 160,
-                  buttonPadding: const EdgeInsets.only(left: 14, right: 14),
-                  buttonDecoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(14),
-                    border: Border.all(
-                      color: Colors.blueGrey,
-                    ),
-                    color: Color.fromARGB(255, 231, 234, 236),
-                  ),
-                  buttonElevation: 2,
-                  itemHeight: 40,
-                  itemPadding: const EdgeInsets.only(left: 14, right: 14),
-                  dropdownMaxHeight: 200,
-                  dropdownWidth: 200,
-                  dropdownPadding: null,
-                  dropdownDecoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(14),
-                    color: Color.fromARGB(255, 231, 234, 236),
-                  ),
-                  dropdownElevation: 8,
-                  scrollbarRadius: const Radius.circular(40),
-                  scrollbarThickness: 6,
-                  scrollbarAlwaysShow: true,
-                  offset: const Offset(-20, 0),
-                )),
-                ),*/
 
             const ListTile(
               leading: const Icon(Icons.balance),
@@ -441,13 +290,10 @@ class _MyStatefulWidgetState extends State<FormWidget> {
                     showZoomButtons: true,
                     onPicked: (pickedData) {
                       latitudeController = pickedData.latLong.latitude.toDouble();
-                      print(latitudeController);
                       longitudeController =
                           pickedData.latLong.longitude.toDouble();
-                      print(longitudeController);
                       addressController = pickedData.address.toString();
 
-                      print(addressController);
                     })),
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 30.0),
@@ -472,15 +318,13 @@ class _MyStatefulWidgetState extends State<FormWidget> {
                         formSize.isNotEmpty) {
                       var list = addressController.split(', ');
                       String formCountry =
-                          list.last; //countryController.text.toString();
-                      print(formCountry);
+                      list.last; //countryController.text.toString();
                       list.removeLast(); //city
                       list.removeLast(); //codigopostal
                       list.removeLast(); //Catalunya
 
                       String formCity =
                           list.last; //cityController.text.toString();
-                      print(formCity);
                       list.removeLast();
                       Parking p = Parking(
                           score: 0,

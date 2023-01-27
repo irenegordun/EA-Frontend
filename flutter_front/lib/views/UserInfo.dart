@@ -75,7 +75,6 @@ class _UserInfoState extends State<UserInfo> {
               style: ButtonStyle(
                 shape: MaterialStateProperty.all(
                   RoundedRectangleBorder(
-                    // Change your radius here
                     borderRadius: BorderRadius.circular(16),
                   ),
                 ),
@@ -94,21 +93,6 @@ class _UserInfoState extends State<UserInfo> {
       setState(() => this._image = File(pickedFile.path));
     }
   }
-  /*Future _pickImage(ImageSource source) async {
-    try{
-    final image = await ImagePicker().pickImage(source: source);
-    if (image == null) return;
-    File? img = File(image.path);
-    setState((){
-      _image = img;
-      Navigator.of(context).pop;
-    });
-    } on PlatformException catch (e){
-      print(e);
-      Navigator.of(context).pop;
-    }
-
-  }*/
 
   var email = "";
   var newemail = "";
@@ -275,7 +259,7 @@ class _UserInfoState extends State<UserInfo> {
                             style: TextStyle(fontSize: 15),
                           )
                         : CircleAvatar(
-                            backgroundImage: FileImage(_image!),
+                            backgroundImage: ExactAssetImage('avatar.png'),
                             radius: 200.0,
                           )),
               ),
@@ -330,7 +314,6 @@ class _UserInfoState extends State<UserInfo> {
               ),
               ListTile(
                 title: Text("Name"),
-                //title: Text(translation(context).name),
 
                 subtitle: TextFormField(
                   controller: editingController2,

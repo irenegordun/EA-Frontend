@@ -15,7 +15,6 @@ import 'package:flutter_front/services/favorite_provider.dart';
 import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 
 import '../models/parking.dart';
-//import '../widgets/buttonAccessibility.dart';
 import '../widgets/drawer.dart';
 import 'Filters.dart';
 import 'MapParkings.dart';
@@ -253,6 +252,7 @@ class _ListParkingsState extends State<ListParkings> {
                         ),
                         child: const Text('Map')))),
           ])),
+
           //Filters
           Expanded(
             child: Row(
@@ -271,7 +271,6 @@ class _ListParkingsState extends State<ListParkings> {
                         icon: const Icon(Icons.highlight_remove_sharp, size: 17.0),
                         label: const Text('Sort',
                         style: TextStyle(fontSize: 12)),
-                        //label: Text('Sort by: ${StorageAparcam().getSortby()}',style: const TextStyle(fontSize: 12)),
                         style: ElevatedButton.styleFrom(
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(20.0),
@@ -293,7 +292,6 @@ class _ListParkingsState extends State<ListParkings> {
                         icon: const Icon(Icons.highlight_remove_sharp, size: 17.0),
                         label: const Text('Type',
                         style: TextStyle(fontSize: 12)),
-                        //label: Text('Type: ${StorageAparcam().getType()}'),
                         style: ElevatedButton.styleFrom(
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(20.0),
@@ -335,7 +333,6 @@ class _ListParkingsState extends State<ListParkings> {
                         icon: const Icon(Icons.highlight_remove_sharp, size: 17.0),
                         label: const Text('Min price',
                         style: TextStyle(fontSize: 12)),
-                        //label: Text('Min price: ${StorageAparcam().getminPrice().toString()}'),
                         style: ElevatedButton.styleFrom(
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(20.0),
@@ -355,7 +352,6 @@ class _ListParkingsState extends State<ListParkings> {
                         icon: const Icon(Icons.highlight_remove_sharp, size: 17.0),
                         label: const Text('Max price',
                         style: TextStyle(fontSize: 12)),
-                        //label: Text('Max price: ${StorageAparcam().getmaxPrice().toString()}'),
                         style: ElevatedButton.styleFrom(
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(20.0),
@@ -375,7 +371,6 @@ class _ListParkingsState extends State<ListParkings> {
                         icon: const Icon(Icons.highlight_remove_sharp, size: 17.0),
                         label: const Text('Min score',
                         style: TextStyle(fontSize: 12)),
-                        //label: Text('Min score: ${StorageAparcam().getminScore().toString()}'),
                         style: ElevatedButton.styleFrom(
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(20.0),
