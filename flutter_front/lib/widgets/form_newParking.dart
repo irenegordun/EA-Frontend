@@ -123,7 +123,7 @@ class _MyStatefulWidgetState extends State<FormWidget> {
                     leading: const Icon(Icons.signpost),
                     title: TextFormField(
                       decoration: const InputDecoration(
-                        hintText: 'Enter the street name',
+                        hintText: 'Street name',
                         hintStyle: TextStyle(
                             color: Color.fromARGB(255, 126, 126, 126)),
                       ),
@@ -140,7 +140,7 @@ class _MyStatefulWidgetState extends State<FormWidget> {
                     leading: const Icon(Icons.numbers_outlined),
                     title: TextFormField(
                       decoration: const InputDecoration(
-                        hintText: 'Enter the street number',
+                        hintText: 'Street number',
                         hintStyle: TextStyle(
                             color: Color.fromARGB(255, 126, 126, 126)),
                       ),
@@ -157,7 +157,7 @@ class _MyStatefulWidgetState extends State<FormWidget> {
                     leading: const Icon(Icons.numbers),
                     title: TextFormField(
                       decoration: const InputDecoration(
-                        hintText: 'Enter the parking spot number',
+                        hintText: 'Parking spot number',
                         hintStyle: TextStyle(
                             color: Color.fromARGB(255, 126, 126, 126)),
                       ),
@@ -170,13 +170,16 @@ class _MyStatefulWidgetState extends State<FormWidget> {
                       },
                     ),
                   ),
-                  ListTile(
+                  Row(
+                    children: <Widget>[
+                      Expanded(
+                      child:ListTile(
                       leading: const Icon(Icons.car_rental_sharp),
-                      title: const Text("Select the vehicle type",
+                      title: const Text("Type",
                           style: TextStyle(color: Colors.grey)),
                       trailing: DropdownButton<String>(
                         value: dropdownTypeValue,
-                        icon: const Icon(Icons.arrow_downward),
+                        icon: const Icon(Icons.keyboard_arrow_down_outlined),
                         elevation: 16,
                         style: const TextStyle(color: Colors.blueGrey),
                         underline: Container(height: 2, color: Colors.blueGrey),
@@ -192,32 +195,16 @@ class _MyStatefulWidgetState extends State<FormWidget> {
                             child: Text(value),
                           );
                         }).toList(),
-                      )),
-                  ListTile(
-                    leading: const Icon(Icons.price_change),
-                    title: TextFormField(
-                      decoration: const InputDecoration(
-                        hintText: 'Enter the price',
-                        hintStyle: TextStyle(
-                            color: Color.fromARGB(255, 126, 126, 126)),
-                      ),
-                      controller: priceController,
-                      validator: (String? value) {
-                        if (value == null || value.isEmpty) {
-                          return 'Please enter some text';
-                        }
-                        return null;
-                      },
-                    ),
-                  ),
-                  ListTile(
+                      )),),
+                      Expanded(
+                        child:ListTile(
                       leading: const Icon(Icons.aspect_ratio),
                       title: const Text(
-                          "Select the dimensions of the parking spot",
+                          "Dimensions",
                           style: TextStyle(color: Colors.grey)),
                       trailing: DropdownButton<String>(
                         value: dropdownSizeValue,
-                        icon: const Icon(Icons.arrow_downward),
+                        icon: const Icon(Icons.keyboard_arrow_down_outlined),
                         elevation: 16,
                         style: const TextStyle(color: Colors.blueGrey),
                         underline: Container(height: 2, color: Colors.blueGrey),
@@ -234,32 +221,11 @@ class _MyStatefulWidgetState extends State<FormWidget> {
                           );
                         }).toList(),
                       )),
-                  const ListTile(
-                    leading: const Icon(Icons.balance),
-                    title: Text('Choose the difficulty',
-                        style: TextStyle(
-                            fontWeight: FontWeight.w500,
-                            color: Color.fromARGB(255, 126, 126, 126))),
-                  ),
-                  Slider(
-                    value: sliderDif,
-                    onChanged: (newScore) {
-                      setState(() {
-                        sliderDif = newScore;
-                      });
-                    },
-                    min: 0.0,
-                    max: 10.0,
-                    divisions: 10,
-                    activeColor: Colors.blueGrey,
-                    inactiveColor: Colors.blueGrey.shade100,
-                    thumbColor: Colors.blueGrey,
-                    label: "$sliderDif",
-                  ),
-                  const Divider(),
-                  ListTile(
-                    leading: const Icon(Icons.calendar_month_outlined),
-                    title: const Text("Enter the availability",
+                      ),
+                      Expanded(
+                      child: ListTile(
+                    leading: const Icon(Icons.data_array_outlined),
+                    title: const Text("Availability",
                         style: TextStyle(
                             color: Color.fromARGB(255, 126, 126, 126))),
                     trailing: IconButton(
@@ -290,6 +256,53 @@ class _MyStatefulWidgetState extends State<FormWidget> {
                       },
                     ),
                   ),
+                      ),
+                      ]
+                  ),
+                  
+                  
+                  ListTile(
+                    leading: const Icon(Icons.price_change),
+                    title: TextFormField(
+                      decoration: const InputDecoration(
+                        hintText: 'Price',
+                        hintStyle: TextStyle(
+                            color: Color.fromARGB(255, 126, 126, 126)),
+                      ),
+                      controller: priceController,
+                      validator: (String? value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Please enter some text';
+                        }
+                        return null;
+                      },
+                    ),
+                  ),
+                  
+                  const ListTile(
+                    leading: const Icon(Icons.balance),
+                    title: Text('Choose the difficulty',
+                        style: TextStyle(
+                            fontWeight: FontWeight.w500,
+                            color: Color.fromARGB(255, 126, 126, 126))),
+                  ),
+                  Slider(
+                    value: sliderDif,
+                    onChanged: (newScore) {
+                      setState(() {
+                        sliderDif = newScore;
+                      });
+                    },
+                    min: 0.0,
+                    max: 10.0,
+                    divisions: 10,
+                    activeColor: Colors.blueGrey,
+                    inactiveColor: Colors.blueGrey.shade100,
+                    thumbColor: Colors.blueGrey,
+                    label: "$sliderDif",
+                  ),
+                  const Divider(),
+                  
                   Expanded(
                       child: FlutterOpenStreetMap(
                           center: LatLong((41.3948), (2.1596)),

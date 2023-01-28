@@ -114,9 +114,9 @@ class DrawerScreen extends StatelessWidget {
           ),
           //Report
           ListTile(
-            leading: const Icon(Icons.highlight_remove_sharp),
+            leading: const Icon(Icons.accessibility_new_outlined),
             title: const Text(
-              'Report',
+              'Accessibility',
             ),
             onTap: () {
               Navigator.of(context).push(
