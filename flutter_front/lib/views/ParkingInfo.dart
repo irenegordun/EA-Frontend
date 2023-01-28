@@ -25,7 +25,7 @@ class ParkingInfo extends StatefulWidget {
 }
 
 class _ParkingInfoState extends State<ParkingInfo> {
-  double rating = 0;   
+  double rating = 0;
   var isLoaded = false;
   User? owner;
   DateTime? firstdate;
@@ -40,7 +40,6 @@ class _ParkingInfoState extends State<ParkingInfo> {
     setState(() {
       _isVisible1 = !_isVisible1;
       _isVisible2 = !_isVisible2;
-
     });
   }
 
@@ -49,7 +48,7 @@ class _ParkingInfoState extends State<ParkingInfo> {
     Navigator.of(context)
         .push(MaterialPageRoute(builder: (context) => const ListParkings()));
   }
-  
+
   @override
   Widget build(BuildContext context) {
     ParkingServices _parkingprovider = Provider.of<ParkingServices>(context);
@@ -82,10 +81,9 @@ class _ParkingInfoState extends State<ParkingInfo> {
         context: context,
         builder: (context) => AlertDialog(
           backgroundColor: Color.fromARGB(255, 230, 241, 248),
-          shape: RoundedRectangleBorder(
-                borderRadius:
-                    BorderRadius.circular(20.0)),
-          title: Text ("APARCA'M", style: TextStyle(fontSize: 17)),
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)),
+          title: Text("APARCA'M", style: TextStyle(fontSize: 17)),
           content: Text(text, style: TextStyle(fontSize: 15)),
           actions: [
             TextButton(
@@ -160,14 +158,15 @@ class _ParkingInfoState extends State<ParkingInfo> {
                   FocusScope.of(context).requestFocus(FocusNode());
                   firstdate = await showDatePicker(
                     context: context,
-                    initialDate: DateTime.now(),
+                    initialDate: availableDates1[0],
                     firstDate: availableDates1[0],
                     lastDate: availableDates1[1],
                   );
+
                   seconddate = await showDatePicker(
                     context: context,
                     initialDate: firstdate ?? DateTime.now(),
-                    firstDate: availableDates1[0],
+                    firstDate: firstdate ?? availableDates1[0],
                     lastDate: availableDates1[1],
                   );
 
@@ -230,109 +229,97 @@ class _ParkingInfoState extends State<ParkingInfo> {
                   ),
                 ),
               ),
-              Row(
-                 children: <Widget>[
+              Row(children: <Widget>[
                 Expanded(
                   flex: 6,
                   child: Visibility(
                     visible: _isVisible1,
                     child: Column(
-                      
                       children: [
-                        Row(
-                          children: <Widget>[ 
+                        Row(children: <Widget>[
                           Expanded(
                             flex: 8,
-                            
                             child: Container(
                               height: 130,
-                              child:  Center(
-                               child: Text("Select the score",style: const TextStyle(fontSize: 15))),
-                              
+                              child: Center(
+                                  child: Text("Select the score",
+                                      style: const TextStyle(fontSize: 15))),
                               decoration: const BoxDecoration(
                                 color: Color.fromARGB(255, 196, 202, 205),
-                                
                               ),
                             ),
-
                           ),
                           Expanded(
-                            
-                            flex: 2,
-
-                            child: Container(
-                              height: 130,
-                              decoration: const BoxDecoration(
-                                color: Color.fromARGB(255, 196, 202, 205),
-                                
-                              ),
-                              child: IconButton(
-                              icon: const Icon(Icons.highlight_remove_sharp, size: 20, color: Color.fromARGB(255, 101, 101, 101)),
-                              tooltip: 'Close',
-                              onPressed: () {
-                                setState(() {
-                                  _isVisible1 = !_isVisible1;
-                                });
-                              },
-                            ),    
-                            )
-                          ),
-                          ]
-                        )
+                              flex: 2,
+                              child: Container(
+                                height: 130,
+                                decoration: const BoxDecoration(
+                                  color: Color.fromARGB(255, 196, 202, 205),
+                                ),
+                                child: IconButton(
+                                  icon: const Icon(Icons.highlight_remove_sharp,
+                                      size: 20,
+                                      color:
+                                          Color.fromARGB(255, 101, 101, 101)),
+                                  tooltip: 'Close',
+                                  onPressed: () {
+                                    setState(() {
+                                      _isVisible1 = !_isVisible1;
+                                    });
+                                  },
+                                ),
+                              )),
+                        ])
                       ],
-                      
-
-                  ),
+                    ),
                   ),
                 ),
                 Expanded(
                   flex: 4,
                   child: Visibility(
-                  visible: _isVisible2,
-                  child: Column(
-                    
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      'Rating: $rating',
-                      style: const TextStyle(fontSize: 15),
-                    ),
-                    const SizedBox(
-                      width: 25,
-                      height: 25,
-                    ),
-                    RatingBar.builder(
-                      minRating: 1,
-                      maxRating: 5,
-                      initialRating: 0,
-                      itemBuilder: (context, _) => const Icon(
-                        Icons.star_border_outlined, size:7.0,
-                        color: Color.fromARGB(255, 230, 211, 65),
-                      ),
-                      onRatingUpdate: (rating) => setState(() {
-                        this.rating = rating;
-                      }),
-                      updateOnDrag: true,
-                    ),
-                      SizedBox(
-                      width: 40,
-                      height: 40,
-                      child:TextButton(
-                        child: const Text('OK'),
-                        onPressed: () {
-                          parking.score = rating.toInt();
-                          setState(() {
-                            _isVisible2 = !_isVisible2;
-                          });
-                        },
-                      ),
-                    ),
-                  ],
-                )),
+                      visible: _isVisible2,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            'Rating: $rating',
+                            style: const TextStyle(fontSize: 15),
+                          ),
+                          const SizedBox(
+                            width: 25,
+                            height: 25,
+                          ),
+                          RatingBar.builder(
+                            minRating: 1,
+                            maxRating: 5,
+                            initialRating: 0,
+                            itemBuilder: (context, _) => const Icon(
+                              Icons.star_border_outlined,
+                              size: 7.0,
+                              color: Color.fromARGB(255, 230, 211, 65),
+                            ),
+                            onRatingUpdate: (rating) => setState(() {
+                              this.rating = rating;
+                            }),
+                            updateOnDrag: true,
+                          ),
+                          SizedBox(
+                            width: 40,
+                            height: 40,
+                            child: TextButton(
+                              child: const Text('OK'),
+                              onPressed: () {
+                                parking.score = rating.toInt();
+                                setState(() {
+                                  _isVisible2 = !_isVisible2;
+                                });
+                              },
+                            ),
+                          ),
+                        ],
+                      )),
                 )
-
-
-            ]),
+              ]),
             ],
           ),
         ),
