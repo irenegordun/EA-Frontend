@@ -5,13 +5,13 @@ link blog: https://www.canva.com/design/DAFZFB4t2bs/CHZBJadc4nHIzInczsqZHw/watch
 Backend: https://github.com/albonru/EA-ProjectBackend.git
 Backoffice: https://github.com/aidaapadilla/EA-Backoffice.git
 
-Login 
+Login
 ![image](https://user-images.githubusercontent.com/91835403/216040317-1d1475ed-d8ea-4edc-bf51-85e64f83670d.png)
 
 Register
 ![image](https://user-images.githubusercontent.com/91835403/216040856-da8abba1-ab83-4eae-89ba-2cabbb268aa6.png)
 
-Parkings general en vista llista
+Parkings general en vista llistaç
 ![image](https://user-images.githubusercontent.com/91835403/216040941-eea71389-2958-4577-8de5-a555b714a105.png)
 
 Parkings general en vista mapa
