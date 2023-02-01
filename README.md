@@ -1,24 +1,51 @@
 # EA-Frontend
-<em> # Mínim 2 Irene </em>
-commit pertinent al minim Irene: "first commit"
+<em> # APARCA'M</em>
+link blog: https://www.canva.com/design/DAFZFB4t2bs/CHZBJadc4nHIzInczsqZHw/watch?utm_content=DAFZFB4t2bs&utm_campaign=designshare&utm_medium=link&utm_source=publishsharelink
 
-○ Implementació bàsica d’una agenda. Podeu fer servir ‘syncfusion_flutter_calendar’ per
-afegir/visualitzar les reserves de parkings en diferents dies
+Backend: https://github.com/albonru/EA-ProjectBackend.git
+Backoffice: https://github.com/aidaapadilla/EA-Backoffice.git
 
-Vista del calendari amb dos events creats:
-![image](https://user-images.githubusercontent.com/91835403/212156766-92b86f49-9fb9-41fa-9101-41598add4931.png)
+Login 
+![image](https://user-images.githubusercontent.com/91835403/216040317-1d1475ed-d8ea-4edc-bf51-85e64f83670d.png)
 
-Formulari per crear un nou event:
-![Captura de pantalla (779)](https://user-images.githubusercontent.com/91835403/212154985-93e10bf0-00e7-4eda-b143-caaf31e486d1.png)
+Register
+![image](https://user-images.githubusercontent.com/91835403/216040856-da8abba1-ab83-4eae-89ba-2cabbb268aa6.png)
 
-Maneres d'accedir al calendari:
-1) Vista de MyBookings on, si apretes a la icona del calendari, accedeixes a MyAgenda
-![Captura de pantalla (781)](https://user-images.githubusercontent.com/91835403/212154781-9cf0d579-491d-426c-a071-df4ee2424f93.png)
+Parkings general en vista llista
+![image](https://user-images.githubusercontent.com/91835403/216040941-eea71389-2958-4577-8de5-a555b714a105.png)
 
-2) Despleable lateral amb entrada MyAgenda
-![image](https://user-images.githubusercontent.com/91835403/212156893-2d30e717-d518-48b8-8262-08fd325ebe0b.png)
+Parkings general en vista mapa
+![image](https://user-images.githubusercontent.com/91835403/216041722-be3d75b4-4078-4938-8db5-89396d4feb16.png)
 
+Filtres llistat
+![image](https://user-images.githubusercontent.com/91835403/216041030-04c2953e-49bd-4700-96bc-ebb587d4dffb.png)
 
+Perfil usuari
+![image](https://user-images.githubusercontent.com/91835403/216041387-325e5e0b-b84c-4570-bf6b-36e13a0c08bd.png)
+
+Crear parking
+![image](https://user-images.githubusercontent.com/91835403/216041585-179ca0f9-aa60-48f0-b905-e21ddcc629e4.png)
+
+Info parking des del punt de vista del propietari
+![image](https://user-images.githubusercontent.com/91835403/216042176-14519897-9061-440d-b761-972afa0c323b.png)
+
+Info parking des del punt de vista del client
+![image](https://user-images.githubusercontent.com/91835403/216042359-5775673d-35cb-486d-bd23-cf85bd6d66b0.png)
+
+Chat
+![image](https://user-images.githubusercontent.com/91835403/216041135-d6a822f5-1ea9-4ad8-9213-337db806f176.png)
+
+Chatbot
+![image](https://user-images.githubusercontent.com/91835403/216042548-c56a270d-6b08-42da-afa5-a33d9111f896.png)
+
+Agenda 
+![image](https://user-images.githubusercontent.com/91835403/216041257-d988665b-1af1-43e0-9818-61b47d71c0c6.png)
+
+Llistat parkings MyFavourites
+![image](https://user-images.githubusercontent.com/91835403/216041494-4e69e03d-5ad6-4cbf-aba0-4085c2375a69.png)
+
+Accessibilitat : report
+![image](https://user-images.githubusercontent.com/91835403/216041936-6181f44d-ed81-4dca-ba7a-5f260d0b698b.png)
 
 
 
